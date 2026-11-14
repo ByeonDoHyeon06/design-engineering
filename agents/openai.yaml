@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Engineering"
+  short_description: "Evidence-guided designer reasoning and verified UI craft"
+  default_prompt: "Use $design-engineering to reframe the actual design problem, retrieve relevant scholarly and practitioner reasoning cards as needed, explore meaningful alternatives without style copying, and verify the artifact, accessibility and actual behavior."

@@ -1,0 +1,1185 @@
+{
+  "schema_version": 1,
+  "purpose": "AI-loadable reasoning primitives for design engineering. No visual reference collection or page-type presets.",
+  "retrieval_guidance": "Select by unresolved question; read only relevant full cards. Keyword scores are hints, not a substitute for reasoning.",
+  "records": [
+    {
+      "id": "P01",
+      "name": "problem-coevolution",
+      "title": "Problem framing as iterative hypothesis",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/P01-problem-coevolution.md",
+      "source_ids": [
+        "DC1",
+        "DC2"
+      ],
+      "signals": [
+        "The given solution shape (a page, dashboard, form) may not fully express the underlying user problem."
+      ],
+      "queries": [
+        "framing",
+        "requirements",
+        "ambiguous",
+        "problem",
+        "reinterpretation",
+        "brief",
+        "문제정의",
+        "문제해결",
+        "재정의",
+        "가설",
+        "요구사항"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P02",
+      "name": "divergent-exploration",
+      "title": "Explore meaningful alternatives before converging",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/P02-divergent-exploration.md",
+      "source_ids": [
+        "CR3",
+        "DC2",
+        "CR4"
+      ],
+      "signals": [
+        "A substantial design brief admits distinct plausible interpretations or compositions."
+      ],
+      "queries": [
+        "alternatives",
+        "concepts",
+        "exploration",
+        "creativity",
+        "variation",
+        "ideas",
+        "diversity",
+        "ideation",
+        "다양성",
+        "발상",
+        "대안",
+        "창의성"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P03",
+      "name": "fixation",
+      "title": "Detect and escape design fixation",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/P03-fixation.md",
+      "source_ids": [
+        "CR1",
+        "CR2"
+      ],
+      "signals": [
+        "First idea, existing examples or an initial style selection are narrowing exploration."
+      ],
+      "queries": [
+        "copy",
+        "imitation",
+        "similar",
+        "reference",
+        "fixation",
+        "stuck",
+        "formula",
+        "template",
+        "style",
+        "고착",
+        "모방",
+        "복제",
+        "유사",
+        "템플릿"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P04",
+      "name": "intent-and-context",
+      "title": "Design for actual intent, not interface labels",
+      "kind": "METHOD",
+      "path": "knowledge/cards/P04-intent-and-context.md",
+      "source_ids": [
+        "S2",
+        "S3",
+        "H1"
+      ],
+      "signals": [
+        "A requested interface contains multiple actions, user expertise levels or consequences."
+      ],
+      "queries": [
+        "context",
+        "audience",
+        "task",
+        "risk",
+        "professional",
+        "dashboard",
+        "admin",
+        "homepage",
+        "intent",
+        "사용자",
+        "맥락",
+        "작업",
+        "대시보드",
+        "관리자",
+        "위험"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P05",
+      "name": "perceptual-grouping",
+      "title": "Express information relationships through grouping",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/P05-perceptual-grouping.md",
+      "source_ids": [
+        "E3",
+        "A3"
+      ],
+      "signals": [
+        "Elements appear related but the meaning is unclear, or unrelated content appears as a single group."
+      ],
+      "queries": [
+        "grouping",
+        "hierarchy",
+        "related",
+        "structure",
+        "visual",
+        "sections",
+        "proximity",
+        "information",
+        "게슈탈트",
+        "그룹",
+        "위계",
+        "정보구조",
+        "섹션"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P06",
+      "name": "information-scent",
+      "title": "Make paths and destinations predictable",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/P06-information-scent.md",
+      "source_ids": [
+        "R1",
+        "R2",
+        "H1"
+      ],
+      "signals": [
+        "Users must select among navigation routes, filters, search results or destination links."
+      ],
+      "queries": [
+        "navigation",
+        "labels",
+        "link",
+        "discoverability",
+        "findability",
+        "search",
+        "information scent",
+        "탐색",
+        "링크",
+        "메뉴",
+        "정보향기",
+        "찾기"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P07",
+      "name": "compositional-judgment",
+      "title": "Balance rhythm, proportion, unity and tension intentionally",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/P07-compositional-judgment.md",
+      "source_ids": [
+        "A3",
+        "A4",
+        "A5",
+        "A6",
+        "A9",
+        "A13"
+      ],
+      "signals": [
+        "A screen is functional but unconvincing, flat, misweighted or visually overworked."
+      ],
+      "queries": [
+        "composition",
+        "balance",
+        "symmetry",
+        "rhythm",
+        "proportion",
+        "tension",
+        "layout",
+        "grid",
+        "비례",
+        "균형",
+        "리듬",
+        "구도",
+        "긴장감"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P08",
+      "name": "multidimensional-aesthetics",
+      "title": "Evaluate perceived aesthetics as multiple dimensions",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/P08-multidimensional-aesthetics.md",
+      "source_ids": [
+        "A1",
+        "A2",
+        "A12",
+        "E5",
+        "R7"
+      ],
+      "signals": [
+        "A design seems polished but ordinary, or striking but difficult to understand."
+      ],
+      "queries": [
+        "aesthetic",
+        "beauty",
+        "color",
+        "craft",
+        "originality",
+        "classical",
+        "expressive",
+        "미학",
+        "아름다움",
+        "완성도",
+        "독창성",
+        "심미성"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P09",
+      "name": "novelty-and-recognition",
+      "title": "Balance new expression with recognizable meaning",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/P09-novelty-and-recognition.md",
+      "source_ids": [
+        "E4",
+        "A7",
+        "A14",
+        "CR2"
+      ],
+      "signals": [
+        "A design brief wants distinctive identity without sacrificing comprehension."
+      ],
+      "queries": [
+        "novelty",
+        "original",
+        "unfamiliar",
+        "typical",
+        "identity",
+        "experimental",
+        "recognition",
+        "독창성",
+        "낯설음",
+        "익숙함",
+        "차별화"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P10",
+      "name": "visual-attention",
+      "title": "Allocate attention without inventing eye tracking",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/P10-visual-attention.md",
+      "source_ids": [
+        "R4",
+        "R5",
+        "A8"
+      ],
+      "signals": [
+        "Important content is not noticed or decorative motion competes with meaning."
+      ],
+      "queries": [
+        "attention",
+        "saliency",
+        "focus",
+        "priority",
+        "motion",
+        "visual",
+        "scanning",
+        "시선",
+        "주의",
+        "강조",
+        "모션",
+        "움직임"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P11",
+      "name": "consistency-and-feedback",
+      "title": "Use consistency for predictability, not uniformity",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/P11-consistency-and-feedback.md",
+      "source_ids": [
+        "R3",
+        "H1",
+        "S1"
+      ],
+      "signals": [
+        "Multiple actions or states are similar, inconsistent, hidden, destructive or confusing."
+      ],
+      "queries": [
+        "consistency",
+        "feedback",
+        "states",
+        "filters",
+        "forms",
+        "status",
+        "navigation",
+        "일관성",
+        "피드백",
+        "상태",
+        "필터",
+        "오류",
+        "폼"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P12",
+      "name": "choice-and-targets",
+      "title": "Design understandable choices and physically operable targets",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/P12-choice-and-targets.md",
+      "source_ids": [
+        "E1",
+        "E2",
+        "S1"
+      ],
+      "signals": [
+        "Users must choose among alternatives or operate small/close controls."
+      ],
+      "queries": [
+        "choice",
+        "decision",
+        "target",
+        "touch",
+        "button",
+        "size",
+        "distance",
+        "선택",
+        "터치",
+        "버튼",
+        "크기",
+        "거리",
+        "조작"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P13",
+      "name": "accessibility-and-craft",
+      "title": "Treat clarity, accessibility and implementation craft as distinct requirements",
+      "kind": "STANDARD",
+      "path": "knowledge/cards/P13-accessibility-and-craft.md",
+      "source_ids": [
+        "S1",
+        "S2",
+        "A2"
+      ],
+      "signals": [
+        "A visual concept is ready for implementation or release."
+      ],
+      "queries": [
+        "accessibility",
+        "semantic",
+        "contrast",
+        "keyboard",
+        "responsive",
+        "qa",
+        "readability",
+        "접근성",
+        "대비",
+        "키보드",
+        "반응형",
+        "품질"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P14",
+      "name": "evaluation-validity",
+      "title": "Evaluate appeal, usefulness and performance separately",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/P14-evaluation-validity.md",
+      "source_ids": [
+        "R6",
+        "R7",
+        "R8",
+        "E5",
+        "A2",
+        "S3"
+      ],
+      "signals": [
+        "An A/B test or design review risks turning model judgment into apparent objective proof."
+      ],
+      "queries": [
+        "evaluation",
+        "rubric",
+        "ab",
+        "test",
+        "score",
+        "user study",
+        "experiment",
+        "평가",
+        "점수",
+        "실험",
+        "사용성",
+        "통계",
+        "평균"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P15",
+      "name": "validation-loops",
+      "title": "Prototype and inspect in the actual medium",
+      "kind": "METHOD",
+      "path": "knowledge/cards/P15-validation-loops.md",
+      "source_ids": [
+        "DC2",
+        "S2",
+        "H1"
+      ],
+      "signals": [
+        "Source code looks plausible but visual/interaction reality is uncertain."
+      ],
+      "queries": [
+        "prototype",
+        "render",
+        "test",
+        "iteration",
+        "browser",
+        "debug",
+        "quality gate",
+        "검증",
+        "브라우저",
+        "화면",
+        "캡처",
+        "구현"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "P16",
+      "name": "identity-and-meaning",
+      "title": "Build coherent identity from meaning, not visual repetition",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/P16-identity-and-meaning.md",
+      "source_ids": [
+        "A10",
+        "A11",
+        "A15",
+        "PM1"
+      ],
+      "signals": [
+        "A visual system needs memorability but cannot depend only on a signature illustration or color."
+      ],
+      "queries": [
+        "brand",
+        "identity",
+        "logo",
+        "type",
+        "meaning",
+        "coherence",
+        "branding",
+        "정체성",
+        "브랜드",
+        "타이포그래피",
+        "아이덴티티"
+      ],
+      "usage": "retrieve_by_question_not_page_category"
+    },
+    {
+      "id": "D01",
+      "name": "semantics-and-syntax",
+      "title": "Clarify meaning, internal language and pragmatic use",
+      "kind": "PRACTITIONER",
+      "path": "knowledge/cards/D01-semantics-and-syntax.md",
+      "source_ids": [
+        "PM1"
+      ],
+      "signals": [
+        "Ask three different questions: what does it mean, what makes the language coherent, and does it work for its audience?"
+      ],
+      "queries": [
+        "meaning",
+        "system",
+        "communication",
+        "coherence",
+        "semantic",
+        "의미",
+        "일관성",
+        "시각언어"
+      ],
+      "usage": "transfer_reasoning_not_style"
+    },
+    {
+      "id": "D02",
+      "name": "usefulness-and-honesty",
+      "title": "Make the artifact understandable, useful and honest",
+      "kind": "PRACTITIONER",
+      "path": "knowledge/cards/D02-usefulness-and-honesty.md",
+      "source_ids": [
+        "PM2"
+      ],
+      "signals": [
+        "Challenge every feature and visual cue to explain what it enables or clarifies."
+      ],
+      "queries": [
+        "use",
+        "honesty",
+        "simplicity",
+        "detail",
+        "craft",
+        "friction",
+        "사용성",
+        "정직",
+        "간결",
+        "디테일"
+      ],
+      "usage": "transfer_reasoning_not_style"
+    },
+    {
+      "id": "D03",
+      "name": "brief-questioning",
+      "title": "Interrogate assumptions before committing to form",
+      "kind": "PRACTITIONER",
+      "path": "knowledge/cards/D03-brief-questioning.md",
+      "source_ids": [
+        "PM3"
+      ],
+      "signals": [
+        "Ask what the stated brief might be missing and what matters to users or the organization."
+      ],
+      "queries": [
+        "brief",
+        "question",
+        "discovery",
+        "client",
+        "concept",
+        "브리프",
+        "질문",
+        "요구사항",
+        "기획"
+      ],
+      "usage": "transfer_reasoning_not_style"
+    },
+    {
+      "id": "D04",
+      "name": "delayed-commitment",
+      "title": "Keep exploratory uncertainty alive just long enough",
+      "kind": "PRACTITIONER",
+      "path": "knowledge/cards/D04-delayed-commitment.md",
+      "source_ids": [
+        "PM4"
+      ],
+      "signals": [
+        "Resist prematurely declaring the first coherent design the best design."
+      ],
+      "queries": [
+        "exploration",
+        "notes",
+        "sketch",
+        "uncertainty",
+        "new idea",
+        "탐색",
+        "스케치",
+        "불확실성"
+      ],
+      "usage": "transfer_reasoning_not_style"
+    },
+    {
+      "id": "D05",
+      "name": "metaphor-legibility",
+      "title": "Test competing visual metaphors at use size",
+      "kind": "PRACTITIONER",
+      "path": "knowledge/cards/D05-metaphor-legibility.md",
+      "source_ids": [
+        "PM5"
+      ],
+      "signals": [
+        "Different symbols may encode the same function with different recognition costs."
+      ],
+      "queries": [
+        "metaphor",
+        "icon",
+        "symbol",
+        "recognize",
+        "visual meaning",
+        "아이콘",
+        "은유",
+        "기호",
+        "인지"
+      ],
+      "usage": "transfer_reasoning_not_style"
+    },
+    {
+      "id": "D06",
+      "name": "medium-feedback",
+      "title": "Prototype within the medium and shorten feedback loops",
+      "kind": "PRACTITIONER",
+      "path": "knowledge/cards/D06-medium-feedback.md",
+      "source_ids": [
+        "PM6"
+      ],
+      "signals": [
+        "A static comp may hide what happens in actual interaction or responsive environments."
+      ],
+      "queries": [
+        "prototype",
+        "digital",
+        "motion",
+        "media",
+        "feedback",
+        "interactive",
+        "실험",
+        "매체",
+        "인터랙션"
+      ],
+      "usage": "transfer_reasoning_not_style"
+    },
+    {
+      "id": "D07",
+      "name": "human-centered-exploration",
+      "title": "Move between user learning, divergent possibilities and prototypes",
+      "kind": "PRACTITIONER",
+      "path": "knowledge/cards/D07-human-centered-exploration.md",
+      "source_ids": [
+        "PM7"
+      ],
+      "signals": [
+        "Treat a design process as flexible inquiry rather than a fixed sequence of workshops."
+      ],
+      "queries": [
+        "user",
+        "iterate",
+        "design thinking",
+        "prototype",
+        "test",
+        "human",
+        "사용자",
+        "탐색",
+        "반복",
+        "프로토타입"
+      ],
+      "usage": "transfer_reasoning_not_style"
+    },
+    {
+      "id": "K01",
+      "name": "aesthetic-constructs",
+      "title": "Distinguish what visual attractiveness actually means",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/K01-aesthetic-constructs.md",
+      "source_ids": [
+        "A1",
+        "A2"
+      ],
+      "claims": [
+        "VC01",
+        "VC02"
+      ],
+      "signals": [
+        "A visually tidy UI may still lack identity; a visually bold page may still be incoherent."
+      ],
+      "queries": [
+        "미학",
+        "심미성",
+        "다양성",
+        "단순성",
+        "색채",
+        "완성도",
+        "aesthetics",
+        "craftsmanship",
+        "diversity",
+        "simplicity",
+        "color",
+        "visual quality",
+        "예쁜",
+        "브랜드",
+        "시각적"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K02",
+      "name": "first-impressions",
+      "title": "Separate very-early visual impressions from durable task value",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/K02-first-impressions.md",
+      "source_ids": [
+        "E4"
+      ],
+      "claims": [
+        "VC03"
+      ],
+      "signals": [
+        "An unusual interface may be judged differently at first glance than after sustained use."
+      ],
+      "queries": [
+        "첫인상",
+        "복잡도",
+        "전형성",
+        "프로토타입",
+        "first impression",
+        "complexity",
+        "prototypicality",
+        "50ms",
+        "복잡",
+        "인지"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K03",
+      "name": "quantitative-perception",
+      "title": "Choose quantitative encodings based on decoding tasks",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/K03-quantitative-perception.md",
+      "source_ids": [
+        "V01"
+      ],
+      "claims": [
+        "VC04"
+      ],
+      "signals": [
+        "A dashboard needs accurate comparison of several quantities."
+      ],
+      "queries": [
+        "차트",
+        "그래프",
+        "축",
+        "정확도",
+        "비교",
+        "정량",
+        "수치",
+        "chart",
+        "position",
+        "length",
+        "angle",
+        "area",
+        "encoding",
+        "quantitative",
+        "dashboard",
+        "데이터"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K04",
+      "name": "nested-validation",
+      "title": "Validate the correct layer of a visualization design",
+      "kind": "FRAMEWORK",
+      "path": "knowledge/cards/K04-nested-validation.md",
+      "source_ids": [
+        "V02"
+      ],
+      "claims": [
+        "VC05"
+      ],
+      "signals": [
+        "The chart renders correctly but users cannot answer their actual question."
+      ],
+      "queries": [
+        "domain",
+        "abstraction",
+        "encoding",
+        "algorithm",
+        "시각화",
+        "시스템",
+        "데이터",
+        "분석",
+        "구현",
+        "사용자문제",
+        "모델",
+        "분리"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K05",
+      "name": "design-study-collaboration",
+      "title": "Investigate unfamiliar domains before codifying UI patterns",
+      "kind": "METHODOLOGY",
+      "path": "knowledge/cards/K05-design-study-collaboration.md",
+      "source_ids": [
+        "V03"
+      ],
+      "claims": [
+        "VC06"
+      ],
+      "signals": [
+        "The task is novel and the designer does not understand what experts mean by “urgent”."
+      ],
+      "queries": [
+        "domain",
+        "협업",
+        "인터뷰",
+        "관찰",
+        "workflows",
+        "domain experts",
+        "field study",
+        "design study",
+        "전문가",
+        "가설",
+        "불확실성"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K06",
+      "name": "information-seeking",
+      "title": "Support exploration without forcing a canonical dashboard layout",
+      "kind": "FRAMEWORK",
+      "path": "knowledge/cards/K06-information-seeking.md",
+      "source_ids": [
+        "V04"
+      ],
+      "claims": [
+        "VC07"
+      ],
+      "signals": [
+        "People must move from high-level state to explanations and evidence."
+      ],
+      "queries": [
+        "overview",
+        "filter",
+        "details-on-demand",
+        "탐색",
+        "필터",
+        "상세",
+        "zoom",
+        "history",
+        "시계열",
+        "network",
+        "정보탐색"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K07",
+      "name": "memorability-accuracy",
+      "title": "Do not confuse memorable graphics with effective analytic communication",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/K07-memorability-accuracy.md",
+      "source_ids": [
+        "V05",
+        "V01"
+      ],
+      "claims": [
+        "VC08",
+        "VC04"
+      ],
+      "signals": [
+        "An unusual colorful visualization is remembered but its numbers are misread."
+      ],
+      "queries": [
+        "기억",
+        "정확도",
+        "시각화",
+        "그래프",
+        "memorability",
+        "chartjunk",
+        "remember",
+        "comprehension",
+        "accuracy",
+        "시각적독창성"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K08",
+      "name": "parallel-exploration",
+      "title": "Explore different problem hypotheses before polishing one",
+      "kind": "RESEARCH",
+      "path": "knowledge/cards/K08-parallel-exploration.md",
+      "source_ids": [
+        "CR1",
+        "CR2",
+        "CR3"
+      ],
+      "claims": [
+        "VC10",
+        "VC11",
+        "VC12"
+      ],
+      "signals": [
+        "The first familiar SaaS layout keeps returning despite different briefs."
+      ],
+      "queries": [
+        "영감",
+        "아이디어",
+        "예시",
+        "고착",
+        "발산",
+        "대안",
+        "prototype",
+        "fixation",
+        "parallel",
+        "diversity",
+        "exploration"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K09",
+      "name": "problem-reframing",
+      "title": "Permit a design solution to refine the problem definition",
+      "kind": "QUALITATIVE_RESEARCH",
+      "path": "knowledge/cards/K09-problem-reframing.md",
+      "source_ids": [
+        "DC2"
+      ],
+      "claims": [
+        "VC09"
+      ],
+      "signals": [
+        "The requested widget is a solution guess rather than an articulation of user need."
+      ],
+      "queries": [
+        "문제정의",
+        "브리프",
+        "재정의",
+        "코에볼루션",
+        "framing",
+        "design thinking",
+        "co-evolution",
+        "reframe"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K10",
+      "name": "usability-evaluation",
+      "title": "Choose outcome measures that actually represent intended usability",
+      "kind": "REVIEW",
+      "path": "knowledge/cards/K10-usability-evaluation.md",
+      "source_ids": [
+        "R6",
+        "S2"
+      ],
+      "claims": [
+        "VC13",
+        "VC18"
+      ],
+      "signals": [
+        "Two designs have nearly equal subjective scores; the team claims objective usability superiority."
+      ],
+      "queries": [
+        "사용성",
+        "과제성공률",
+        "에러율",
+        "시간",
+        "설문",
+        "측정",
+        "테스트",
+        "user testing",
+        "usability",
+        "performance",
+        "evidence",
+        "evaluation"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K11",
+      "name": "accessibility-conditional",
+      "title": "Apply accessibility criteria with their actual conditions",
+      "kind": "STANDARD",
+      "path": "knowledge/cards/K11-accessibility-conditional.md",
+      "source_ids": [
+        "S1"
+      ],
+      "claims": [
+        "VC14",
+        "VC15",
+        "VC16",
+        "VC17"
+      ],
+      "signals": [
+        "A reviewer claims every 1px border under 3:1 or every 20px link automatically fails WCAG."
+      ],
+      "queries": [
+        "WCAG",
+        "대비",
+        "contrast",
+        "border",
+        "target",
+        "touch",
+        "focus",
+        "키보드",
+        "터치",
+        "접근성",
+        "24px",
+        "색상",
+        "간격"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K12",
+      "name": "claim-provenance",
+      "title": "Separate source findings, practitioner guidance and AI extrapolation",
+      "kind": "METHOD",
+      "path": "knowledge/cards/K12-claim-provenance.md",
+      "source_ids": [
+        "V02",
+        "R6",
+        "S1"
+      ],
+      "claims": [
+        "VC05",
+        "VC13",
+        "VC14"
+      ],
+      "signals": [
+        "The AI says “research proves” a CSS ratio without identifying a suitable study."
+      ],
+      "queries": [
+        "근거",
+        "인용",
+        "논문",
+        "출처",
+        "검증",
+        "확실",
+        "확신",
+        "evidence",
+        "claim",
+        "research",
+        "bibliography",
+        "confidence",
+        "provenance"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K13",
+      "name": "visualization-design-critique",
+      "title": "Review systems at domain, perception and implementation levels",
+      "kind": "METHOD",
+      "path": "knowledge/cards/K13-visualization-design-critique.md",
+      "source_ids": [
+        "V02",
+        "V03",
+        "V01"
+      ],
+      "claims": [
+        "VC04",
+        "VC05",
+        "VC06"
+      ],
+      "signals": [
+        "A visually polished analytics application fails when used with real data."
+      ],
+      "queries": [
+        "시각화",
+        "데이터",
+        "검증",
+        "도메인",
+        "전문가",
+        "시각화평가",
+        "dashboard",
+        "analytics",
+        "graph",
+        "visualization",
+        "problem",
+        "validation"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K14",
+      "name": "responsive-focus",
+      "title": "Test cross-viewport continuity instead of relying on breakpoint recipes",
+      "kind": "STANDARD",
+      "path": "knowledge/cards/K14-responsive-focus.md",
+      "source_ids": [
+        "S1"
+      ],
+      "claims": [
+        "VC16",
+        "VC17",
+        "VC14"
+      ],
+      "signals": [
+        "The header wraps into two lines and anchor navigation hides the target."
+      ],
+      "queries": [
+        "모바일",
+        "반응형",
+        "헤더",
+        "앵커",
+        "scroll-margin",
+        "focus",
+        "overflow",
+        "tablet",
+        "responsive",
+        "320px",
+        "text spacing",
+        "zoom",
+        "sticky"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K15",
+      "name": "experimental-design-evaluation",
+      "title": "Avoid overstating small design A/B experiments",
+      "kind": "METHOD",
+      "path": "knowledge/cards/K15-experimental-design-evaluation.md",
+      "source_ids": [
+        "R6",
+        "A1",
+        "A2",
+        "CR3"
+      ],
+      "claims": [
+        "VC01",
+        "VC02",
+        "VC12",
+        "VC13"
+      ],
+      "signals": [
+        "A six-page model-generated A/B test yields a tiny score gap and a claim of scientific superiority."
+      ],
+      "queries": [
+        "A/B",
+        "실험",
+        "표본",
+        "블라인드",
+        "독립",
+        "차이",
+        "유의",
+        "score",
+        "평가",
+        "variance",
+        "표준편차",
+        "sample"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    }
+  ],
+  "version": "3.7-verified-depth"
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "gemini": {
+    "mode": "off",
+    "model": "gemini-3.6-flash",
+    "timeout_seconds": 30,
+    "max_catalog_items": 160,
+    "max_results": 6,
+    "max_prompt_chars": 48000
+  },
+  "privacy": {
+    "allow_external_catalog": false,
+    "allow_private_content": false
+  },
+  "cache": {
+    "enabled": true,
+    "ttl_hours": 168
+  }
+}

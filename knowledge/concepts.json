@@ -1,0 +1,569 @@
+{
+  "schema_version": 1,
+  "description": "Bilingual query hints, not interface-type templates or mandatory design prescriptions. All card links are retrieval hypotheses.",
+  "concepts": [
+    {
+      "id": "information_clarity",
+      "cues": [
+        "명확",
+        "전달",
+        "정보를 이해",
+        "한눈에",
+        "알아보기",
+        "comprehension",
+        "communicat",
+        "clear information",
+        "explain"
+      ],
+      "expand": [
+        "information hierarchy",
+        "information scent",
+        "grouping",
+        "clarity",
+        "정보구조",
+        "정보탐색",
+        "시각적 위계"
+      ],
+      "cards": [
+        "P05",
+        "P06",
+        "P10",
+        "K06"
+      ]
+    },
+    {
+      "id": "navigation_findability",
+      "cues": [
+        "찾기",
+        "찾아",
+        "탐색",
+        "메뉴",
+        "경로",
+        "navigation",
+        "wayfinding",
+        "findability",
+        "search results"
+      ],
+      "expand": [
+        "information scent",
+        "navigation",
+        "choice",
+        "destination",
+        "정보탐색",
+        "단서"
+      ],
+      "cards": [
+        "P06",
+        "K06",
+        "P12"
+      ]
+    },
+    {
+      "id": "hierarchy_attention",
+      "cues": [
+        "위계",
+        "강조",
+        "시선",
+        "주목",
+        "우선순위",
+        "attention",
+        "hierarchy",
+        "salience",
+        "priority",
+        "눈에 들어",
+        "눈에 띄",
+        "눈길",
+        "시선이",
+        "잘 안 보"
+      ],
+      "expand": [
+        "attention",
+        "composition",
+        "hierarchy",
+        "visual",
+        "시각적 위계",
+        "그룹"
+      ],
+      "cards": [
+        "P05",
+        "P10",
+        "P07",
+        "K01"
+      ]
+    },
+    {
+      "id": "content_structure",
+      "cues": [
+        "구조",
+        "분류",
+        "관계",
+        "정보 설계",
+        "information architecture",
+        "organize",
+        "structure",
+        "content"
+      ],
+      "expand": [
+        "grouping",
+        "structure",
+        "information",
+        "hierarchy",
+        "정보구조",
+        "가까움",
+        "범주"
+      ],
+      "cards": [
+        "P05",
+        "P06",
+        "P04",
+        "K06"
+      ]
+    },
+    {
+      "id": "visual_aesthetics",
+      "cues": [
+        "미적",
+        "심미",
+        "예쁜",
+        "아름",
+        "미학",
+        "aesthetic",
+        "beautiful",
+        "polish",
+        "craft"
+      ],
+      "expand": [
+        "expressive",
+        "classical",
+        "simplicity",
+        "color",
+        "craftsmanship",
+        "미학",
+        "완성도"
+      ],
+      "cards": [
+        "K01",
+        "P08",
+        "P07",
+        "P09"
+      ]
+    },
+    {
+      "id": "visual_composition",
+      "cues": [
+        "구도",
+        "비례",
+        "리듬",
+        "균형",
+        "여백",
+        "배치",
+        "composition",
+        "balance",
+        "rhythm",
+        "spacing",
+        "proportion"
+      ],
+      "expand": [
+        "composition",
+        "visual weight",
+        "balance",
+        "proportion",
+        "rhythm",
+        "비례",
+        "구성"
+      ],
+      "cards": [
+        "P07",
+        "P08",
+        "D01"
+      ]
+    },
+    {
+      "id": "originality_fixation",
+      "cues": [
+        "고착",
+        "독창",
+        "정형화",
+        "비슷",
+        "템플릿",
+        "창의",
+        "novelty",
+        "original",
+        "fixation",
+        "template",
+        "same style",
+        "모방",
+        "레퍼런스",
+        "콘셉트",
+        "같은 패턴"
+      ],
+      "expand": [
+        "fixation",
+        "parallel exploration",
+        "meaning",
+        "novelty",
+        "고착",
+        "대안",
+        "발상"
+      ],
+      "cards": [
+        "P03",
+        "K08",
+        "P09",
+        "P02",
+        "D04"
+      ]
+    },
+    {
+      "id": "problem_framing",
+      "cues": [
+        "문제 정의",
+        "재정의",
+        "요구사항",
+        "의미",
+        "brief",
+        "reframe",
+        "problem framing",
+        "ambiguity",
+        "requirements",
+        "다시 정의",
+        "재해석",
+        "문제를 다시",
+        "문제 해결"
+      ],
+      "expand": [
+        "problem",
+        "framing",
+        "brief",
+        "meaning",
+        "hypothesis",
+        "문제정의",
+        "맥락"
+      ],
+      "cards": [
+        "P01",
+        "K09",
+        "D03"
+      ]
+    },
+    {
+      "id": "interaction_feedback",
+      "cues": [
+        "피드백",
+        "동작",
+        "상태",
+        "인터랙션",
+        "클릭",
+        "feedback",
+        "interaction",
+        "state",
+        "action",
+        "response"
+      ],
+      "expand": [
+        "feedback",
+        "consistency",
+        "interaction",
+        "state",
+        "status",
+        "상태",
+        "피드백"
+      ],
+      "cards": [
+        "P11",
+        "P12",
+        "D02"
+      ]
+    },
+    {
+      "id": "task_success",
+      "cues": [
+        "사용자 과제",
+        "시나리오",
+        "완료",
+        "효율",
+        "찾을 수",
+        "task success",
+        "user task",
+        "usability",
+        "workflow",
+        "completion"
+      ],
+      "expand": [
+        "task",
+        "user",
+        "outcome",
+        "evaluation",
+        "information scent",
+        "사용성",
+        "탐색"
+      ],
+      "cards": [
+        "P14",
+        "K10",
+        "P06",
+        "K04"
+      ]
+    },
+    {
+      "id": "forms_error",
+      "cues": [
+        "입력",
+        "폼",
+        "오류",
+        "복구",
+        "검증",
+        "form",
+        "validation",
+        "error",
+        "recover",
+        "submit"
+      ],
+      "expand": [
+        "error",
+        "feedback",
+        "forms",
+        "safe",
+        "accessibility",
+        "오류",
+        "상태"
+      ],
+      "cards": [
+        "P11",
+        "P13",
+        "D02"
+      ]
+    },
+    {
+      "id": "accessibility_keyboard",
+      "cues": [
+        "접근성",
+        "키보드",
+        "스크린리더",
+        "초점",
+        "wcag",
+        "focus",
+        "keyboard",
+        "screen reader",
+        "accessibility"
+      ],
+      "expand": [
+        "accessibility",
+        "WCAG",
+        "focus",
+        "keyboard",
+        "target size",
+        "접근성",
+        "초점"
+      ],
+      "cards": [
+        "K11",
+        "P13",
+        "K14"
+      ]
+    },
+    {
+      "id": "mobile_responsive",
+      "cues": [
+        "모바일",
+        "반응형",
+        "좁은",
+        "320px",
+        "390px",
+        "mobile",
+        "responsive",
+        "breakpoint",
+        "overflow"
+      ],
+      "expand": [
+        "responsive",
+        "focus",
+        "scroll",
+        "viewport",
+        "accessibility",
+        "모바일",
+        "반응형"
+      ],
+      "cards": [
+        "K14",
+        "P15",
+        "P13"
+      ]
+    },
+    {
+      "id": "data_accuracy",
+      "cues": [
+        "차트",
+        "그래프",
+        "데이터 비교",
+        "정확도",
+        "시각화",
+        "chart",
+        "graph",
+        "visualization",
+        "encoding",
+        "quantitative"
+      ],
+      "expand": [
+        "quantitative",
+        "graphical perception",
+        "encoding",
+        "visualization",
+        "comparison",
+        "데이터",
+        "시각화"
+      ],
+      "cards": [
+        "K03",
+        "K04",
+        "K13"
+      ]
+    },
+    {
+      "id": "high_risk_operations",
+      "cues": [
+        "권한",
+        "삭제",
+        "되돌리",
+        "안전",
+        "승인",
+        "permission",
+        "delete",
+        "admin",
+        "audit",
+        "critical"
+      ],
+      "expand": [
+        "risk",
+        "error",
+        "feedback",
+        "context",
+        "safe",
+        "작업",
+        "위험"
+      ],
+      "cards": [
+        "P04",
+        "P11",
+        "D02",
+        "K11"
+      ]
+    },
+    {
+      "id": "evidence_integrity",
+      "cues": [
+        "근거",
+        "논문",
+        "출처",
+        "주장",
+        "검증 수준",
+        "evidence",
+        "claims",
+        "source",
+        "research",
+        "citation"
+      ],
+      "expand": [
+        "provenance",
+        "verification",
+        "framework",
+        "scope",
+        "claim",
+        "출처",
+        "검증"
+      ],
+      "cards": [
+        "K12",
+        "P14",
+        "K15"
+      ]
+    },
+    {
+      "id": "testing_validation",
+      "cues": [
+        "검증",
+        "테스트",
+        "평가",
+        "사용자 연구",
+        "실험",
+        "qa",
+        "test",
+        "validate",
+        "evaluation",
+        "experiment"
+      ],
+      "expand": [
+        "validation",
+        "usability",
+        "evaluation",
+        "experiment",
+        "quality",
+        "검증",
+        "평가"
+      ],
+      "cards": [
+        "K10",
+        "P15",
+        "P14",
+        "K15"
+      ]
+    },
+    {
+      "id": "brand_meaning",
+      "cues": [
+        "브랜드",
+        "정체성",
+        "상징",
+        "일관성",
+        "표현",
+        "brand",
+        "identity",
+        "symbol",
+        "coherence",
+        "meaning"
+      ],
+      "expand": [
+        "identity",
+        "meaning",
+        "recognition",
+        "consistency",
+        "brand",
+        "정체성",
+        "의미"
+      ],
+      "cards": [
+        "P16",
+        "D01",
+        "P09"
+      ]
+    },
+    {
+      "id": "concept_metaphor",
+      "cues": [
+        "비유",
+        "은유",
+        "메타포",
+        "도상",
+        "아이콘",
+        "metaphor",
+        "icon",
+        "visual relation",
+        "concept"
+      ],
+      "expand": [
+        "metaphor",
+        "legibility",
+        "visual",
+        "concept",
+        "symbol",
+        "은유",
+        "의미"
+      ],
+      "cards": [
+        "D05",
+        "P16",
+        "P09"
+      ]
+    }
+  ]
+}

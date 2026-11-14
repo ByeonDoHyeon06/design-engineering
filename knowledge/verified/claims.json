@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-11-14",
+  "disclaimer": "All records checked against the source identification and publisher/institution abstract or official standard page. Full texts were not systematically reviewed. Findings are source-scoped; application guidance in cards is extrapolation unless explicitly noted.",
+  "claims": [
+    {
+      "id": "VC01",
+      "source_id": "A1",
+      "evidence_type": "EMPIRICAL",
+      "source_supported_summary": "Four studies developed a measure and identified classical/expressive dimensions of perceived website aesthetics.",
+      "source_scope": "Website aesthetic rating instruments, not screen-specific CSS rules.",
+      "do_not_infer": "Do not assert an objective ideal style or validated 100-point custom rubric.",
+      "verification_basis": "publisher_or_institution_abstract"
+    },
+    {
+      "id": "VC02",
+      "source_id": "A2",
+      "evidence_type": "EMPIRICAL",
+      "source_supported_summary": "Seven studies identified distinguishable facets of perceived aesthetics: simplicity, diversity, color, craftsmanship.",
+      "source_scope": "Website perception assessments.",
+      "do_not_infer": "Do not make a fixed checklist with assumed causal improvements.",
+      "verification_basis": "publisher_or_institution_abstract",
+      "selected_primary_text_support": "In Study 6, 78 people evaluated alternate color designs after tasks; the color manipulation selectively affected Colorfulness (not the other facets). Study 7 compared aesthetically pleasing/distorted websites with 375 participants. These are source-specific validations of the measure, not a design recipe."
+    },
+    {
+      "id": "VC03",
+      "source_id": "E4",
+      "evidence_type": "EMPIRICAL",
+      "source_supported_summary": "Visual complexity and prototypicality affected rapid screenshot aesthetics judgments; low-complexity/high-prototypicality screens were generally preferred in these studies.",
+      "source_scope": "Very short first impressions from screenshots.",
+      "do_not_infer": "Not proof that unconventional designs always perform worse or users accomplish tasks faster.",
+      "verification_basis": "publisher_or_institution_abstract"
+    },
+    {
+      "id": "VC04",
+      "source_id": "V01",
+      "evidence_type": "EMPIRICAL",
+      "source_supported_summary": "Quantitative graphical decoding accuracy varies with the elementary perceptual task.",
+      "source_scope": "Graph designs for accurate quantitative extraction.",
+      "do_not_infer": "Not a blanket prohibition on pie charts or claims about aesthetic preference.",
+      "verification_basis": "publisher_or_institution_abstract"
+    },
+    {
+      "id": "VC05",
+      "source_id": "V02",
+      "evidence_type": "FRAMEWORK",
+      "source_supported_summary": "Design/validation can be distinguished into domain, abstraction, visual encoding/interaction, and algorithm layers.",
+      "source_scope": "Information visualization design process.",
+      "do_not_infer": "Not validated as a mandatory sequence for all UI projects.",
+      "verification_basis": "publisher_or_institution_abstract",
+      "selected_primary_text_support": "The author describes four nested levels and states that designers need not always perform them in linear order. Wrong upstream abstraction can spoil even correct downstream encoding/algorithm."
+    },
+    {
+      "id": "VC06",
+      "source_id": "V03",
+      "evidence_type": "METHODOLOGY",
+      "source_supported_summary": "The methodology proposes nine stages, informed by 21 design studies and literature survey.",
+      "source_scope": "Domain expert collaboration and visualization design studies.",
+      "do_not_infer": "Not a controlled trial proving nine stages universally superior.",
+      "verification_basis": "publisher_or_institution_abstract",
+      "selected_primary_text_support": "Article introduction states the authors reflected on 21 prior design studies (3 assessed as failures by authors), plus literature, and proposes nine stages. This is reflective methodology, not an RCT."
+    },
+    {
+      "id": "VC07",
+      "source_id": "V04",
+      "evidence_type": "FRAMEWORK",
+      "source_supported_summary": "The information-seeking mantra is a starting point, together with data/task taxonomies.",
+      "source_scope": "Exploratory information visualization.",
+      "do_not_infer": "Not a universal home-page wireframe or required overview panel.",
+      "verification_basis": "publisher_or_institution_abstract"
+    },
+    {
+      "id": "VC08",
+      "source_id": "V05",
+      "evidence_type": "EMPIRICAL",
+      "source_supported_summary": "Visual attributes including color and recognizable objects related to visualization memorability in this study.",
+      "source_scope": "Recall of single-panel visualizations.",
+      "do_not_infer": "Memorability does not establish comprehension, data accuracy or task success.",
+      "verification_basis": "publisher_or_institution_abstract"
+    },
+    {
+      "id": "VC09",
+      "source_id": "DC2",
+      "evidence_type": "QUALITATIVE_EMPIRICAL",
+      "source_supported_summary": "Protocol studies of nine experienced designers supported problem/solution co-evolution.",
+      "source_scope": "Industrial design tasks and protocol observations.",
+      "do_not_infer": "Not proof that every task needs broad problem reframing.",
+      "verification_basis": "publisher_or_institution_abstract"
+    },
+    {
+      "id": "VC10",
+      "source_id": "CR1",
+      "evidence_type": "EMPIRICAL",
+      "source_supported_summary": "Provided examples induced design fixation in studied conceptual design tasks.",
+      "source_scope": "Conceptual design experiments.",
+      "do_not_infer": "Do not infer that all references harm creativity.",
+      "verification_basis": "publisher_or_institution_abstract"
+    },
+    {
+      "id": "VC11",
+      "source_id": "CR2",
+      "evidence_type": "META_ANALYSIS",
+      "source_supported_summary": "Across 43 studies examples narrowed solution-category diversity yet improved idea novelty/quality in reported aggregate results.",
+      "source_scope": "Experimental design ideation literature.",
+      "do_not_infer": "Do not collapse diverse outcomes into examples always good/bad.",
+      "verification_basis": "publisher_or_institution_abstract"
+    },
+    {
+      "id": "VC12",
+      "source_id": "CR3",
+      "evidence_type": "EMPIRICAL",
+      "source_supported_summary": "Parallel prototype creation before critique outperformed serial prototyping in tested novice web advertisement design tasks.",
+      "source_scope": "Novice graphic web advertising prototyping.",
+      "do_not_infer": "No demonstrated effect here for all AI agents or high-stakes admin UIs.",
+      "verification_basis": "publisher_or_institution_abstract"
+    },
+    {
+      "id": "VC13",
+      "source_id": "R6",
+      "evidence_type": "REVIEW",
+      "source_supported_summary": "Review of 180 HCI studies found recurring validity limitations in the choice of usability measures.",
+      "source_scope": "Usability evaluation study design.",
+      "do_not_infer": "A single subjective score cannot prove task performance.",
+      "verification_basis": "publisher_or_institution_abstract"
+    },
+    {
+      "id": "VC14",
+      "source_id": "S1",
+      "evidence_type": "NORMATIVE",
+      "source_supported_summary": "WCAG 2.2 AA target size of 24 CSS px has spacing, equivalent, inline, user-agent-control and essential exceptions.",
+      "source_scope": "Applicable WCAG 2.2 criterion 2.5.8.",
+      "do_not_infer": "Small controls are not automatic violations without evaluating exceptions.",
+      "verification_basis": "official_standard_text"
+    },
+    {
+      "id": "VC15",
+      "source_id": "S1",
+      "evidence_type": "NORMATIVE",
+      "source_supported_summary": "Non-text contrast 1.4.11 applies to visual information required for identifying components/states and meaningful graphics.",
+      "source_scope": "Applicable WCAG 2.2 criterion 1.4.11.",
+      "do_not_infer": "Not every decorative border is required to have 3:1 contrast.",
+      "verification_basis": "official_standard_text"
+    },
+    {
+      "id": "VC16",
+      "source_id": "S1",
+      "evidence_type": "NORMATIVE",
+      "source_supported_summary": "Focus Not Obscured minimum 2.4.11 prohibits fully hiding focused controls behind author-created content.",
+      "source_scope": "Keyboard focus/overlay/sticky header behaviors.",
+      "do_not_infer": "Does not require every anchor section heading to be fully visible; separately test task quality.",
+      "verification_basis": "official_standard_text"
+    },
+    {
+      "id": "VC17",
+      "source_id": "S1",
+      "evidence_type": "NORMATIVE",
+      "source_supported_summary": "Text Spacing 1.4.12 is an override-resilience requirement, not a requirement to author exact spacing values.",
+      "source_scope": "Resizable text and layout robustness.",
+      "do_not_infer": "Do not claim a mandatory base CSS letter-spacing of 0.12em.",
+      "verification_basis": "official_standard_text"
+    },
+    {
+      "id": "VC18",
+      "source_id": "S2",
+      "evidence_type": "STANDARD_SCOPE",
+      "source_supported_summary": "ISO 9241-210:2019 specifies requirements and recommendations for human-centred design activities and principles throughout system lifecycle.",
+      "source_scope": "Project and design process governance.",
+      "do_not_infer": "Full normative requirements were not checked, so do not claim ISO certification/compliance.",
+      "verification_basis": "official_scope_abstract"
+    }
+  ]
+}

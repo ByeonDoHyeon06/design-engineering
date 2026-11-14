@@ -1,0 +1,11 @@
+{
+  "records": [
+    {
+      "file": "papers/example-paper.pdf",
+      "title": "Replace with exact source title",
+      "authors": "Replace with verified authors",
+      "url": "https://doi.org/REPLACE_ME",
+      "rights": "user-provided-unverified"
+    }
+  ]
+}

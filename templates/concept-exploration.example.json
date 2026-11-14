@@ -1,0 +1,9 @@
+{
+  "goal": "A page that helps participants understand a creative technology event",
+  "user_meaning": "Explore and decide whether and how to attend",
+  "alternatives": [
+    {"id":"C1","meaning_interpretation":"Many disciplines meet and change one another","visual_relationship":"Different forms interact and transform across sections","design_tradeoff":"Could confuse program details if visuals dominate","how_to_test":"Ask visitors to identify festival premise and next action"},
+    {"id":"C2","meaning_interpretation":"A navigable sequence of three festival days","visual_relationship":"A temporal reading path organized around session transitions","design_tradeoff":"Could feel procedural rather than celebratory","how_to_test":"Test finding a specific session and date"},
+    {"id":"C3","meaning_interpretation":"An open laboratory to discover unexpected ideas","visual_relationship":"Layered discoveries with progressive disclosure of program details","design_tradeoff":"May hide essential facts before interaction","how_to_test":"First-impression recall and task success separately"}
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "version": "3.4",
+  "note": "Documented practices support reasoning operations, not named-style imitation. Each is descriptive practitioner evidence, not universal experimental validation.",
+  "methods": [
+    {
+      "id": "vignelli",
+      "name": "Massimo Vignelli",
+      "reasoning_lens": "semantics-syntax-pragmatics",
+      "reported_focus": "Meaning, coherent visual language, comprehensibility",
+      "transferable_operation": "Ask what is meant, how elements relate, whether the recipient understands; do not prescribe grids",
+      "primary_or_institutional_url": "https://www.lars-mueller-publishers.com/vignelli-canon",
+      "access_level": "publisher_description",
+      "evidence_type": "PRACTITIONER",
+      "limitations": "Publisher description of book; source-specific doctrine, not validated universal effect",
+      "not_style_instruction": true
+    },
+    {
+      "id": "rams",
+      "name": "Dieter Rams",
+      "reasoning_lens": "usefulness-honesty-craft",
+      "reported_focus": "Understandability, utility, honest expression, rigorous finishing",
+      "transferable_operation": "Audit detail and unnecessary friction; no obligation to minimal aesthetics",
+      "primary_or_institutional_url": "https://designmuseum.org/designers/dieter-rams",
+      "access_level": "museum_profile",
+      "evidence_type": "PRACTITIONER",
+      "limitations": "Museum synthesis; product design cannot transfer verbatim to all digital UI",
+      "not_style_instruction": true
+    },
+    {
+      "id": "scher",
+      "name": "Paula Scher",
+      "reasoning_lens": "brief-probing-and-concept",
+      "reported_focus": "Learn what the client and audience really need before formal proposal",
+      "transferable_operation": "Ask hard early questions; derive form from the answer, not from Scher visual signatures",
+      "primary_or_institutional_url": "https://www.creativereview.co.uk/establishing-a-clients-needs/",
+      "access_level": "practitioner_interview",
+      "evidence_type": "PRACTITIONER",
+      "limitations": "Partial interview/excerpt reviewed; do not imply all projects use identical method",
+      "not_style_instruction": true
+    },
+    {
+      "id": "bierut",
+      "name": "Michael Bierut",
+      "reasoning_lens": "uncertainty-and-sketch",
+      "reported_focus": "Keep early concepts flexible; use notes and surprises to revise",
+      "transferable_operation": "Record initial concepts then test against what emerges",
+      "primary_or_institutional_url": "https://www.aaa.si.edu/collections/interviews/oral-history-interview-michael-bierut-16017",
+      "access_level": "oral_history",
+      "evidence_type": "PRACTITIONER",
+      "limitations": "Self-report, not an experiment; do not clone visual style",
+      "not_style_instruction": true
+    },
+    {
+      "id": "kare",
+      "name": "Susan Kare",
+      "reasoning_lens": "multiple-metaphors-and-recognition",
+      "reported_focus": "Generate several symbol choices and test recognition at real scale",
+      "transferable_operation": "Translate a concept into alternatives; test what users recognize",
+      "primary_or_institutional_url": "https://web.stanford.edu/dept/SUL/sites/mac/primary/interviews/kare/trans.html",
+      "access_level": "primary_interview",
+      "evidence_type": "PRACTITIONER",
+      "limitations": "Historical icon practice and informal testing; not every metaphor travels",
+      "not_style_instruction": true
+    },
+    {
+      "id": "cooper",
+      "name": "Muriel Cooper",
+      "reasoning_lens": "medium-integrated-prototyping",
+      "reported_focus": "Shorten feedback via experimenting with tools and media",
+      "transferable_operation": "Prototype in real interaction medium; observe change in context",
+      "primary_or_institutional_url": "https://www.arch.columbia.edu/exhibitions/10-messages-and-means-muriel-cooper-at-mit",
+      "access_level": "museum_exhibition_profile",
+      "evidence_type": "PRACTITIONER",
+      "limitations": "Curatorial synthesis not direct interview, no claim of causal advantage",
+      "not_style_instruction": true
+    },
+    {
+      "id": "ideo",
+      "name": "IDEO design practice",
+      "reasoning_lens": "adaptive-human-centered-iteration",
+      "reported_focus": "Empathy, generating choices, converging after tests",
+      "transferable_operation": "Gather actual user context when possible, prototype and learn iteratively",
+      "primary_or_institutional_url": "https://designthinking.ideo.com/process",
+      "access_level": "collective_practice",
+      "evidence_type": "PRACTITIONER",
+      "limitations": "Studio methodology not guaranteed optimal nor universal step-by-step law",
+      "not_style_instruction": true
+    }
+  ]
+}

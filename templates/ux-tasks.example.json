@@ -1,0 +1,14 @@
+{
+  "description": "Example actions for the LAYER / 27 experiment. Adapt scenarios to actual user goals, selectors and content.",
+  "scenarios": [
+    {
+      "id": "find-program",
+      "user_goal": "Find the program section for a chosen session",
+      "success_criterion": "Program section becomes visible and contains the desired title",
+      "steps": [
+        {"action":"assert_visible","selector":"#programs"},
+        {"action":"assert_no_overflow"}
+      ]
+    }
+  ]
+}

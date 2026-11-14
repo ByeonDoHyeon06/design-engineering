@@ -1,0 +1,2 @@
+# Optional: PDF text extraction, not required for Markdown/TXT/HTML or Gemini REST.
+pypdf>=4
