@@ -13,6 +13,18 @@ mkdir -p .agents/skills
 git clone <YOUR_REPO_URL> .agents/skills/design-engineering
 ```
 
+
+## Claude Code 플러그인 설치
+
+Claude Code에서 이 저장소를 마켓플레이스로 등록한 뒤 스킬을 설치할 수 있습니다.
+
+```bash
+claude plugin marketplace add ByeonDoHyeon06/design-engineering
+claude plugin install design-engineering@design-engineering-marketplace
+```
+
+Claude Code 세션에서는 `/design-engineering:design-engineering`으로 호출하거나 디자인 작업에 스킬 사용을 요청하세요. 기존 루트 `SKILL.md`가 공통 원본이며, `skills/design-engineering/SKILL.md`는 Claude Code용 진입점입니다. 설치 후 `claude plugin list`와 `claude plugin details design-engineering`으로 로딩 상태를 확인할 수 있습니다. 저장소에서 `claude plugin validate .`를 실행해 마켓플레이스를 검증할 수 있습니다. Claude Code CLI에서 실제 설치/검증 실행은 별도로 필요합니다.
+
 ## 빠른 시작
 
 아래 명령들은 Skill 루트에서 실행합니다. 로컬 경로에서는 **외부 통신·API 키가 필요 없습니다.**

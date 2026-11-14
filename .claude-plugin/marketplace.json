@@ -1,0 +1,32 @@
+{
+  "name": "design-engineering-marketplace",
+  "description": "Research-informed design engineering skills for Claude Code.",
+  "owner": {
+    "name": "ByeonDoHyeon06"
+  },
+  "plugins": [
+    {
+      "name": "design-engineering",
+      "source": "./",
+      "description": "Research-informed design engineering: retrieve evidence, explore design hypotheses, critique rendered UI, test user flows, and revise.",
+      "version": "3.8.0",
+      "author": {
+        "name": "ByeonDoHyeon06"
+      },
+      "category": "design",
+      "homepage": "https://github.com/ByeonDoHyeon06/design-engineering",
+      "repository": "https://github.com/ByeonDoHyeon06/design-engineering",
+      "keywords": [
+        "design",
+        "ui",
+        "ux",
+        "research",
+        "visual-critique"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/design-engineering"
+      ]
+    }
+  ]
+}
