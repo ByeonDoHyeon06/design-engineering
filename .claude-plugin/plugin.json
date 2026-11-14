@@ -1,0 +1,17 @@
+{
+  "name": "design-engineering",
+  "version": "3.8.1",
+  "description": "Research-informed design engineering workflow with local evidence retrieval, visual critique, and UX validation.",
+  "author": {
+    "name": "ByeonDoHyeon06"
+  },
+  "homepage": "https://github.com/ByeonDoHyeon06/design-engineering",
+  "repository": "https://github.com/ByeonDoHyeon06/design-engineering",
+  "keywords": [
+    "design",
+    "ui",
+    "ux",
+    "research",
+    "visual-critique"
+  ]
+}
