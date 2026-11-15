@@ -9,7 +9,7 @@
       "name": "design-engineering",
       "source": "./",
       "description": "Research-informed design engineering: retrieve evidence, explore design hypotheses, critique rendered UI, test user flows, and revise.",
-      "version": "3.8.1",
+      "version": "3.8.2",
       "author": {
         "name": "ByeonDoHyeon06"
       },
@@ -22,6 +22,10 @@
         "ux",
         "research",
         "visual-critique"
+      ],
+      "strict": false,
+      "skills": [
+        "./"
       ]
     }
   ]

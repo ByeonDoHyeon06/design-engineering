@@ -1,48 +1,44 @@
 # Design Engineering — Knowledge → Design → Critique
 
-Codex용 범용 디자인공학 Skill. 논문·학술 연구·디자이너의 문제 해결 방식에서 **판단 근거**를 찾고, 실제 UI 제작과 시각적 비평·사용자 과제 검증을 연결합니다. 특정 홈페이지, 대시보드, 관리자 화면을 정해진 스타일로 만드는 템플릿이 아닙니다.
+Codex·Claude Code 등 다양한 에이전트에서 사용할 수 있는 범용 디자인공학 Skill. 논문·학술 연구·디자이너의 문제 해결 방식에서 **판단 근거**를 찾고, 실제 UI 제작과 시각적 비평·사용자 과제 검증을 연결합니다. 특정 홈페이지, 대시보드, 관리자 화면을 정해진 스타일로 만드는 템플릿이 아닙니다.
 
 **v3.8 주요 변화:** 검색 실패 개선, 출처·주장 단위 검증, 설계 결정 추적, 실제 스크린샷 비평과 재검증, 의미 중심 콘셉트 탐색, 브라우저 과제 시나리오 테스트. 연구 카드 수를 늘리지 않고 이미 존재하는 지식을 제대로 적용하는 데 집중했습니다.
 
-## 설치
+## 설치 (공통 Skill 원본)
 
-이 폴더를 `.agents/skills/design-engineering/`에 설치하거나 GitHub 저장소를 해당 위치에 복제합니다. `SKILL.md`는 항상 현재 실행 절차만 설명하며 버전 이력은 Git 커밋/릴리스에서 관리합니다.
+실행 지침은 저장소 루트의 `SKILL.md` **하나뿐**입니다. `knowledge/`, `scripts/`, `methods/`, `templates/` 등 모든 경로는 이 스킬 루트를 기준으로 합니다. 단일 `SKILL.md`만 복사하면 연구 검색과 검증 기능을 사용할 수 없으므로 **저장소 전체를 설치**하세요.
+
+### Codex
 
 ```bash
 mkdir -p .agents/skills
-git clone <YOUR_REPO_URL> .agents/skills/design-engineering
+git clone https://github.com/ByeonDoHyeon06/design-engineering.git .agents/skills/design-engineering
 ```
 
-
-## Claude Code 플러그인 설치
-
-Claude Code에서 이 저장소를 마켓플레이스로 등록한 뒤 스킬을 설치할 수 있습니다.
-
-```bash
-claude plugin marketplace add ByeonDoHyeon06/design-engineering
-claude plugin install design-engineering@design-engineering-marketplace
-```
-
-**중요:** Claude Code에서 플러그인을 설치해야 `knowledge/`, `scripts/`, `methods/`, `templates/` 등이 함께 제공됩니다. `skills/design-engineering/SKILL.md` 파일만 복사하거나 별도의 단일 스킬 가져오기 방식으로 설치하면 연구 검색 도구는 포함되지 않습니다. 이번 구성은 정식 `.claude-plugin/plugin.json`을 이용하는 전체 저장소 플러그인입니다.
-
-기존 설치를 갱신하려면 Claude Code에서 아래 순서로 실행하세요.
+### Claude Code (마켓플레이스)
 
 ```text
-/plugin marketplace update design-engineering-marketplace
-/plugin uninstall design-engineering@design-engineering-marketplace
+/plugin marketplace add ByeonDoHyeon06/design-engineering
 /plugin install design-engineering@design-engineering-marketplace
 ```
 
-설치 후 Claude에게 **설치된 플러그인 루트**에서 `SKILL.md`, `scripts/knowledge_index.py`, `knowledge/catalog.json`, `methods/`, `templates/`의 존재 여부를 확인하게 하고, 다음 명령을 실행하게 하세요.
+이미 설치했다면 `/plugin marketplace update design-engineering-marketplace` 후 재설치해 캐시된 구성을 새로 받아주세요. `.claude-plugin/marketplace.json`은 별도의 Claude 전용 스킬을 만들지 않고 **루트 `SKILL.md` 디렉터리를 직접 등록**합니다. 플러그인/스킬의 자동 로딩 여부와 설치된 리소스 범위는 Claude Code 버전과 설치 방식에 따라 확인이 필요합니다.
+
+### 공통 설치 검증
+
+**설치된 스킬 루트**에서 실행하세요. Claude Code에서는 설치된 플러그인/스킬이 실제로 어디에 있는지 먼저 확인해야 하며, 현재 작업 프로젝트 디렉터리에서 실행해서는 안 됩니다.
 
 ```bash
-python "${CLAUDE_PLUGIN_ROOT}/scripts/knowledge_index.py" rebuild
-python "${CLAUDE_PLUGIN_ROOT}/scripts/knowledge_index.py" search '행사 홈페이지에서 정보를 명확하게 전달하는 방법' --top 5 --json
+test -f SKILL.md
+test -f scripts/knowledge_index.py
+test -f knowledge/catalog.json
+test -d methods
+test -d templates
+python scripts/knowledge_index.py rebuild
+python scripts/knowledge_index.py search '행사 홈페이지 정보를 명확히 전달하는 방법' --top 5 --json
 ```
 
-일부 파일이 누락되면 설치 완료로 보지 말고 `/doctor`와 실제 플러그인 설치 경로를 확인하세요. 설치 방법(마켓플레이스 플러그인인지 단일 스킬 가져오기인지)에 따라 결과가 다를 수 있습니다.
-
-Claude Code 세션에서는 `/design-engineering:design-engineering`으로 호출하거나 디자인 작업에 스킬 사용을 요청하세요. 기존 루트 `SKILL.md`가 공통 원본이며, `skills/design-engineering/SKILL.md`는 Claude Code용 진입점입니다. 설치 후 `claude plugin list`와 `claude plugin details design-engineering`으로 로딩 상태를 확인할 수 있습니다. 저장소에서 `claude plugin validate .`를 실행해 마켓플레이스를 검증할 수 있습니다. Claude Code CLI에서 실제 설치/검증 실행은 별도로 필요합니다.
+실행에 필요한 자료가 누락되면 Knowledge 검색을 수행한 것으로 취급하지 않습니다. 스킬의 기능과 실제 설치 환경의 검증 결과를 구분해서 보고하세요.
 
 ## 빠른 시작
 

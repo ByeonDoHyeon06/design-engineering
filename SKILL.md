@@ -7,6 +7,10 @@ description: Research-informed, context-flexible design engineering for websites
 
 Build a design that serves its **meaning and user tasks**, not a prescribed visual style. Research helps generate and challenge hypotheses; it does not manufacture universal layout recipes. Preserve the user's content, constraints, brand, domain rules and functional contract. A Skill cannot fine-tune model weights; humans' design methods are transferable questions, not proven agent-performance laws.
 
+## Portable resource loading
+
+This root `SKILL.md` is the **only** canonical skill instruction for every agent. Resolve paths from the directory containing this file (the **skill root**), not from the current product project's working directory. Before relying on local research, verify `knowledge/catalog.json` and `scripts/knowledge_index.py` are present alongside this file; run commands with the skill root as the working directory or with an equivalent explicit path. If support files are absent, state that the installation is incomplete and **do not claim local research was retrieved**. Do not assume one agent's environment variables or installation path exist in another.
+
 ## Working loop (scale the formality to the task)
 
 1. **Frame:** Identify user goal, audience, content/data, consequential actions, uncertainty and protected requirements. If the observed failure suggests the original framing is wrong, revisit it.
