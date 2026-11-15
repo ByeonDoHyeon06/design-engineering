@@ -13,6 +13,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import knowledge_graph
 import knowledge_governance
 import knowledge_index
+import query_understanding
 
 class V40Tests(unittest.TestCase):
     def test_full_legacy_graph_is_valid_and_nonduplicated(self):
@@ -108,6 +109,19 @@ class V40Tests(unittest.TestCase):
         state["status_overrides"]["source:NOTREAL"]={"status":"needs_review",
               "reason":"injected","reviewer":"test"}
         self.assertTrue(any("missing node" in s for s in knowledge_graph.build(ROOT,state)["errors"]))
+
+    def test_bilingual_topic_guard_avoids_generic_out_of_domain_matches(self):
+        negatives=("지구 맨틀의 광물 결정과 판 구조론",
+                   "코드 컴파일러의 SSA 중간 표현 최적화")
+        for question in negatives:
+            self.assertEqual(knowledge_index.search(question,top=5),[])
+
+    def test_korean_verb_nominalization_in_findability_queries(self):
+        question="프로그램이 많은 행사에서 관심 있는 발표를 빨리 찾는 방법"
+        result=query_understanding.analyze(question)
+        self.assertIn("navigation_findability",[c["id"] for c in result["concepts"]])
+        found=[x["id"] for x in knowledge_index.search(question,top=5)]
+        self.assertTrue(set(found)&{"P06","K06"},found)
 
     def test_local_graph_does_not_promote_unreviewed_claims(self):
         g=knowledge_graph.build(ROOT)
