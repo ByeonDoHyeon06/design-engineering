@@ -80,12 +80,13 @@ jobs:
         run: |
           python -m pip wheel . --no-deps --wheel-dir wheelhouse
           python -m venv .wheel-venv
+          ROOT_DIR="$PWD"
           if [[ "${{ runner.os }}" == "Windows" ]]; then
-            PY=".wheel-venv/Scripts/python.exe"
-            DE=".wheel-venv/Scripts/de.exe"
+            PY="$ROOT_DIR/.wheel-venv/Scripts/python.exe"
+            DE="$ROOT_DIR/.wheel-venv/Scripts/de.exe"
           else
-            PY=".wheel-venv/bin/python"
-            DE=".wheel-venv/bin/de"
+            PY="$ROOT_DIR/.wheel-venv/bin/python"
+            DE="$ROOT_DIR/.wheel-venv/bin/de"
           fi
           "$PY" -m pip install --no-index --find-links wheelhouse design-engineering-skill
           mkdir -p external-consumer
