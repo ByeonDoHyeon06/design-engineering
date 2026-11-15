@@ -9,7 +9,7 @@ sys.path.insert(0, str(ROOT/"scripts"))
 import knowledge_index
 import knowledge_health
 
-class KnowledgeGovernanceTests(unittest.TestCase):
+class KnowledgeHealthTests(unittest.TestCase):
     def test_registry_graph_has_no_broken_references(self):
         result = knowledge_health.inspect(ROOT)
         self.assertEqual(result["errors"], [], result)

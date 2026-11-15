@@ -30,7 +30,7 @@ class CuratedEvidenceTests(unittest.TestCase):
         self.assertTrue(all(x['id'].startswith('K') for x in knowledge_index.search('대시보드 데이터 비교 정확도',verified_only=True)))
 
     def test_no_unreviewed_claims_promoted(self):
-        claims=json.loads((ROOT/'knowledge/verified/claims.json').read_text())['claims']
+        claims=json.loads((ROOT/'knowledge/claims.json').read_text())['claims']
         sources={x['id']:x for x in json.loads((ROOT/'knowledge/sources.json').read_text())['records']}
         for c in claims:
             self.assertTrue(sources[c['source_id']].get('reverified_at'))

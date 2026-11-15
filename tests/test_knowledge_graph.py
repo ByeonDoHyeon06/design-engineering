@@ -16,8 +16,8 @@ import knowledge_index
 import query_understanding
 from knowledge_ingest import prepare, commit, IngestError
 
-class V40Tests(unittest.TestCase):
-    def test_full_legacy_graph_is_valid_and_nonduplicated(self):
+class KnowledgeGraphTests(unittest.TestCase):
+    def test_authoritative_graph_is_valid_and_nonduplicated(self):
         graph=knowledge_graph.build(ROOT)
         self.assertEqual(graph["errors"],[],graph["errors"])
         self.assertEqual(graph["counts"]["method"],41)

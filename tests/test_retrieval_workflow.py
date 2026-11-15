@@ -5,7 +5,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 import knowledge_index,query_understanding,decision_trace,concept_exploration,visual_critique,ux_scenarios
 
-class V38RegressionTests(unittest.TestCase):
+class RetrievalWorkflowTests(unittest.TestCase):
     def test_original_missing_natural_language_question(self):
         hits=knowledge_index.search('행사 홈페이지에서 정보를 명확하게 전달하는 방법',top=3)
         self.assertIn('P05',[x['id'] for x in hits])
@@ -17,11 +17,11 @@ class V38RegressionTests(unittest.TestCase):
         self.assertIn('information hierarchy',a['expansions'])
 
     def test_small_retrieval_regression_set(self):
-        from retrieval_benchmark import benchmark
-        data=json.loads((ROOT/'benchmarks/retrieval-v38.json').read_text(encoding='utf8'))
-        result=benchmark(data,3)
+        from retrieval_evaluation import evaluate
+        data=json.loads((ROOT/'benchmarks/retrieval-core.json').read_text(encoding='utf8'))
+        result=evaluate(data,3)
         self.assertEqual(result['queries'],20)
-        self.assertGreaterEqual(result['hit_rate'],0.8)
+        self.assertGreaterEqual(result['positive_hit_at_k'],0.8)
 
     def test_verified_filter_has_explicit_claims(self):
         hits=knowledge_index.search('시각적 미학 색채',top=10,verified_only=True)
@@ -36,10 +36,10 @@ class V38RegressionTests(unittest.TestCase):
     def _isolation_root(self,t):
         root=Path(t)
         (root/'knowledge/cards').mkdir(parents=True)
-        (root/'knowledge/verified').mkdir(parents=True)
+        
         for name in ['sources.json','concepts.json']:
             shutil.copy2(ROOT/'knowledge'/name,root/'knowledge'/name)
-        shutil.copy2(ROOT/'knowledge/verified/claims.json',root/'knowledge/verified/claims.json')
+        shutil.copy2(ROOT/'knowledge/claims.json',root/'knowledge/claims.json')
         record=next(r for r in json.loads((ROOT/'knowledge/catalog.json').read_text())['records'] if r['id']=='K01')
         text=(ROOT/record['path']).read_text(encoding='utf8')
         return root,record,text

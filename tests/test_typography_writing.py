@@ -1,12 +1,12 @@
-"""v3.9 registry integrity and curated natural-language retrieval smoke tests."""
+"""current registry integrity and curated natural-language retrieval smoke tests."""
 import json,sys,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 import knowledge_index
-from retrieval_benchmark import benchmark
+from retrieval_evaluation import evaluate
 
-class V39KnowledgeTests(unittest.TestCase):
+class TypographyWritingTests(unittest.TestCase):
     def test_new_cards_have_grounded_sources_and_explicit_scope(self):
         catalog=json.loads((ROOT/'knowledge/catalog.json').read_text(encoding='utf8'))['records']
         sources={r['id']:r for r in json.loads((ROOT/'knowledge/sources.json').read_text(encoding='utf8'))['records']}
@@ -30,10 +30,10 @@ class V39KnowledgeTests(unittest.TestCase):
                     self.assertNotEqual(item['evidence_status'],'source_claims_checked')
 
     def test_curated_queries_retrieve_v39_topics(self):
-        data=json.loads((ROOT/'benchmarks/retrieval-v39.json').read_text(encoding='utf8'))
-        result=benchmark(data,5)
+        data=json.loads((ROOT/'benchmarks/retrieval-typography.json').read_text(encoding='utf8'))
+        result=evaluate(data,5)
         self.assertEqual(result['queries'],9)
-        self.assertGreaterEqual(result['hit_rate'],0.8,result['results'])
+        self.assertGreaterEqual(result['positive_hit_at_k'],0.8,result['results'])
 
 if __name__=='__main__':
     unittest.main()
