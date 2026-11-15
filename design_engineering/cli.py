@@ -316,6 +316,36 @@ def _design(args):
     return 0
 
 
+def _knowledge(args):
+    """Consistent local Knowledge CRUD, always with explicit review for writes."""
+    if args.knowledge_action == "list":
+        scope = ("session","project","user") if args.scope == "all" else (args.scope,)
+        items = personal.records(**_scope_paths(args), scopes=scope,
+                                 include_archived=args.include_archived)
+        result = {"records": items, "count": len(items),
+                  "notice": "Local context only; never registered scientific claims."}
+    elif args.knowledge_action == "conflicts":
+        from .knowledge_intelligence import conflict_candidates
+        scopes = ("session","project","user") if args.scope == "all" else (args.scope,)
+        rows = personal.records(**_scope_paths(args), scopes=scopes)
+        result = conflict_candidates(rows)
+    elif args.knowledge_action == "edit":
+        if args.scope == "all":
+            raise personal.LocalKnowledgeError("Select one scope before proposing a revision.")
+        result = personal.propose_revision(
+            args.id, args.text, scope=args.scope, **_scope_paths(args),
+            context=args.context, outcome=args.outcome, tags=args.tag)
+    elif args.knowledge_action == "archive":
+        if args.scope == "all" or not args.approve or not args.reviewer:
+            raise personal.LocalKnowledgeError("Archival needs one scope, --approve and --reviewer.")
+        result = personal.archive(args.id, scope=args.scope, reviewer=args.reviewer,
+                                  **_scope_paths(args))
+    else:
+        raise personal.LocalKnowledgeError("Unknown local Knowledge operation.")
+    _print(result, args.json)
+    return 0
+
+
 def parser():
     p=argparse.ArgumentParser(prog="de",
         description="Design Engineering — research, personal Knowledge, and real UI validation.")
@@ -460,6 +490,34 @@ def parser():
     review.add_argument("file", help="Existing visual-critique JSON file.")
     review.add_argument("--json", action="store_true")
     review.set_defaults(func=_design)
+
+    knowledge = sub.add_parser("knowledge", help="Manage locally reviewed design guidance.")
+    ksub = knowledge.add_subparsers(dest="knowledge_action", required=True)
+    kl = ksub.add_parser("list", help="List active personal/user/project records.")
+    kl.add_argument("--scope", choices=("all","user","project","session"), default="all")
+    kl.add_argument("--include-archived", action="store_true")
+    kl.add_argument("--json",action="store_true")
+    kl.set_defaults(func=_knowledge)
+    kc = ksub.add_parser("conflicts", help="Review possible opposing preferences; no automatic resolution.")
+    kc.add_argument("--scope", choices=("all","user","project","session"), default="all")
+    kc.add_argument("--json",action="store_true")
+    kc.set_defaults(func=_knowledge)
+    ke = ksub.add_parser("edit", help="Draft a revision. Use de review --approve to apply.")
+    ke.add_argument("id")
+    ke.add_argument("text")
+    ke.add_argument("--scope", choices=("user","project","session"), default="project")
+    ke.add_argument("--context")
+    ke.add_argument("--outcome")
+    ke.add_argument("--tag",action="append",default=None)
+    ke.add_argument("--json",action="store_true")
+    ke.set_defaults(func=_knowledge)
+    ka = ksub.add_parser("archive", help="Archive one active local note, retaining its history.")
+    ka.add_argument("id")
+    ka.add_argument("--scope",choices=("user","project","session"),default="project")
+    ka.add_argument("--approve",action="store_true")
+    ka.add_argument("--reviewer")
+    ka.add_argument("--json",action="store_true")
+    ka.set_defaults(func=_knowledge)
 
     return p
 
