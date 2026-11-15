@@ -16,6 +16,7 @@
 
 <p>
   <a href="#프로젝트-소개">소개</a> ·
+  <a href="#터미널로-살펴보는-사용-흐름">CLI 예시</a> ·
   <a href="#작업-방식">작업 방식</a> ·
   <a href="#시작하기">시작하기</a> ·
   <a href="#문서">문서</a>
@@ -59,6 +60,26 @@
   </tr>
 </table>
 
+## 터미널로 살펴보는 사용 흐름
+
+연구 검색과 검증 과정을 명령줄에서도 사용할 수 있습니다.
+
+![연구 자료 검색과 출처 확인, 저장소 점검을 표현한 macOS 스타일 터미널 예시](../assets/readme/terminal-showcase.svg)
+
+<sub>실제 실행 화면이나 벤치마크 결과가 아닌 설명용 예시입니다.</sub>
+
+### 질문부터 점검까지
+
+![연구 검색에서 검증까지의 CLI 사용 흐름을 보여주는 애니메이션 예시](../assets/readme/cli-workflow.svg)
+
+```bash
+de search "How should mixed Korean and Latin headings wrap?"
+de search "How should mixed Korean and Latin headings wrap?" --explain
+de check
+```
+
+검색 결과의 근거와 한계를 확인하고 저장소 점검을 실행할 수 있습니다. 자동 점검만으로 실제 화면 품질이 검증되는 것은 아닙니다.
+
 ## 작업 방식
 
 <p align="center">
@@ -82,6 +103,18 @@
 </p>
 
 출처가 확인된 연구와 사용자·프로젝트·세션 취향을 별도로 관리합니다. AI가 작성한 내용도 검토 및 승인을 거치기 전에는 공통 근거로 등록되지 않습니다.
+
+##### 프로젝트 방향 관리 예시
+
+![프로젝트 선호를 작성하고 검토하는 터미널 예시](../assets/readme/project-context.svg)
+
+```bash
+de add "Prefer precise square layouts and clear typography" --scope project
+de review --list
+de context --conflicts
+```
+
+<sub>실제 실행 로그가 아닌 설명용 예시입니다. 개인·프로젝트 선호와 검증된 연구 근거는 구분합니다.</sub>
 
 #### 실제 결과를 확인하고 개선
 
