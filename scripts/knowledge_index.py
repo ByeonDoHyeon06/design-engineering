@@ -167,6 +167,10 @@ def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=N
         fts=_fts(db,[q]+expansions[:14])
         docs=[f'{row[1]} {row[1]} {row[7]} {row[6][:2200]}' for row in entries]
         char=_similarities(q+' '+' '.join(expansions[:10]),docs)
+        # A concept hint alone may be accidental (e.g. Korean '구조' in geology).
+        # Require independent direct query support for generic concept cues.
+        qgrams=_grams(q)
+        qgram_total=sum(qgrams.values()) or 1
         embed=list(semantic_scores) if semantic_scores is not None else (
               _embedding_similarities(q,docs,embedding_model) if embedding_model else None)
         if embed is not None and len(embed)!=len(entries):raise ValueError('Embedding score length mismatch.')
@@ -189,9 +193,19 @@ def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=N
             direct_tokens=[x for x in re.findall(r'[\w가-힣]+',norm(q)) if len(x)>=2]
             meta_norm=norm(title+' '+hints)
             direct_score=min(1.5,sum(0.15 for tok in direct_tokens if tok in meta_norm))
+            strong_meta_hits=sum(1 for tok in set(direct_tokens)
+                                 if len(tok)>=3 and tok in meta_norm)
+            meta_grams=_grams(meta_norm)
+            raw_overlap=sum(min(count,meta_grams.get(gram,0))
+                            for gram,count in qgrams.items())/qgram_total
+            domain_anchor=any(c.get('has_domain_anchor',False) for c,_ in concept_matches)
             score=conceptual+fts_score+char_score+direct_score+embedding_score
             if not concept_matches and id_ not in fts and char[i]<0.12 and (embed is None or embed[i]<0.44):continue
             if score<0.14:continue
+            # No evidence of a design task? Abstain instead of filling top-N
+            # with cards connected only through generic words and expansions.
+            if not domain_anchor and strong_meta_hits<2 and raw_overlap<0.16 and (
+                    embed is None or embed[i]<0.5):continue
             details=[]
             for cid in claim_ids:
                 cl=claims.get(cid)
@@ -210,6 +224,8 @@ def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=N
                             for sid in json.loads(src_json)],
                         'score':round(score,5),
                         'why_matched':{'concepts':[c['id'] for c,_ in concept_matches],
+                                       'domain_anchor':domain_anchor,
+                                       'raw_metadata_overlap':round(raw_overlap,3),
                                        'fts':id_ in fts,'character_similarity':round(char[i],3),
                                        'local_embeddings':embed is not None}})
         res.sort(key=lambda r:(-r['score'],r['id']))
