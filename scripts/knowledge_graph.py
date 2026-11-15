@@ -218,12 +218,36 @@ def build(root=ROOT, governance=None):
     reject_cycles(broader,"broader")
     reject_cycles({a:[b] for a,b in supersessions.items()},"supersession")
 
+    # Inactive or overdue sources need explicit human reassessment of dependents.
+    # These are warnings, not automatic retractions of scientific claims.
+    today=date.today()
+    for full,meta in overrides.items():
+        if not isinstance(meta,dict) or full not in nodes:continue
+        due=meta.get("review_due")
+        if due and _date(due) and date.fromisoformat(due)<today:
+            warnings.append("review overdue: "+full+" (due "+due+")")
+    for origin,target,relation in edge_set:
+        if relation not in ("cites","supported_by"):continue
+        if not origin.startswith(("method:","claim:")):continue
+        if target.startswith("source:") and nodes[target]["status"] in ("archived","superseded"):
+            if nodes[origin]["status"]=="active":
+                warnings.append("active dependency on inactive source: "+origin+" -> "+target)
+
     # Deduplicated URLs are candidates only; editions and translations may differ.
     try:
         from knowledge_health import inspect
         health = inspect(root)
         errors.extend(health["errors"])
-        warnings.extend(health["warnings"])
+        # A manually reviewed same-work link resolves the immediate duplicate
+        # warning without destroying either source. Other URLs still need review.
+        equivalents_reviewed={frozenset((x["a"],x["b"])) for x in equivalents
+                              if x.get("reviewer") and x.get("reason")}
+        for warning in health["warnings"]:
+            if warning.startswith("potential source alias: "):
+                identifiers=warning.split(" => ",1)[0].split(": ",1)[1].split(", ")
+                if len(identifiers)==2 and frozenset("source:"+v for v in identifiers) in equivalents_reviewed:
+                    continue
+            warnings.append(warning)
     except (FileNotFoundError,ValueError,KeyError) as exc:
         errors.append("legacy health audit failed: " + str(exc))
 
