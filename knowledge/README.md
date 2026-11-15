@@ -17,3 +17,5 @@ Read relevant cards **after searching the user's actual uncertainty**. Look at s
 For commands and review practices see [Knowledge management](../docs/knowledge-management.md). For the read-only relation model see [Architecture](../docs/architecture.md).
 
 The `.cache/` SQLite index can always be recreated. It is **not** a new source of truth. New sources should be connected to an existing card or claim when appropriate; do not add near-duplicate cards simply because more papers become available.
+
+Personal preferences and observations are **not stored in this repository's core knowledge catalog**. `de context` and `de search` use separate local records. See [Personal Knowledge](../docs/personal-knowledge.md).

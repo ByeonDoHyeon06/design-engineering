@@ -1,7 +1,7 @@
 {
   "name": "design-engineering",
-  "version": "4.0.1",
-  "description": "Unified design-engineering skill with typed provenance graph, reviewed Knowledge lifecycle, bilingual retrieval and UI validation.",
+  "version": "4.1.0",
+  "description": "Unified design engineering skill with a shared CLI and reviewed, locally scoped user/project Knowledge.",
   "author": {
     "name": "ByeonDoHyeon06"
   },

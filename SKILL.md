@@ -11,6 +11,18 @@ Design for **meaning, clarity, and user tasks**, not a stock aesthetic. Preserve
 
 This is the **only** canonical `SKILL.md` for Codex and Claude Code. Resolve resource paths relative to the directory containing this file, **not** the user's application directory or a platform-specific parent. Before claiming research retrieval, check `knowledge/catalog.json`, `knowledge/claims.json`, `knowledge/governance.json` and `scripts/knowledge_index.py`. If files are missing, report an incomplete installation; do not fabricate studies or substitute unrelated evidence.
 
+## Unified CLI and personal Knowledge (v4.1)
+
+The user-facing command is `de`. The full package also supports `python -m design_engineering` from the skill repository and the portable launcher `python <SKILL_ROOT>/scripts/de.py` from any consumer project without installing the package. The **consumer project's working directory** determines project scope; never treat the installed skill root as the consumer project. Run `de --project /path/to/project ...` when needed.
+
+- `de search "design question" --json` retrieves source-scoped core findings under `research` and separately labelled user/project/session guidance under `personal_guidance`. A preference is **not** research evidence.
+- `de context --json` returns active personal direction with session → project → user precedence. Interpret conflict in the context of the current user request and real product requirements.
+- `de add "I prefer ..." --scope project --type preference` creates a pending **local draft**, not active guidance. Other local types: principle, observation (requires context+outcome), reference (requires a local source file). `de review <draft> --approve --reviewer owner` activates a reviewed entry.
+- `de add --type evidence --scope core --file PAPER --title TITLE --authors AUTHORS` uses the existing source-aware, human-reviewed ingestion path. Never promote user opinions or fabricated source summaries into core research.
+- `de inspect source:N39`, `de check --smoke` and `de qa page.html --out /tmp/review` unify research/validation access. The underlying scripts remain available for advanced checks.
+
+**Persistence consent matters:** Do not write user preferences merely because the user mentions a passing preference. Draft only when a user asks to record or apply ongoing knowledge; request/obtain their explicit approval before invoking the review/commit action. A reviewer label and CLI flag are not human identity authentication. User/project Knowledge stays local and is never automatically sent to the public GitHub catalog or external models. For full paths, scope boundaries and limitations consult `docs/personal-knowledge.md`.
+
 ## Design loop
 
 1. **Frame:** Clarify user goal, audience, actual content, important actions, constraints, uncertainties and protected claims. Revisit the brief if observed failures contradict assumptions.

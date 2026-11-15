@@ -68,3 +68,9 @@ The scripts share a root directory convention. Avoid importing project files fro
 - No proprietary user screenshots, research PDFs, client documents or browser state are shipped in the public Knowledge library.
 
 The project intentionally avoids mandatory network access, a hosted vector database and an aesthetic score. Research, implementation hypotheses and observed task success remain separate forms of evidence.
+
+## Unified CLI and scoped personal Knowledge (v4.1)
+
+`design_engineering/cli.py` is the public entry point, exposed by `pyproject.toml` (`de`/`design-engineering`) and the portable launcher `scripts/de.py`. Existing scripts stay modular behind it. Read-only core evidence retrieval and local preferences are **never combined into one evidence confidence grade**.
+
+Personal data is held separately by `design_engineering/local_knowledge.py` at user, project or explicit session scope. Draft → reviewer approval → local JSON applies a scope-bound checksum guard, source-file fingerprint and exact-duplicate check. These are workflow safeguards, not authenticated multi-user database transactions. See [Personal Knowledge](personal-knowledge.md).

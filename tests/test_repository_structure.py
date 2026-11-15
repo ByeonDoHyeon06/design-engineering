@@ -14,7 +14,8 @@ class RepositoryStructureTests(unittest.TestCase):
         self.assertEqual([p.relative_to(ROOT).as_posix() for p in ROOT.rglob("SKILL.md")],
                          ["SKILL.md"])
         for name in (
-            "README.md", "CONTRIBUTING.md",
+            "README.md", "CONTRIBUTING.md", "pyproject.toml", "scripts/de.py",
+            "design_engineering/cli.py", "design_engineering/local_knowledge.py",
             "knowledge/catalog.json", "knowledge/concepts.json",
             "knowledge/sources.json", "knowledge/claims.json",
             "knowledge/governance.json", "scripts/knowledge_index.py",
