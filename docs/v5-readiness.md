@@ -10,10 +10,11 @@ This is a release gate and handoff guide, **not a version changelog**. The main 
 | 4.3 | Content-led design and real visual critique | `de design plan/validate/review`, [design execution](design-execution.md) | Plans and screenshot integrity verified; **no automatic aesthetic ranking** |
 | 4.4 | Knowledge usage explainability and review cues | `de search --explain`, `de context --conflicts`, `de check --review-due` | Lexical heuristics and registered coverage only; **not global semantic completeness** |
 | 4.5 | Usable personal Knowledge lifecycle and portable distribution | `de knowledge list/edit/conflicts/archive`; full wheel build/install | Explicit review and history; local JSON is not a multi-user concurrent database |
+| 4.6 (proposed) | Source attribution and evidence-linked practice hypotheses | `de provenance`, `de search --actions`, [provenance & actions](provenance-and-actions.md) | Operator-reported invocation, conditional heuristics; **not design quality proof** |
 
 ## Before any external blind comparison
 
-1. Merge prerequisite PRs in sequence: [#12](https://github.com/ByeonDoHyeon06/design-engineering/pull/12) → [#13](https://github.com/ByeonDoHyeon06/design-engineering/pull/13) → [#14](https://github.com/ByeonDoHyeon06/design-engineering/pull/14) → [#15](https://github.com/ByeonDoHyeon06/design-engineering/pull/15). Branches are stacked; **do not delete a branch that remains the base of another open PR** until that dependency is retargeted.
+1. The v4.2–v4.5 feature branches were integrated into `main` by [PR #16](https://github.com/ByeonDoHyeon06/design-engineering/pull/16). Before collecting results, check that the exact target skill commit and actual installation match the experiment; use `de provenance capture` and keep logs private.
 2. Verify installation on the agent and operating systems used in the study. GitHub CI is a package test, not a guarantee of every downstream runtime.
 3. Freeze the study protocol, tasks, model/effort/tools/budget, prompt and skill commit. Select genuinely held-out tasks beyond the curated pilot if making general claims.
 4. Generate real skill/no-skill implementations in separate clean agent contexts, **same conditions except skill availability**, with 1440px and 390px browser screenshots for both conditions. Keep full build/runtime evidence and account for noncompletions.

@@ -169,7 +169,7 @@ class CLIContractTests(unittest.TestCase):
         run=subprocess.run([sys.executable,"-m","design_engineering","--version"],
                            cwd=ROOT,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
         self.assertEqual(run.returncode,0,run.stderr)
-        self.assertIn("4.5.0",run.stdout)
+        self.assertIn("4.6.0",run.stdout)
         portable=subprocess.run([sys.executable,str(ROOT/"scripts/de.py"),"--version"],
                                 cwd=self.project,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
         self.assertEqual(portable.returncode,0,portable.stderr)
