@@ -55,7 +55,7 @@ def _similarity(a, b):
 def location(scope, *, project=None, home=None, session_id=None):
     """Scope output lives outside the installed skill. No auto-upload to GitHub."""
     if scope not in SCOPES:
-        raise LocalKnowledgeError("Use user, project or session for personal Knowledge.")
+        raise LocalKnowledgeError("Core research is not personal Knowledge: use user, project or session scope.")
     if scope == "project":
         folder = Path(project or Path.cwd()).expanduser().resolve()
         if not folder.is_dir():
