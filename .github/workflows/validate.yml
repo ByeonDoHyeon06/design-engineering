@@ -18,8 +18,14 @@ jobs:
         run: python scripts/validate_install.py --root . --smoke
       - name: Knowledge registry health
         run: python scripts/knowledge_health.py --json
+      - name: Typed Knowledge graph validation
+        run: python scripts/knowledge_graph.py validate
       - name: Unit tests
         run: python -m unittest discover -s tests -v
+      - name: v4 retrieval and growth diagnostics
+        run: |
+          python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-v4.json --top 3
+          python scripts/knowledge_scale_benchmark.py --size 1000 --size 10000
       - name: Knowledge retrieval benchmarks
         run: |
           python scripts/retrieval_benchmark.py --dataset benchmarks/retrieval-v38.json --top 3
