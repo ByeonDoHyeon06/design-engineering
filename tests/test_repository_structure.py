@@ -95,10 +95,10 @@ class RepositoryStructureTests(unittest.TestCase):
             (ROOT/"i18n/README.ko.md", "../assets/"),
         ]:
             content = path.read_text(encoding="utf-8")
-            images = re.findall(r'<img\\s+[^>]*src="([^"]+)"[^>]*>', content)
+            images = re.findall(r'<img\s+[^>]*src="([^"]+)"[^>]*>', content)
             self.assertEqual(set(images), {prefix + name for name in expected})
             self.assertEqual(len(images), len(expected))
-            self.assertEqual(len(re.findall(r'<img\\s+[^>]*alt="[^"]+"',content)),
+            self.assertEqual(len(re.findall(r'<img\s+[^>]*alt="[^"]+"',content)),
                              len(images), "Image alt text is required for both languages.")
             for src in images:
                 asset = (path.parent / src).resolve()
