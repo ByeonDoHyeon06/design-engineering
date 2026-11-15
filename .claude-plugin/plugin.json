@@ -1,0 +1,12 @@
+{
+  "name": "design-engineering",
+  "version": "3.9.1",
+  "description": "Research-informed design engineering with Korean typography, UX writing, knowledge retrieval and visual QA.",
+  "author": {
+    "name": "ByeonDoHyeon06"
+  },
+  "repository": "https://github.com/ByeonDoHyeon06/design-engineering",
+  "skills": [
+    "."
+  ]
+}

@@ -14,14 +14,20 @@ for row in CAT['records']:
     seen.add(id_)
     if not path.is_file():errors.append('missing card '+id_);continue
     body=path.read_text(encoding='utf8')
-    if id_.startswith('K'):
+    # K IDs are card identifiers, not evidence grades. Only cards explicitly
+    # linked to curated verified claims receive the claim-specific audit.
+    if id_.startswith('K') and row.get('claims'):
         updated+=1
         for need in ('When to retrieve','study scope','derived design advice','Verification in a live design','Provenance'):
             if need.lower() not in body.lower():errors.append(id_+': missing '+need)
-        if not row.get('claims'):errors.append(id_+': no verified claim IDs')
         for clid in row.get('claims',[]):
             if clid not in claims:errors.append(id_+': unknown claim '+clid)
             elif claims[clid]['source_id'] not in row['source_ids']:errors.append(id_+': claim source mismatch '+clid)
+    if id_.startswith('K') and not row.get('claims'):
+        for need in ('When to retrieve','Verification level:', 'Countercases','Provenance'):
+            if need.lower() not in body.lower():errors.append(id_+': missing '+need)
+        if 'verified claim ids:** none' not in body.lower():
+            errors.append(id_+': missing explicit unverified-claims disclosure')
     for sid in row['source_ids']:
         if sid not in byid:errors.append(id_+': unknown source '+sid)
 for c in CLAIMS['claims']:
