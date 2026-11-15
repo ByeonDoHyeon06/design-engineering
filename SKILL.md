@@ -46,6 +46,18 @@ The search response distinguishes `evidence_status` for explicit claim links fro
 
 Before adding Knowledge, check whether an existing source, concept, claim or method already covers the question. Run `python scripts/knowledge_health.py --json` to inspect graph errors and **review-only** duplicate-source warnings. Do not automatically merge or discard sources based on URL similarity. The proposed v4.0 typed lifecycle/migration lives in `docs/v4-knowledge-architecture.md`; it is not implemented by the current index.
 
+## Knowledge Governance v4.0 (use only when needed)
+
+Keep **one root skill** across Codex and Claude. Knowledge is structured as a read-only Source → Claim → Concept → Method → Observation projection of the existing registries; this does not create or validate scientific claims. When decisions depend on research provenance, source withdrawal, overlap, contradictory studies or staleness, use:
+- `python scripts/knowledge_graph.py validate` for integrity, and `impact source:<ID>` to list dependent claims/methods/concepts;
+- `python scripts/knowledge_health.py --json` for duplicate and orphan review warnings;
+- `python scripts/knowledge_governance.py propose-status ...` followed by separately reviewed `apply ... --confirm` to record lifecycle changes. NEVER auto-archive or merge sources based on keyword/DOI similarity alone.
+- `knowledge/v4/README.md` for procedures and limits; `knowledge/v4/governance.json` is a sparse metadata overlay, not a second source of research truth.
+
+Ordinary search omits archived/superseded methods; explicit `--include-inactive` is available for audits. A lifecycle state of `active` is **not** evidence verification. `knowledge_index` lexical scores remain heuristics. Report weak retrieval and no-match cases; refer to `scripts/retrieval_evaluation.py` for diagnostic negative-query measurements.
+
+Avoid exposing private source excerpts, project screenshots or user studies in a public Knowledge registry.
+
 ## Evidence and optional external AI
 
 - Source identity, selected paper sections and claim provenance are in `knowledge/sources.json`, `knowledge/verified/claims.json` and `knowledge/VERIFICATION-POLICY.md`. Unreviewed legacy cards remain available, but must not be promoted to verified research findings.
