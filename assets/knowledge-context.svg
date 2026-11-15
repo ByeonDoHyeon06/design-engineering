@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="490" viewBox="0 0 1200 490" role="img" aria-labelledby="title desc">
+<title id="title">Knowledge with provenance and personal context</title>
+<desc id="desc">A conceptual illustration showing source-backed core research and separately scoped user, project, and session preferences combining as inputs to a design decision.</desc>
+<defs>
+ <pattern id="dot" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".9" fill="#BEC5C7"/></pattern>
+</defs>
+<rect width="1200" height="490" fill="#F1F0EA"/>
+<rect x="22" y="22" width="1156" height="446" fill="url(#dot)" opacity=".38"/>
+<path d="M40 40v25M40 40h25M1160 450v-25M1160 450h-25" fill="none" stroke="#9AA7B2" stroke-width="1.5"/>
+<text x="48" y="64" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" letter-spacing="2.4" fill="#5D6A7C">KNOWLEDGE / CONTEXT</text>
+<text x="1152" y="64" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="11" letter-spacing="1.3" fill="#6B7787">EVIDENCE IS NOT PREFERENCE</text>
+<!-- source card -->
+<rect x="60" y="112" width="299" height="308" fill="#142032"/>
+<rect x="60" y="112" width="299" height="40" fill="#263447"/>
+<text x="80" y="137" font-family="Arial,Helvetica,sans-serif" fill="#F3F4EF" font-size="12" font-weight="700" letter-spacing="2">01 / CORE RESEARCH</text>
+<rect x="79" y="175" width="261" height="188" fill="#F6F4EE"/>
+<rect x="97" y="195" width="103" height="7" fill="#263345"/>
+<rect x="97" y="215" width="222" height="5" fill="#9BA3AC"/>
+<rect x="97" y="226" width="198" height="5" fill="#B2B6B6"/>
+<rect x="97" y="237" width="209" height="5" fill="#B2B6B6"/>
+<path d="M97 261h222" stroke="#C5C7C3" stroke-width="1"/>
+<rect x="97" y="281" width="86" height="58" fill="#C5CDDE"/>
+<rect x="192" y="281" width="127" height="58" fill="#E1E4E0"/>
+<path d="M107 324l21-12 17 5 18-22 12-4" fill="none" stroke="#5779EB" stroke-width="2"/>
+<circle cx="175" cy="291" r="3.5" fill="#5779EB"/>
+<rect x="206" y="294" width="97" height="5" fill="#9EA6AD"/>
+<rect x="206" y="305" width="75" height="5" fill="#AFB4BA"/>
+<rect x="206" y="316" width="83" height="5" fill="#AFB4BA"/>
+<rect x="79" y="378" width="111" height="21" fill="#728AFF"/>
+<rect x="198" y="378" width="142" height="21" fill="#35495F"/>
+<text x="89" y="393" font-family="Arial,Helvetica,sans-serif" fill="#0B1528" font-weight="700" font-size="9" letter-spacing="1">SOURCE</text>
+<text x="209" y="393" font-family="Arial,Helvetica,sans-serif" fill="#F5F5F0" font-size="9" letter-spacing="1">CLAIM + SCOPE</text>
+<!-- middle scope cluster -->
+<rect x="439" y="112" width="327" height="308" fill="#FCFBF6" stroke="#C9D1D2"/>
+<text x="460" y="137" font-family="Arial,Helvetica,sans-serif" fill="#223042" font-size="12" font-weight="700" letter-spacing="2">02 / PERSONAL CONTEXT</text>
+<path d="M460 153h286" stroke="#DBDED9" stroke-width="1"/>
+<rect x="459" y="170" width="287" height="62" fill="#EFF0ED"/>
+<rect x="459" y="170" width="5" height="62" fill="#8799F5"/>
+<text x="475" y="190" font-family="Arial,Helvetica,sans-serif" fill="#2B3949" font-size="11" font-weight="700" letter-spacing="1.2">USER</text>
+<text x="475" y="210" font-family="Arial,Helvetica,sans-serif" fill="#647182" font-size="11">Personal direction</text>
+<rect x="641" y="184" width="87" height="5" fill="#ABB5B8"/>
+<rect x="641" y="196" width="72" height="5" fill="#BCC3C5"/>
+<rect x="641" y="208" width="80" height="5" fill="#C8CDCD"/><rect x="459" y="247" width="287" height="62" fill="#EFF0ED"/>
+<rect x="459" y="247" width="5" height="62" fill="#E6AE86"/>
+<text x="475" y="267" font-family="Arial,Helvetica,sans-serif" fill="#2B3949" font-size="11" font-weight="700" letter-spacing="1.2">PROJECT</text>
+<text x="475" y="287" font-family="Arial,Helvetica,sans-serif" fill="#647182" font-size="11">Brand and constraints</text>
+<rect x="641" y="261" width="87" height="5" fill="#ABB5B8"/>
+<rect x="641" y="273" width="72" height="5" fill="#BCC3C5"/>
+<rect x="641" y="285" width="80" height="5" fill="#C8CDCD"/><rect x="459" y="324" width="287" height="62" fill="#EFF0ED"/>
+<rect x="459" y="324" width="5" height="62" fill="#A3B6C4"/>
+<text x="475" y="344" font-family="Arial,Helvetica,sans-serif" fill="#2B3949" font-size="11" font-weight="700" letter-spacing="1.2">SESSION</text>
+<text x="475" y="364" font-family="Arial,Helvetica,sans-serif" fill="#647182" font-size="11">Working preferences</text>
+<rect x="641" y="338" width="87" height="5" fill="#ABB5B8"/>
+<rect x="641" y="350" width="72" height="5" fill="#BCC3C5"/>
+<rect x="641" y="362" width="80" height="5" fill="#C8CDCD"/><!-- convergence -->
+<path d="M359 264h74M766 264h44" stroke="#7789AD" stroke-width="2" stroke-dasharray="5 5"/>
+<circle cx="394" cy="264" r="7" fill="#738DFF"/>
+<circle cx="791" cy="264" r="7" fill="#738DFF"/>
+<path d="M813 258l7 6-7 6" fill="none" stroke="#667BA8" stroke-width="2"/>
+<!-- output -->
+<rect x="831" y="112" width="311" height="308" fill="#F8F7F2" stroke="#B9C2C6"/>
+<rect x="831" y="112" width="311" height="40" fill="#DCE1EA"/>
+<text x="852" y="137" font-family="Arial,Helvetica,sans-serif" fill="#243245" font-size="12" font-weight="700" letter-spacing="2">03 / DESIGN DECISION</text>
+<rect x="850" y="171" width="273" height="229" fill="#EEF0ED"/>
+<rect x="864" y="187" width="245" height="27" fill="#FCFBF6" stroke="#B6BDC0"/>
+<rect x="877" y="197" width="68" height="6" fill="#354155"/>
+<rect x="1030" y="197" width="18" height="6" fill="#ACB6BA"/>
+<rect x="1060" y="197" width="18" height="6" fill="#ACB6BA"/>
+<rect x="864" y="228" width="161" height="115" fill="#FCFBF6"/>
+<rect x="877" y="244" width="114" height="8" fill="#2A394A"/>
+<rect x="877" y="261" width="96" height="8" fill="#2A394A"/>
+<rect x="877" y="286" width="131" height="5" fill="#AEB7BA"/>
+<rect x="877" y="298" width="119" height="5" fill="#BDC5C4"/>
+<rect x="877" y="318" width="81" height="17" fill="#657FFC"/>
+<rect x="1034" y="228" width="75" height="55" fill="#D3D9E7"/>
+<path d="M1045 264l16-12 15 3 22-15" fill="none" stroke="#647EFA" stroke-width="2"/>
+<rect x="1034" y="290" width="75" height="53" fill="#E2E4E0"/>
+<rect x="1045" y="300" width="51" height="5" fill="#B8C2C7"/>
+<rect x="1045" y="312" width="42" height="5" fill="#B8C2C7"/>
+<rect x="864" y="355" width="245" height="26" fill="#29384A"/>
+<circle cx="882" cy="368" r="5" fill="#EFB187"/>
+<text x="897" y="371" fill="#F2F2EE" font-family="Arial,Helvetica,sans-serif" font-size="9" letter-spacing="1.3">CONTEXT, NOT FALSE PROOF</text>
+<path d="M60 442h1082" stroke="#C5C9C7" stroke-width="1"/>
+<text x="64" y="455" fill="#667180" font-family="Arial,Helvetica,sans-serif" font-size="9" letter-spacing="1.8">DESIGN ENGINEERING · INFORMATION ARCHITECTURE</text>
+</svg>
