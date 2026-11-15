@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="820" viewBox="0 0 560 820" role="img" aria-labelledby="title desc">
+<title id="title">Visual critique and verification — mobile view</title>
+<desc id="desc">A mobile-first diagram showing an initial browser capture with a clipped heading, followed by a reviewed and refined layout.</desc>
+<rect width="560" height="820" fill="#111C2B"/>
+<rect x="26" y="27" width="508" height="765" fill="none" stroke="#48576C"/>
+<text x="49" y="62" fill="#D3DBEB" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700" letter-spacing="1">VALIDATE THE ACTUAL OUTPUT</text>
+<text x="49" y="88" fill="#98A9BF" font-family="Arial,Helvetica,sans-serif" font-size="14">Observe, revise, and inspect again.</text>
+<text x="49" y="122" fill="#F3AF89" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700">01 / BEFORE — ISSUE FOUND</text>
+<rect x="49" y="138" width="462" height="253" fill="#F1F2ED"/>
+<rect x="49" y="138" width="462" height="31" fill="#D2D7DD"/>
+<circle cx="68" cy="154" r="4" fill="#E0A082"/><circle cx="82" cy="154" r="4" fill="#AEB9C4"/><circle cx="96" cy="154" r="4" fill="#AEB9C4"/>
+<rect x="117" y="146" width="360" height="15" fill="#FBFBF5"/>
+<rect x="67" y="188" width="426" height="32" fill="#DCE1E2"/>
+<rect x="82" y="199" width="98" height="10" fill="#263A54"/>
+<rect x="67" y="235" width="262" height="128" fill="#FBFBF5"/>
+<rect x="84" y="252" width="244" height="13" fill="#29394E"/>
+<rect x="84" y="275" width="262" height="13" fill="#29394E"/>
+<rect x="84" y="307" width="172" height="7" fill="#B4BDC1"/>
+<rect x="84" y="325" width="121" height="24" fill="#7189F7"/>
+<rect x="340" y="235" width="153" height="128" fill="#C9D8E6"/>
+<path d="M356 341l26-38 24 9 24-40 46 12" fill="none" stroke="#627DF9" stroke-width="3"/>
+<rect x="80" y="247" width="268" height="49" fill="none" stroke="#EAAC85" stroke-width="3"/>
+<path d="M349 272h52v-24" fill="none" stroke="#EAAC85" stroke-width="3"/>
+<circle cx="402" cy="238" r="13" fill="#EAAC85"/>
+<path d="M397 233l10 10m0-10l-10 10" fill="none" stroke="#253347" stroke-width="2.5"/>
+<path d="M280 399v30" stroke="#9FADD0" stroke-width="3" stroke-dasharray="5 5"/>
+<path d="M274 422l6 8 6-8" fill="none" stroke="#9FADD0" stroke-width="3"/>
+<text x="49" y="461" fill="#B5C5FF" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700">02 / AFTER — RE-CAPTURED</text>
+<rect x="49" y="477" width="462" height="253" fill="#F1F2ED"/>
+<rect x="49" y="477" width="462" height="31" fill="#D2D7DD"/>
+<circle cx="68" cy="493" r="4" fill="#ADB9C4"/><circle cx="82" cy="493" r="4" fill="#ADB9C4"/><circle cx="96" cy="493" r="4" fill="#ADB9C4"/>
+<rect x="117" y="485" width="360" height="15" fill="#FBFBF5"/>
+<rect x="67" y="527" width="426" height="32" fill="#DCE1E2"/>
+<rect x="82" y="538" width="98" height="10" fill="#263A54"/>
+<rect x="67" y="574" width="262" height="128" fill="#FBFBF5"/>
+<rect x="86" y="594" width="219" height="12" fill="#29394E"/>
+<rect x="86" y="619" width="195" height="12" fill="#29394E"/>
+<rect x="86" y="651" width="183" height="6" fill="#B4BDC1"/>
+<rect x="86" y="669" width="121" height="22" fill="#7189F7"/>
+<rect x="340" y="574" width="153" height="128" fill="#C9D8E6"/>
+<path d="M356 680l26-38 24 9 24-40 46 12" fill="none" stroke="#627DF9" stroke-width="3"/>
+<rect x="80" y="587" width="235" height="105" fill="none" stroke="#8199FF" stroke-width="3"/>
+<path d="M315 610h75v-27" fill="none" stroke="#8199FF" stroke-width="3"/>
+<circle cx="390" cy="574" r="14" fill="#8199FF"/>
+<path d="M382 573l6 6 10-11" fill="none" stroke="#15243A" stroke-width="3"/>
+<text x="49" y="764" fill="#ABBADC" font-family="Arial,Helvetica,sans-serif" font-size="14">Visual checks need real browser captures.</text>
+</svg>
