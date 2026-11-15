@@ -120,14 +120,15 @@ def init_run(*, tasks_file, out, seed, agent, model, effort, protocol_note=""):
         task_id = task["id"]
         assignments.append({
             "task_id": task_id,
-            "A": {"condition": "skill" if on_left else "baseline", "image": None, "metrics": None},
-            "B": {"condition": "baseline" if on_left else "skill", "image": None, "metrics": None}
+            "A": {"condition": "skill" if on_left else "baseline", "images": {"desktop": None, "mobile": None}, "metrics": None},
+            "B": {"condition": "baseline" if on_left else "skill", "images": {"desktop": None, "mobile": None}, "metrics": None}
         })
         packet.append({
             "task_id": task_id, "category": task["category"], "brief": task["brief"],
             "audience": task["audience"], "task_goals": task["task_goals"],
             "required_states": task["required_states"], "review_checks": task["review_checks"],
-            "screenshots": {"A": task_id + "/A.png", "B": task_id + "/B.png"}
+            "screenshots": {side: {v: task_id + "/" + side + "-" + v + ".png"
+                                   for v in ("desktop", "mobile")} for side in SIDES}
         })
         (folder / "blind" / task_id).mkdir()
     secret = {
@@ -208,7 +209,7 @@ def _scrub_png(path):
     return PNG_SIGNATURE + b"".join(chunks)
 
 
-def attach(*, run, task_id, condition, screenshot, duration_seconds=None,
+def attach(*, run, task_id, condition, desktop, mobile, duration_seconds=None,
            input_tokens=None, output_tokens=None, cost_usd=None):
     folder, secret, packet = _run(run)
     if condition not in ARMS:
@@ -225,22 +226,37 @@ def attach(*, run, task_id, condition, screenshot, duration_seconds=None,
             raise EvaluationError("Token counts must be nonnegative integers.")
     pair = pairs[0]
     side = next(label for label in SIDES if pair[label]["condition"] == condition)
-    if pair[side]["image"] is not None:
-        raise EvaluationError("Screenshot already attached for this task/condition. Create a new run for changed outputs.")
-    data = _scrub_png(screenshot)
-    target = folder / "blind" / task_id / (side + ".png")
-    with os.fdopen(os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "wb") as handle:
-        handle.write(data)
-    pair[side]["image"] = _sha(data)
-    pair[side]["metrics"] = {
-        "duration_seconds": duration_seconds,
-        "input_tokens": input_tokens,
-        "output_tokens": output_tokens,
-        "cost_usd": cost_usd
-    }
-    _private_json(folder / "private" / "assignments.json", secret)
-    return {"attached": task_id, "blind_artifact": str(target), "sha256": pair[side]["image"],
+    if any(pair[side]["images"].values()):
+        raise EvaluationError("Screenshots already attached for this task/condition. Create a new run for changed outputs.")
+    captures = {"desktop": _scrub_png(desktop), "mobile": _scrub_png(mobile)}
+    targets = {v: folder / "blind" / task_id / (side + "-" + v + ".png")
+               for v in captures}
+    if any(path.exists() for path in targets.values()):
+        raise EvaluationError("A blind screenshot file already exists; inspect or create a new run.")
+    written = []
+    try:
+        for viewport, data in captures.items():
+            target = targets[viewport]
+            with os.fdopen(os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "wb") as handle:
+                handle.write(data)
+            written.append(target)
+            pair[side]["images"][viewport] = _sha(data)
+        pair[side]["metrics"] = {
+            "duration_seconds": duration_seconds,
+            "input_tokens": input_tokens,
+            "output_tokens": output_tokens,
+            "cost_usd": cost_usd
+        }
+        _private_json(folder / "private" / "assignments.json", secret)
+    except Exception:
+        for target in written:
+            target.unlink(missing_ok=True)
+        raise
+    return {"attached": task_id,
+            "blind_artifacts": {v: str(path) for v, path in targets.items()},
+            "sha256": pair[side]["images"],
             "notice": "PNG metadata was removed. Share blind/ only; never private/."}
+
 
 
 def validate_run(run, *, require_complete=False):
@@ -249,13 +265,15 @@ def validate_run(run, *, require_complete=False):
     modified = []
     for assignment in secret["assignments"]:
         for side in SIDES:
-            task_id = assignment["task_id"]
-            image = folder / "blind" / task_id / (side + ".png")
-            expected = assignment[side]["image"]
-            if expected is None or not image.is_file():
-                missing.append(task_id + "/" + side)
-            elif _sha(image.read_bytes()) != expected:
-                modified.append(task_id + "/" + side)
+            for viewport in ("desktop", "mobile"):
+                task_id = assignment["task_id"]
+                label = task_id + "/" + side + "-" + viewport
+                image = folder / "blind" / (label + ".png")
+                expected = assignment[side]["images"][viewport]
+                if expected is None or not image.is_file():
+                    missing.append(label)
+                elif _sha(image.read_bytes()) != expected:
+                    modified.append(label)
     problems = list(modified)
     # Blinded material must never include the hidden condition keys/assignments.
     public = json.dumps(packet, ensure_ascii=False).casefold()
@@ -267,7 +285,7 @@ def validate_run(run, *, require_complete=False):
         "ok": not problems,
         "ready_for_review": not problems and not missing,
         "tasks": len(secret["assignments"]),
-        "attached": len(secret["assignments"]) * 2 - len(missing),
+        "attached": len(secret["assignments"]) * 4 - len(missing),
         "missing": missing, "modified": modified, "errors": problems,
         "note": "Ready for review means that screenshots exist; it is not a usability or design quality pass."
     }
@@ -349,8 +367,8 @@ def report(*, run, judgment_files):
                 raise EvaluationError(f"{tid}: reviewer must confirm images and provide a meaningful explanation.")
             _ratings(item, task_id=tid)
             assignment = map_[tid]
-            if any(assignment[side]["image"] is None for side in SIDES):
-                raise EvaluationError(f"{tid}: cannot rate a task without both screenshots.")
+            if any(not all(assignment[side]["images"].values()) for side in SIDES):
+                raise EvaluationError(f"{tid}: cannot rate a task without both desktop and mobile captures.")
             decision = "tie" if choice == "tie" else assignment[choice]["condition"]
             judgments[tid].append({"judge": judge, "decision": decision, "choice": choice,
                                    "reason": item["reason"].strip(), "ratings": item["ratings"]})
