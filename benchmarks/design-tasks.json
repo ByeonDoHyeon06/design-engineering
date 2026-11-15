@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "description": "Curated pilot design-task set; task selection is not externally validated or representative. Each task is fictional and intentionally bounded to avoid unsupported product claims.",
+  "common_protocol": {
+    "comparison": "same brief, model family, tool allowance, time/token budget and evaluation environment in both conditions; only availability of Design Engineering skill differs",
+    "outputs": "actual rendered desktop and mobile screenshots plus implementation; preserve generation logs outside the blind packet",
+    "required_viewports": [
+      390,
+      1440
+    ],
+    "limitations": [
+      "No task result or design quality score is included.",
+      "A successful DOM assertion is not user comprehension.",
+      "Use independent blind judges and report missing artifacts."
+    ]
+  },
+  "tasks": [
+    {
+      "id": "corporate-home",
+      "category": "corporate",
+      "brief": "Build a homepage for a fictional infrastructure software company presenting two offerings, a clear primary contact action, and a short explanation of its approach.",
+      "audience": "Prospective technical buyers",
+      "task_goals": [
+        "Find the two offerings",
+        "reach the contact action"
+      ],
+      "required_states": [
+        "home",
+        "offerings",
+        "contact"
+      ],
+      "review_checks": [
+        "keyboard navigation",
+        "mobile nav",
+        "credible fictional copy"
+      ]
+    },
+    {
+      "id": "analytics-dashboard",
+      "category": "dashboard",
+      "brief": "Design a fictional subscription-product analytics dashboard with revenue, retention, and a filter for date range. Use labeled placeholder data clearly marked as simulated.",
+      "audience": "Product managers",
+      "task_goals": [
+        "Locate retention",
+        "change the date range",
+        "understand the displayed period"
+      ],
+      "required_states": [
+        "overview",
+        "filter_active",
+        "empty_state"
+      ],
+      "review_checks": [
+        "visible filter status",
+        "accessible chart alternative",
+        "no fake real-world claims"
+      ]
+    },
+    {
+      "id": "booking-search",
+      "category": "booking",
+      "brief": "Design a fictional accommodation search result page with dates, guest count, editable filters, and an identifiable reservation next step. Simulated availability must be labeled.",
+      "audience": "Travelers choosing lodging",
+      "task_goals": [
+        "Adjust filters",
+        "compare two properties",
+        "start a booking"
+      ],
+      "required_states": [
+        "results",
+        "filtered",
+        "no_results"
+      ],
+      "review_checks": [
+        "mobile filter usability",
+        "clear total vs nightly labels",
+        "simulated inventory disclosure"
+      ]
+    },
+    {
+      "id": "conference-schedule",
+      "category": "event",
+      "brief": "Design a small conference schedule for two tracks and twelve sessions, including times, speaker labels, a findable program and a personal selection state.",
+      "audience": "Conference attendees",
+      "task_goals": [
+        "Find a session",
+        "compare overlapping times",
+        "save one"
+      ],
+      "required_states": [
+        "schedule",
+        "session_detail",
+        "saved"
+      ],
+      "review_checks": [
+        "readable time zones",
+        "keyboard interactions",
+        "mobile schedule navigation"
+      ]
+    },
+    {
+      "id": "developer-documentation",
+      "category": "docs",
+      "brief": "Create a fictional SDK documentation landing page with installation steps, a code example, topic navigation, search entry and troubleshooting guidance.",
+      "audience": "Developers",
+      "task_goals": [
+        "Find setup instructions",
+        "copy example",
+        "locate troubleshooting"
+      ],
+      "required_states": [
+        "landing",
+        "search_results",
+        "error_help"
+      ],
+      "review_checks": [
+        "copy feedback",
+        "code legibility",
+        "mobile sidebar alternative"
+      ]
+    },
+    {
+      "id": "local-news",
+      "category": "editorial",
+      "brief": "Design a fictional local-news reading experience with a daily briefing, source attribution, topic browsing, and a full article page.",
+      "audience": "Readers seeking a concise update",
+      "task_goals": [
+        "Find a source",
+        "navigate a topic",
+        "open an article"
+      ],
+      "required_states": [
+        "briefing",
+        "article",
+        "source_detail"
+      ],
+      "review_checks": [
+        "clear editorial vs AI summary",
+        "comfortable text length",
+        "citation prominence"
+      ]
+    },
+    {
+      "id": "ecommerce-detail",
+      "category": "commerce",
+      "brief": "Create a fictional physical-product detail page with variants, shipping explanation, gallery, and a working cart state. Use invented product information explicitly labeled as a demo.",
+      "audience": "Shoppers comparing options",
+      "task_goals": [
+        "Select a variant",
+        "inspect shipping",
+        "add item to cart"
+      ],
+      "required_states": [
+        "product",
+        "variant_selected",
+        "cart_success"
+      ],
+      "review_checks": [
+        "visual image alternatives",
+        "price clarity",
+        "error/stock feedback"
+      ]
+    },
+    {
+      "id": "nonprofit-donation",
+      "category": "nonprofit",
+      "brief": "Design a fictional educational nonprofit campaign page with impact explanation, donation amount choices and a confirmation step. Avoid unverified impact numbers.",
+      "audience": "Potential donors",
+      "task_goals": [
+        "Understand the purpose",
+        "select an amount",
+        "reach confirmation"
+      ],
+      "required_states": [
+        "campaign",
+        "amount_selected",
+        "confirmation"
+      ],
+      "review_checks": [
+        "transparent claims",
+        "clear donation consent",
+        "form errors"
+      ]
+    },
+    {
+      "id": "creative-portfolio",
+      "category": "portfolio",
+      "brief": "Create a portfolio for a fictional independent type designer, with a strong but readable identity, project index, project detail and a contact path.",
+      "audience": "Potential clients",
+      "task_goals": [
+        "Compare projects",
+        "inspect case study",
+        "find contact"
+      ],
+      "required_states": [
+        "index",
+        "case_study",
+        "contact"
+      ],
+      "review_checks": [
+        "distinctive yet usable composition",
+        "responsive cropping",
+        "keyboard access"
+      ]
+    },
+    {
+      "id": "mobile-onboarding",
+      "category": "onboarding",
+      "brief": "Design a fictional personal planner onboarding flow with three steps, permission explanation, skip affordance, and completion confirmation.",
+      "audience": "First-time mobile users",
+      "task_goals": [
+        "Understand benefits",
+        "skip optional step",
+        "finish onboarding"
+      ],
+      "required_states": [
+        "welcome",
+        "permission",
+        "completed"
+      ],
+      "review_checks": [
+        "honest permission wording",
+        "progress clarity",
+        "small-screen fit"
+      ]
+    },
+    {
+      "id": "developer-platform",
+      "category": "platform",
+      "brief": "Design a fictional compute platform homepage and pricing comparison, with three plans, constraints disclosed, and an actionable docs path.",
+      "audience": "Developer teams",
+      "task_goals": [
+        "Compare plans",
+        "identify a limit",
+        "open documentation"
+      ],
+      "required_states": [
+        "hero",
+        "pricing",
+        "docs_entry"
+      ],
+      "review_checks": [
+        "no unverified performance claims",
+        "mobile plan comparison",
+        "focus states"
+      ]
+    },
+    {
+      "id": "public-form",
+      "category": "public-service",
+      "brief": "Create a fictional public-service permit application form with eligibility guidance, required fields, step progress, and recoverable validation errors.",
+      "audience": "Residents applying online",
+      "task_goals": [
+        "Find eligibility",
+        "complete details",
+        "recover from error"
+      ],
+      "required_states": [
+        "eligibility",
+        "form_errors",
+        "review"
+      ],
+      "review_checks": [
+        "plain language",
+        "error recovery",
+        "accessible labels"
+      ]
+    }
+  ]
+}
