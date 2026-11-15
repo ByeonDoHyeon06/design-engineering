@@ -1257,7 +1257,8 @@
       ],
       "claims": [],
       "signals": [
-        "Generic cards squeeze different content roles into an identical layout."
+        "Generic cards squeeze different content roles into an identical layout.",
+        "A comparison table and a process flow need different visual structure despite sharing a section."
       ],
       "queries": [
         "콘텐츠 설계",
@@ -1270,7 +1271,13 @@
         "information architecture",
         "layout",
         "reading order",
-        "user needs"
+        "user needs",
+        "비교표",
+        "정보 흐름",
+        "콘텐츠 역할",
+        "비교와 순서",
+        "comparison table",
+        "content roles"
       ],
       "usage": "retrieve_by_question_not_page_category",
       "review": "official public-sector practitioner guidance; specific layout effects not proven"

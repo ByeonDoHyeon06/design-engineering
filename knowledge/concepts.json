@@ -634,7 +634,13 @@
         "content",
         "layout",
         "information architecture",
-        "reading order"
+        "reading order",
+        "비교표",
+        "흐름",
+        "역할",
+        "순서",
+        "비교",
+        "문장 구성"
       ],
       "expand": [
         "content",
@@ -642,7 +648,12 @@
         "information hierarchy",
         "user needs",
         "콘텐츠",
-        "구조"
+        "구조",
+        "comparison",
+        "sequence",
+        "content role",
+        "비교표",
+        "흐름"
       ],
       "cards": [
         "K18",
