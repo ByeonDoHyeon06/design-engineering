@@ -1,6 +1,6 @@
 # P09 — Balance new expression with recognizable meaning
 
-**Type:** RESEARCH  — **Source IDs:** E4, A7, A14, CR2
+**Type:** RESEARCH  — **Source IDs:** E4, A14, CR2
 
 ## Use when
 A design brief wants distinctive identity without sacrificing comprehension.
