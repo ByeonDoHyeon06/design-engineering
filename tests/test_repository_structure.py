@@ -81,40 +81,63 @@ class RepositoryStructureTests(unittest.TestCase):
                 target=file.parent/path.split("#",1)[0]
                 self.assertTrue(target.is_file(),f"{file}: broken Markdown link: {path}")
 
-    def test_bilingual_readmes_share_the_same_local_safe_artwork(self):
-        expected = {
-            "design-engineering-mark.svg",
-            "hero-system.svg",
-            "process-loop.svg",
-            "knowledge-context.svg",
-            "validation-study.svg",
+    def test_bilingual_readmes_share_local_responsive_artwork(self):
+        # Full-width desktop art, portrait mobile variants, and recognizable agent marks.
+        primary = {
+            "design-engineering-mark.webp",
+            "hero-system.svg", "process-loop.svg",
+            "knowledge-context.svg", "validation-study.svg",
+            "integrations/claude.svg", "integrations/codex.svg",
+        }
+        mobile = {
+            "hero-system-mobile.svg", "process-loop-mobile.svg",
+            "knowledge-context-mobile.svg", "validation-study-mobile.svg",
         }
         svg_ns = "{http://www.w3.org/2000/svg}"
-        for path,prefix in [
-            (ROOT/"README.md", "assets/"),
-            (ROOT/"i18n/README.ko.md", "../assets/"),
-        ]:
+        for path,prefix in (
+            (ROOT/"README.md","assets/"),
+            (ROOT/"i18n/README.ko.md","../assets/"),
+        ):
             content = path.read_text(encoding="utf-8")
-            images = re.findall(r'<img\s+[^>]*src="([^"]+)"[^>]*>', content)
-            self.assertEqual(set(images), {prefix + name for name in expected})
-            self.assertEqual(len(images), len(expected))
-            self.assertEqual(len(re.findall(r'<img\s+[^>]*alt="[^"]+"',content)),
-                             len(images), "Image alt text is required for both languages.")
-            for src in images:
-                asset = (path.parent / src).resolve()
-                self.assertTrue(asset.is_file(), src)
-                text = asset.read_text(encoding="utf-8")
-                self.assertNotIn("<script", text.lower())
-                self.assertNotIn("<foreignobject", text.lower())
-                self.assertNotIn("<image ", text.lower())
-                self.assertNotIn("https://", text.replace('https://www.w3.org/2000/svg',''))
-                self.assertNotIn("http://", text.replace('http://www.w3.org/2000/svg',''))
-                tree = ET.fromstring(text)
-                self.assertEqual(tree.tag, svg_ns + "svg")
-                self.assertTrue(tree.attrib.get("viewBox"))
-                self.assertIsNotNone(tree.find(svg_ns + "title"))
-                self.assertIsNotNone(tree.find(svg_ns + "desc"))
-                self.assertGreater(asset.stat().st_size, 500)
+            images = re.findall(r'<img\s+[^>]*src="([^"]+)"[^>]*>',content)
+            sources = re.findall(r'<source\s+[^>]*srcset="([^"]+)"[^>]*>',content)
+            self.assertEqual(set(images), {prefix + n for n in primary})
+            self.assertEqual(set(sources), {prefix + n for n in mobile})
+            self.assertEqual(len(images),len(primary))
+            self.assertEqual(len(sources),len(mobile))
+            self.assertEqual(len(re.findall(r'<picture>',content)),4)
+            # Empty alt is correct for decorative logos beside explicit agent names.
+            self.assertEqual(len(re.findall(r'<img\\s+[^>]*alt="[^"]*"',content)),
+                             len(images))
+            self.assertEqual(len(re.findall(r'<source\\s+media="\(max-width: 640px\)"',content)),
+                             len(mobile))
+            for name in primary | mobile:
+                asset=(path.parent / prefix / name).resolve()
+                self.assertTrue(asset.is_file(),name)
+                if asset.suffix == ".webp":
+                    data=asset.read_bytes()
+                    self.assertTrue(data.startswith(b"RIFF"),name)
+                    self.assertEqual(data[8:12],b"WEBP")
+                    self.assertGreater(len(data),1000)
+                    continue
+                raw=asset.read_text(encoding="utf-8")
+                self.assertNotIn("<script",raw.lower())
+                self.assertNotIn("<foreignobject",raw.lower())
+                self.assertNotIn("<image ",raw.lower())
+                self.assertNotIn("http://",raw.replace("http://www.w3.org/2000/svg",""))
+                self.assertNotIn("https://",raw.replace("https://www.w3.org/2000/svg",""))
+                root=ET.fromstring(raw)
+                self.assertEqual(root.tag,svg_ns+"svg")
+                self.assertTrue(root.attrib.get("viewBox"))
+                self.assertIsNotNone(root.find(svg_ns+"title"))
+                if "integrations/" not in name:
+                    self.assertIsNotNone(root.find(svg_ns+"desc"))
+                if name.endswith("-mobile.svg"):
+                    dims=[float(n) for n in root.attrib["viewBox"].split()]
+                    self.assertLess(dims[2],dims[3],name)
+                self.assertGreater(asset.stat().st_size,500,name)
+        self.assertFalse((ROOT/"assets/design-engineering-mark.svg").exists(),
+                         "Unused previous project mark must be removed.")
 
     def test_default_readme_is_english_and_korean_translation_is_linked(self):
         english = (ROOT/"README.md").read_text(encoding="utf-8")
