@@ -1,80 +1,50 @@
 ---
 name: design-engineering
-description: Research-informed, context-flexible design engineering for websites and interfaces. Retrieve source-scoped research, interpret designer problem-solving methods, explore distinct hypotheses, implement, critique real rendered screens, verify task flows and revise. Not a style reference collection or fixed website/dashboard template system.
+description: Research-informed design engineering for interfaces. Frame user goals, retrieve source-scoped evidence, explore meaningful alternatives, implement, inspect real rendered screens, verify task flows, and revise. Adapt to the brief; never enforce a fixed style or page template.
 ---
 
-# Design Engineering — knowledge applied through feedback
+# Design Engineering
 
-Build a design that serves its **meaning and user tasks**, not a prescribed visual style. Research helps generate and challenge hypotheses; it does not manufacture universal layout recipes. Preserve the user's content, constraints, brand, domain rules and functional contract. A Skill cannot fine-tune model weights; humans' design methods are transferable questions, not proven agent-performance laws.
+Design for **meaning, clarity, and user tasks**, not a stock aesthetic. Preserve the user's actual brand, content, accessibility needs, product facts, constraints and functional expectations. The skill is a reasoning workflow and local Knowledge library, **not** model fine-tuning or proof that a generated design will succeed.
 
-## Portable resource loading
+## Skill root and resources
 
-This root `SKILL.md` is the **only** canonical skill instruction for every agent. Resolve paths from the directory containing this file (the **skill root**), not from the current product project's working directory. Before relying on local research, verify `knowledge/catalog.json` and `scripts/knowledge_index.py` are present alongside this file; run commands with the skill root as the working directory or with an equivalent explicit path. If support files are absent, state that the installation is incomplete and **do not claim local research was retrieved**. Do not assume one agent's environment variables or installation path exist in another.
+This is the **only** canonical `SKILL.md` for Codex and Claude Code. Resolve resource paths relative to the directory containing this file, **not** the user's application directory or a platform-specific parent. Before claiming research retrieval, check `knowledge/catalog.json`, `knowledge/claims.json`, `knowledge/governance.json` and `scripts/knowledge_index.py`. If files are missing, report an incomplete installation; do not fabricate studies or substitute unrelated evidence.
 
-## Working loop (scale the formality to the task)
+## Design loop
 
-1. **Frame:** Identify user goal, audience, content/data, consequential actions, uncertainty and protected requirements. If the observed failure suggests the original framing is wrong, revisit it.
-2. **Retrieve:** Search the unresolved *question*, not a page type. `python scripts/knowledge_index.py search 'question' --top 5 --json`. Read relevant full cards and source limits. For source-checked claims use `--verified-only`. Absence of results means **no retrieved evidence**, not proof that research is absent.
-3. **Interpret evidence:** Separate `SOURCE_FINDING`, `FRAMEWORK`, `STANDARD`, `PRACTITIONER` and `DESIGN_HYPOTHESIS`. Check study population, method, source-access level, `do_not_infer`, and whether the finding transfers to this problem. Verification of an abstract is not independent replication.
-4. **Explore meaning first:** When substantive design choices are open, compare genuinely different **interpretations and visual relationships**, not only palettes or motifs. Learn design *operations* (reframe, sketch, simplify, test metaphors), never copy a famous designer's look. Do not force diversity where the brief has one natural answer. `templates/concept-exploration.example.json` is optional scaffolding.
-5. **Implement and trace:** Record major choices as problem → evidence + scope → hypothesis → alternative → code/artifact → checks, using `templates/decision-note.md` or `scripts/decision_trace.py`. Small straightforward fixes do not need paperwork. Never include research metadata in production UI unless requested.
-6. **Render, critique, test and revise:** Inspect actual desktop/mobile screenshots for hierarchy, proportion, density, rhythm, meaningful graphic expression, typography and cropping. Run browser geometry smoke tests, **and** separately verify representative user-task flows, state changes, error recovery and keyboard behavior. Link each discovered issue to a concrete revision and a fresh observation. If a hypothesis fails, change it; do not merely decorate or hide the problem.
-7. **Report with limits:** State artifact, important tradeoffs, what was actually inspected/tested, what failed or remains untested. Do not call automated browser assertions a user study, screenshot inspection a WCAG audit, or AI preference a measured usability result.
+1. **Frame:** Clarify user goal, audience, actual content, important actions, constraints, uncertainties and protected claims. Revisit the brief if observed failures contradict assumptions.
+2. **Retrieve selectively:** Search unresolved questions, not page genres. Run `python scripts/knowledge_index.py search 'specific design uncertainty' --top 5 --json`. Read only relevant card bodies and inspect source scope. `--verified-only` restricts to explicit registered claim links, **not** K-prefix cards. No results means no suitable registered evidence was found.
+3. **Interpret:** Distinguish findings, normative standards, practitioner reasoning and design hypotheses. Review population/method, accessible source portion, `do_not_infer`, version and context. An abstract or official draft is not independent verification of a UI outcome.
+4. **Explore meaning:** When alternatives matter, compare differing information relationships, user journeys and expressions, not only palettes. Avoid style imitation, gratuitous variation, a default hero or prescribed card grids. Use `templates/concept-exploration.example.json` only if useful.
+5. **Implement and trace:** Build an actual artifact with working states and authentic content. For consequential decisions record goal → source and limit → hypothesis → alternative → implementation → observed check via `scripts/decision_trace.py` or `templates/decision-note.md`. No excessive documents for minor edits.
+6. **Render, inspect and verify:** Use `python scripts/visual_critique.py start page.html --out /tmp/visual-review`. **Open the captured images**, inspect hierarchy, type, rhythm, color, contrast, crop, viewport continuity and meaning. Validate functional scenarios with `scripts/ux_scenarios.py`, including errors, keyboard focus, mobile navigation and task outcomes. Make a revision, capture again, and only mark `fixed` when evidence exists.
+7. **Report:** Deliver the usable artifact; state sources that actually informed decisions, alternatives/tradeoffs, tests actually run and unresolved risks. A browser assertion is not a user study; a screenshot is not a WCAG audit.
 
-## Text, typography and content decisions (v3.9)
+## Typography, Korean and content
 
-When text and layout decisions matter, analyze **meaning and user tasks together** rather than fitting placeholder copy into predefined grids. Retrieve only relevant cards:
-- **K16** for typeface coverage, Hangul/Latin mixed typography, line breaking and spacing-override resilience. W3C Korean text layout is a **Group Note Draft**; it is not an endorsed normative font prescription.
-- **K17** for naturally phrased Korean UX copy, task-specific labels, and actionable errors. GOV.UK English writing guidance is *practitioner material*; adapting it to Korean is a **design hypothesis**, not a validated Korean-language rule.
-- **K18** for connecting content roles (evidence, comparison, sequence, action) to structure, with real text lengths and responsive revision.
+For real text-layout problems, query K16 (Hangul typography and mixed-script layout), K17 (natural Korean UX copy) and K18 (content roles and layout), as applicable. Preserve legal/brand terminology, product facts and exact actions; review Korean honorific tone, translationese, line wrapping, truncation and cross-viewport typography **in the rendered UI**. W3C Hangul layout is a Group Note Draft, and English practitioner guidance does not experimentally validate Korean wording choices. Details: `docs/typography-writing.md`.
 
-Preserve facts, constraints, brand/legal terminology and actions before rephrasing. Test real Korean and mixed-script text at representative widths; revise layout when copy no longer fits. Do not claim automatic grammar/style checking or font recommendation is proven. Use `docs/type-language-content-review.md` for high-stakes or text-heavy tasks; skip ceremony for minor fixes.
+## Knowledge and governance
 
-## Knowledge Retrieval 2.0
+The current library keeps **one source of truth** for each record type: `knowledge/sources.json`, `knowledge/claims.json`, `knowledge/concepts.json`, `knowledge/catalog.json` and the actual `knowledge/cards/`. `knowledge/governance.json` holds sparse lifecycle/review metadata; the typed graph is derived, not a duplicate store.
 
-- `python scripts/knowledge_index.py rebuild` — disposable offline FTS5 index from the catalog and cards.
-- `python scripts/knowledge_index.py search '행사 홈페이지에서 정보를 명확하게 전달하는 방법' --top 5 --json` — bilingual question analysis, concept expansion, FTS+character retrieval, and provenance-linked results. These offline concepts are heuristics, **not complete semantic understanding**.
-- `--verified-only` filters by **explicit claim ID + matching reverified source**, not filename or K-prefix. Results include `verified_claims`, `source_scope`, `do_not_infer` and evidence state.
-- Optional *real* local sentence embeddings: `--embedding-model /path/to/pre-downloaded-model`; requires extra `sentence-transformers` and does **not** download a model automatically. Model validity/quality depends on that choice.
-- `python scripts/retrieval_benchmark.py` — repeat a transparent regression dataset; do not confuse the curated benchmark with held-out real-world evaluation.
+- Search: `scripts/knowledge_index.py` — offline SQLite FTS5, bilingual concept hints and character similarity; optional local sentence embeddings are opt-in. Scores are **heuristics, not calibrated confidence**. Use `--relative-cutoff 0` when investigating missed matches; `--include-inactive` only for historic/audit searches.
+- Provenance: `python scripts/knowledge_graph.py validate` and `python scripts/knowledge_graph.py impact source:N39`. Check dependencies, not merely card counts.
+- Integrity: `python scripts/knowledge_health.py --json` flags duplicate/unreferenced sources for **human review**, never automatic merging. A lifecycle state of `active` is **not** evidence verification.
+- Changes: `scripts/knowledge_governance.py` uses proposal → explicit reviewer → `apply --confirm`; do not silently archive/rewrite sources. `scripts/knowledge_ingest.py` requires original source, quotation checks, limitations and approval.
+- Evaluate: `scripts/retrieval_evaluation.py` reports hit@k, precision and false positives on curated queries including no-answer cases; it is not a benchmark of general human performance.
 
-## Knowledge relevance and maintenance (v3.9)
+Read `docs/architecture.md`, `docs/knowledge-management.md` and `knowledge/VERIFICATION-POLICY.md` when working on the Knowledge system.
 
-Search is a **candidate selection tool**, not a guarantee of a relevant finding. When one result strongly dominates, the default query-relative cutoff suppresses notably weaker cards (`--relative-cutoff 0.20`). The threshold is a heuristic **not** a calibrated relevance probability; use `--relative-cutoff 0` to inspect suppressed candidates or if recall seems insufficient. Do not cite a weak, unrelated result simply to fill a top-N quota.
+## Tools and optional providers
 
-The search response distinguishes `evidence_status` for explicit claim links from `source_context` for source type and verification access level. A W3C draft or practitioner opinion remains context, not a proved design effect.
+`scripts/static_page_audit.py` checks deterministic HTML structure issues; `scripts/visual_critique.py` captures screenshots and audit records; `scripts/ux_scenarios.py` validates observable tasks. Actual browser tests need Playwright/Chromium; otherwise mark `NOT TESTED`. Check images/fonts usage rights and real asset availability.
 
-Before adding Knowledge, check whether an existing source, concept, claim or method already covers the question. Run `python scripts/knowledge_health.py --json` to inspect graph errors and **review-only** duplicate-source warnings. Do not automatically merge or discard sources based on URL similarity. The proposed v4.0 typed lifecycle/migration lives in `docs/v4-knowledge-architecture.md`; it is not implemented by the current index.
+Gemini is **off by default**. External metadata selection via `scripts/knowledge_research.py` needs a configured `config.json`, `GEMINI_API_KEY` and explicit outbound-consent flag. It cannot approve new evidence or invent verified source IDs. Never send client data or unpublished source material without authorization.
 
-## Knowledge Governance v4.0 (use only when needed)
+## Boundaries
 
-Keep **one root skill** across Codex and Claude. Knowledge is structured as a read-only Source → Claim → Concept → Method → Observation projection of the existing registries; this does not create or validate scientific claims. When decisions depend on research provenance, source withdrawal, overlap, contradictory studies or staleness, use:
-- `python scripts/knowledge_graph.py validate` for integrity, and `impact source:<ID>` to list dependent claims/methods/concepts;
-- `python scripts/knowledge_health.py --json` for duplicate and orphan review warnings;
-- `python scripts/knowledge_governance.py propose-status ...` followed by separately reviewed `apply ... --confirm` to record lifecycle changes. NEVER auto-archive or merge sources based on keyword/DOI similarity alone.
-- `knowledge/v4/README.md` for procedures and limits; `knowledge/v4/governance.json` is a sparse metadata overlay, not a second source of research truth.
-
-Ordinary search omits archived/superseded methods; explicit `--include-inactive` is available for audits. A lifecycle state of `active` is **not** evidence verification. `knowledge_index` lexical scores remain heuristics. Report weak retrieval and no-match cases; refer to `scripts/retrieval_evaluation.py` for diagnostic negative-query measurements.
-
-Avoid exposing private source excerpts, project screenshots or user studies in a public Knowledge registry.
-
-## Evidence and optional external AI
-
-- Source identity, selected paper sections and claim provenance are in `knowledge/sources.json`, `knowledge/verified/claims.json` and `knowledge/VERIFICATION-POLICY.md`. Unreviewed legacy cards remain available, but must not be promoted to verified research findings.
-- `scripts/knowledge_ingest.py` accepts PDF/MD/HTML/TXT → local candidate → **explicit source-aware approval**. No auto-publishing of model claims. See `knowledge/README.md`.
-- Gemini is **off by default**. With a separately configured `config.json`, OS-level `GEMINI_API_KEY` and explicit permission for metadata transmission, `scripts/knowledge_research.py 'question' --provider gemini --approve-external --json` may select local card IDs. Gemini is advisory; unrecognized IDs are rejected. No cloud File Search or new-paper discovery is claimed.
-
-## Visual and task verification
-
-- `python scripts/visual_critique.py start page.html --out /tmp/visual-review` — screenshots at 1440/390/320 and geometric issue candidates. **You must actually view the images** and edit `critique.json`; no automatic aesthetic scores. `python scripts/visual_critique.py validate /tmp/visual-review/critique.json` checks that "fixed" issues have after-evidence. See `docs/visual-critique.md`.
-- `python scripts/ux_scenarios.py validate my-tasks.json` and `python scripts/ux_scenarios.py run page.html my-tasks.json --out /tmp/task-review` — scripted browser task assertions, **not** observation of a human participant. See `docs/ux-validation.md`.
-- `python scripts/decision_trace.py new trace.json --goal '...'` and `python scripts/decision_trace.py validate trace.json` — evidence-to-decision links with observed revision proof.
-- Existing `static_page_audit.py`, `visual_qa_capture.py`, `browser_smoke.py` remain available. If browser tools are missing, mark screenshots/interactions as `NOT TESTED`, never as passed.
-
-## Non-negotiable boundaries
-
-- **No forced branch** between homepage, dashboard, admin or editor. No canonical aesthetic, mandatory hero/cards/charts, visual reference gallery, fixed UI-type decision tree, invented copy, or research-citation stuffing.
-- Keep user-facing meaning and task performance primary. Do not equate novelty with visual noise or minimalism with correctness.
-- Check semantics, keyboard, contrast, error states and applicable WCAG success criteria with their exceptions; no universal numeric CSS "scientific constants".
-- Verify image rights and private-data boundaries. Do not send client information, unpublished source texts or credentials to external services without explicit authorization.
-- Use only the few relevant cards and tools. The point is *learning from evidence and revising an artifact*, not maximizing research references or checklist length.
+- **No canonical aesthetic. No forced branch** by page type, no obligatory hero/cards/charts or style gallery; let goals and actual content determine the composition.
+- Don't turn narrow experimental findings, designer advice or standards into universal numerical CSS rules.
+- Do not increase card count or cited-paper count as a proxy for quality. Favor useful retrieval, accurate wording, actual visual polish, working interactions and verified revisions.

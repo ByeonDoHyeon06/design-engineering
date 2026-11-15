@@ -1,16 +1,19 @@
-# Design Engineering v4.0 — Knowledge → Design → Critique
+# Design Engineering
 
-Codex·Claude Code 등 다양한 에이전트에서 사용할 수 있는 범용 디자인공학 Skill. 논문·학술 연구·디자이너의 문제 해결 방식에서 **판단 근거**를 찾고, 실제 UI 제작과 시각적 비평·사용자 과제 검증을 연결합니다. 특정 홈페이지, 대시보드, 관리자 화면을 정해진 스타일로 만드는 템플릿이 아닙니다.
+**Research-informed design engineering for Codex and Claude Code.**
 
-**v4.0:** 출처·검증 주장·개념·방법·관찰 관계를 하나의 타입화된 그래프로 조회하고, 지식 중복·수명주기를 명시적인 검토자 승인 절차로 관리합니다. 기존 Knowledge 파일은 중복 저장하거나 파괴적으로 마이그레이션하지 않습니다. [v4 운영 가이드](knowledge/v4/README.md) / [설계 RFC](docs/v4-knowledge-architecture.md).
+Design Engineering은 정해진 UI 템플릿을 제공하는 스킬이 아닙니다. 디자인 과제를 정의하고, 검증 범위를 알 수 있는 근거를 찾고, 설계 가설을 구현한 뒤 실제 화면과 사용자 과제로 평가하도록 돕습니다.
 
-**v3.9:** 실제 한글 조판·타이포그래피(K16), 자연스러운 한국어 UX Writing(K17), 콘텐츠와 레이아웃 통합 설계(K18)를 공통 스킬에 연결했습니다. W3C 초안과 GOV.UK 실무 지침은 각각 원문 지위와 전이 한계를 구분하며, 새로운 경험적 효과가 입증됐다고 주장하지 않습니다. `docs/type-language-content-review.md`에 적용·검토 절차가 있습니다.
+- **근거 중심 판단** — 출처·주장·적용 범위를 구분하고, 근거가 없는 설계 판단은 가설로 표시합니다.
+- **의미 중심 구성** — 화면 유형이나 트렌드보다 정보의 역할, 브랜드 맥락, 사용자 행동에 따라 구조를 설계합니다.
+- **실제 결과 검증** — 브라우저 스크린샷과 동작 테스트를 수행하고, 수정 전후를 기록합니다.
+- **관리 가능한 지식** — 중복과 관계를 추적하고 자료의 변경·보관을 검토자 승인 아래 관리합니다.
 
-**v3.8 주요 변화:** 검색 실패 개선, 출처·주장 단위 검증, 설계 결정 추적, 실제 스크린샷 비평과 재검증, 의미 중심 콘셉트 탐색, 브라우저 과제 시나리오 테스트. 연구 카드 수를 늘리지 않고 이미 존재하는 지식을 제대로 적용하는 데 집중했습니다.
+> **v4.0** · 단일 `SKILL.md` · 로컬 우선 · 공개 연구 데이터는 참조 정보로만 제공 · 선택적 외부 AI
 
-## 설치 (공통 Skill 원본)
+## Quick start
 
-실행 지침은 저장소 루트의 `SKILL.md` **하나뿐**입니다. `knowledge/`, `scripts/`, `methods/`, `templates/` 등 모든 경로는 이 스킬 루트를 기준으로 합니다. 단일 `SKILL.md`만 복사하면 연구 검색과 검증 기능을 사용할 수 없으므로 **저장소 전체를 설치**하세요.
+모든 기능을 사용하려면 **저장소 전체**가 필요합니다. `SKILL.md`만 복사하면 Knowledge 검색과 검증 스크립트를 사용할 수 없습니다.
 
 ### Codex
 
@@ -19,154 +22,117 @@ mkdir -p .agents/skills
 git clone https://github.com/ByeonDoHyeon06/design-engineering.git .agents/skills/design-engineering
 ```
 
-### Claude Code (마켓플레이스)
+### Claude Code
+
+Claude Code에서 마켓플레이스를 등록하고 플러그인을 설치합니다.
 
 ```text
 /plugin marketplace add ByeonDoHyeon06/design-engineering
 /plugin install design-engineering@design-engineering-marketplace
 ```
 
-**Claude Code 구성:** `.claude-plugin/plugin.json`에서 `"skills": ["."]`로 루트 `SKILL.md`를 명시합니다. 마켓플레이스는 전체 저장소를 `source: "./"`로 참조하며, 별도 Claude용 스킬 복제본은 없습니다. 이 설정은 Claude Code 플러그인용이며, Codex는 기존 저장소 설치를 그대로 사용합니다.
+업데이트 시 `/plugin marketplace update design-engineering-marketplace`를 실행한 뒤 설치된 플러그인도 갱신하세요. 플러그인 루트의 `SKILL.md`, `knowledge/`, `scripts/`를 확인합니다. 공통 스킬은 **루트 `SKILL.md` 하나**이며 Claude 전용 복제본은 없습니다.
 
-**이전 설치가 1,243바이트 단독 SKILL.md를 표시하는 경우:** 현재 정식 루트 파일과 다른 구버전/단독 스킬입니다. 먼저 Claude에게 실제로 읽은 **절대 경로**를 보고하도록 하세요. `~/.claude/skills/design-engineering/`처럼 직접 복사한 위치와 `~/.claude/plugins/cache/`에 있는 플러그인 설치는 다릅니다. 파일이 하나뿐인 경로를 플러그인 루트로 착각하지 마세요. 정확한 설치 유형을 확인한 다음 오래된 중복 스킬 등록을 비활성화하거나 제거해야 합니다. 다른 파일을 무차별 삭제하지 마세요.
+### 설치 확인
 
-설치 갱신은 Claude Code 안에서 `/plugin marketplace update design-engineering-marketplace`를 실행하고 설치된 플러그인을 업데이트하거나 제거 후 재설치하세요. 새 세션에서 `/plugin`의 Installed 탭 또는 `claude plugin list`로 **플러그인 이름·버전·상태**를 확인하세요. 마켓플레이스 갱신만으로 설치된 플러그인이 갱신됐다고 가정하지 마세요.
-
-### 공통 설치 검증
-
-**설치된 스킬 루트**에서 실행하세요. Claude Code에서는 설치된 플러그인/스킬이 실제로 어디에 있는지 먼저 확인해야 하며, 현재 작업 프로젝트 디렉터리에서 실행해서는 안 됩니다.
+아래 명령은 설치된 스킬의 **루트 디렉터리**에서 실행합니다. 기본 검색에는 API 키와 외부 네트워크가 필요 없습니다.
 
 ```bash
-test -f SKILL.md
-test -f scripts/knowledge_index.py
-test -f knowledge/catalog.json
-test -d methods
-test -d templates
-python scripts/knowledge_index.py rebuild
-python scripts/knowledge_index.py search '행사 홈페이지 정보를 명확히 전달하는 방법' --top 5 --json
 python scripts/validate_install.py --root . --smoke
+python scripts/knowledge_index.py search '한글 타이포그래피와 줄바꿈' --top 5 --json
 ```
 
-실행에 필요한 자료가 누락되면 Knowledge 검색을 수행한 것으로 취급하지 않습니다. 스킬의 기능과 실제 설치 환경의 검증 결과를 구분해서 보고하세요.
+## How it works
 
-Claude Code에서 검증할 때는 다음을 그대로 요청하는 것이 좋습니다.
-
-> 지금 사용 중인 design-engineering 스킬 파일의 **절대 경로, 실제 바이트 크기, 파일 내용의 첫 제목**을 출력하고, `claude plugin list`에서 설치된 플러그인 상태와 경로를 확인하세요. 검사 대상이 개별 스킬 폴더인지 전체 플러그인 루트인지 구분하세요. **플러그인 루트**에 있는 `scripts/validate_install.py`를 `--root <plugin-root> --smoke`로 실행하고 결과와 오류를 보고하세요. 새 파일을 임의로 설치하거나 잘못된 연구 인용을 생성하지 마세요.
-
-마켓플레이스 설치가 계속 실패할 때는 로컬에서 저장소 전체를 클론하여 `claude --plugin-dir /absolute/path/to/design-engineering` 방식으로 별도로 테스트할 수 있습니다. 이렇게 하면 마켓플레이스 캐시 문제와 플러그인 자체 문제를 분리할 수 있습니다. `claude plugin validate .`로 플러그인/마켓플레이스 메타데이터도 확인하세요.
-
-## v3.9 Knowledge 품질 및 v4.0 설계
-
-새로운 자료를 계속 카드로 추가하기 전에 기존 자료의 중복, 출처 검증 상태, 개념 연결, 실제 사용 목적을 확인하세요.
-
-```bash
-python scripts/knowledge_health.py --json
-python scripts/knowledge_index.py search '한글 폰트 줄바꿈과 타이포그래피' --top 5 --json
-# 검색 누락 진단: 상대 점수 필터 비활성화
-python scripts/knowledge_index.py search '한글 폰트 줄바꿈과 타이포그래피' --relative-cutoff 0 --top 10 --json
+```text
+과제 정의 → 필요한 Knowledge 검색 → 출처·적용 범위 검토
+    → 의미 있는 대안 탐색 → 구현 → 실제 화면·사용자 과제 검증
+    → 발견한 문제 수정 → 재검증 및 한계 보고
 ```
 
-검색은 강한 결과가 존재할 때 약한 상대 점수의 후보를 제외하도록 개선했습니다. 이 점수는 확률이나 학술 근거의 신뢰도가 아닙니다. `source_context`는 출처의 종류와 검증 수준을 표시하고, `verified_claims`는 실제로 검증 등록된 주장만 표시합니다.
+AI에게 "이 디자인을 Design Engineering 스킬을 활용해 제작하고, 관련 근거와 실제 검증 결과를 구분해 보고해 줘"라고 요청할 수 있습니다. 스킬은 **고정된 폰트·Hero·레이아웃을 강제하지 않으며**, 프로젝트의 기존 디자인 시스템과 사용자 요구가 우선입니다.
 
-`knowledge_health.py`는 구조 오류를 실패 처리하고, 중복 DOI·참조되지 않는 출처는 **검토용 경고**로 보고합니다. 데이터를 임의로 병합·삭제하지 않습니다. 향후 지식 모델을 정규화하기 위한 RFC: [v4.0 Knowledge Architecture](docs/v4-knowledge-architecture.md). **v4.0 마이그레이션은 아직 수행하지 않았습니다.**
+### 주요 도구
 
-## v4.0 Knowledge 운영
+| 목적 | 명령어 |
+| --- | --- |
+| 근거 탐색 | `python scripts/knowledge_index.py search 'question' --top 5 --json` |
+| 검증된 주장만 검색 | `python scripts/knowledge_index.py search 'question' --verified-only` |
+| 출처 관계 검사 | `python scripts/knowledge_graph.py validate` |
+| 출처 영향 추적 | `python scripts/knowledge_graph.py impact source:N39` |
+| 중복·연결 상태 점검 | `python scripts/knowledge_health.py --json` |
+| 설계 의사결정 검토 | `python scripts/decision_trace.py --help` |
+| 실제 화면 비평 | `python scripts/visual_critique.py start page.html --out /tmp/visual-review` |
+| 브라우저 사용자 과제 | `python scripts/ux_scenarios.py run page.html tasks.json --out /tmp/task-review` |
+| 검색 품질 평가 | `python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-relevance.json` |
 
-```bash
-python scripts/knowledge_graph.py validate
-python scripts/knowledge_graph.py impact source:N39
-python scripts/knowledge_governance.py --help
-python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-v4.json --top 3
-python scripts/knowledge_scale_benchmark.py --size 1000 --size 10000
-```
+일반 검색은 보관·대체된 방법 카드를 제외합니다. 감사 목적의 과거 검색에는 `--include-inactive`를 사용합니다. 검색의 점수는 **관련도 휴리스틱**일 뿐, 연구 신뢰도를 의미하지 않습니다.
 
-`active`는 검색 가능한 수명주기 상태이지 연구가 검증되었다는 뜻이 아닙니다. DOI 중복·미사용 출처는 자동 삭제하지 않고 검토 목록으로 유지합니다. v4 구조와 사용자 과제 기반 디자인 품질은 별도로 평가해야 합니다.
-
-## 빠른 시작
-
-아래 명령들은 Skill 루트에서 실행합니다. 로컬 경로에서는 **외부 통신·API 키가 필요 없습니다.**
-
-```bash
-python scripts/knowledge_index.py rebuild
-python scripts/knowledge_index.py search '행사 홈페이지에서 정보를 명확하게 전달하는 방법' --top 5 --json
-python scripts/knowledge_index.py search '데이터 차트 비교 정확도' --verified-only --top 5
-python scripts/retrieval_benchmark.py
-python scripts/retrieval_benchmark.py --dataset benchmarks/retrieval-v39.json --top 5
-python -m unittest discover -s tests -p 'test_v39.py'
-```
-
-결과의 `verified_claims`는 학술 연구 또는 표준의 **확인 범위**이지, 현 프로젝트에서 그 디자인을 썼을 때 효과가 입증된 것은 아닙니다. `--verified-only`는 카드 이름이 아닌 검증된 주장 ID 연결을 검사합니다.
-
-### 디자인 의사결정 및 반복 검토
-
-```bash
-python scripts/decision_trace.py new /tmp/design-decisions.json --goal '행사 내용을 이해하고 프로그램을 찾도록 설계'
-# 실제 문제·선택·근거·구현·검증 결과를 채워 넣고
-python scripts/decision_trace.py validate /tmp/design-decisions.json
-
-python scripts/visual_critique.py start path/to/page.html --out /tmp/visual-qa
-# 이미지 실제 열람 후 /tmp/visual-qa/critique.json에 관찰·수정·재확인을 기록
-python scripts/visual_critique.py validate /tmp/visual-qa/critique.json
-
-python scripts/ux_scenarios.py validate my-tasks.json
-python scripts/ux_scenarios.py run path/to/page.html my-tasks.json --out /tmp/ux-check --width 390
-```
-
-`Visual Critique`는 예쁨을 자동 점수화하지 않습니다. UI에 대한 시각적 판단은 화면을 직접 관찰한 뒤 기록해야 하며, **클릭·폼 테스트가 정상이어도 실제 방문자가 내용을 이해했다고 주장할 수는 없습니다.** 시나리오는 사용자의 목적에 맞게 직접 작성합니다.
-
-### 의미 기반 검색의 정확한 범위
-
-로컬 기본 검색은 **한영 설계 개념 확장 + SQLite FTS5 + 문자 유사도**입니다. 기존의 키워드 검색보다 자연어 변화에 견딜 수 있지만 완전한 의미 이해나 학술 주장 검증을 수행하지 않습니다. 기존 모델을 로컬에 갖고 있다면 선택형 문장 임베딩 재정렬도 가능합니다.
-
-```bash
-# 선택 사항; 별도 준비한 로컬 모델만 허용하며 다운로드하지 않음
-python -m pip install sentence-transformers
-python scripts/knowledge_index.py search '복잡한 관리자 화면의 정보 위계' \
-  --embedding-model /LOCAL/MODEL/DIRECTORY --top 5
-```
-
-### Gemini (선택)
-
-사용할 때만 `config.example.json`을 `config.json`으로 복사해 `gemini.mode = ask`, OS 환경변수 `GEMINI_API_KEY`를 설정합니다. 질문과 제한된 로컬 카드 메타데이터를 외부로 보내는 데 명시적 동의가 필요합니다.
-
-```bash
-python scripts/knowledge_research.py '특정 사용자 과제에서 필요한 근거' \
-  --provider gemini --approve-external --json
-```
-
-API 키가 없어도 전체 로컬 검색과 QA 도구는 작동합니다. Gemini 실서비스 호출은 **이 패키지의 자동 테스트에서 인증되지 않았습니다**. 모델이 제안한 출처 ID는 로컬 등록 데이터와 대조합니다.
-
-### 자료 등록
-
-`knowledge/README.md`와 `knowledge/VERIFICATION-POLICY.md` 참조. PDF/Markdown/HTML/TXT를 검토 대기열에 준비한 뒤 출처·인용·페이지를 확인한 후보만 승인합니다. 불특정 AI 추측은 승인 자료가 아닙니다.
-
-## 구조
+## Repository layout
 
 ```text
 design-engineering/
-├── SKILL.md                 # 짧은 실행 지침
+├── SKILL.md                     # 모든 에이전트가 공유하는 유일한 스킬 지침
+├── .claude-plugin/              # Claude Code 배포 메타데이터
+├── agents/                      # Codex 에이전트 메타데이터
 ├── knowledge/
-│   ├── catalog.json         # 지식 카드 메타데이터
-│   ├── concepts.json        # 범용 설계 개념 및 동의어(스타일 처방 아님)
-│   ├── verified/claims.json # 연구 주장 및 적용 범위
-│   ├── sources.json         # 출처·검토 수준
-│   └── cards/               # 연구·방법론 카드 (v3.9에서 3개 추가)
-├── scripts/
-│   ├── knowledge_index.py   # 혼합 로컬 검색
-│   ├── query_understanding.py
-│   ├── knowledge_research.py
-│   ├── knowledge_ingest.py
-│   ├── decision_trace.py
-│   ├── concept_exploration.py
-│   ├── visual_critique.py
-│   └── ux_scenarios.py
-├── docs/                    # 시각 비평·사용자 과제 운영
-├── templates/               # 중간 판단 기록 (UI 출력 아님)
-└── benchmarks/              # 연구용 회귀 질의
+│   ├── cards/                   # 실제 설계 문제에 적용하는 지식 카드
+│   ├── catalog.json             # 카드 메타데이터 및 검색 힌트
+│   ├── concepts.json            # 한국어·영어 설계 개념
+│   ├── sources.json             # 출처 및 검토 범위
+│   ├── claims.json              # 출처가 명시된 검증 주장
+│   └── governance.json          # 수명주기·별칭·관계의 승인 메타데이터
+├── methods/                     # 디자이너 방법론
+├── scripts/                     # Knowledge · 설계 · 브라우저 QA 도구
+├── templates/                   # 의사결정·시나리오·자료 수집 예시
+├── docs/                        # 아키텍처 및 운영 가이드
+├── benchmarks/                  # 검색 회귀 및 부정 질의 평가 데이터
+├── tests/                       # 자동 테스트
+└── .github/workflows/           # CI
 ```
 
-개발용 GitHub 저장소에는 `tests/`, `.github/workflows/validate.yml`, `CONTRIBUTING.md`가 추가로 포함됩니다. 설치용 ZIP은 개발 파일을 제외한 배포본으로 제공합니다.
+각 파일은 고유 목적을 갖습니다. 논문 1편을 추가할 때마다 카드를 새로 만들지 않으며, 원래 출처와 주장은 `sources.json` 및 `claims.json`에 유지됩니다. 관계 그래프는 이를 읽어서 **필요할 때 생성**합니다.
 
-## 검증 한계
+## Documentation
 
-지식 검색 20문항의 재현용 회귀셋 결과는 제작한 소규모 도메인 질의에 대한 **회귀 테스트**로, 새로운 사용자 질의나 모델 전반으로 일반화할 수 없습니다. 브라우저 QA는 실제 Playwright/Chromium으로 실행할 수 있으나 시각적 취향, WCAG 전체, 스크린리더나 실제 사용자 테스트를 인증하지 않습니다.
+| 문서 | 내용 |
+| --- | --- |
+| [Architecture](docs/architecture.md) | 저장소 구성, 관계 그래프, 검색 구조 |
+| [Knowledge governance](docs/knowledge-management.md) | 자료 등록·중복·검토·보관 및 영향 추적 |
+| [Evidence policy](knowledge/VERIFICATION-POLICY.md) | 출처 검증과 주장 해석의 한계 |
+| [Typography & Korean UX writing](docs/typography-writing.md) | 한글 조판과 문장·레이아웃 검토 |
+| [Visual critique](docs/visual-critique.md) | 실제 스크린샷 비평과 수정 검증 |
+| [UX validation](docs/ux-validation.md) | 브라우저 과제와 관찰 가능한 성공 조건 |
+| [Contributing](CONTRIBUTING.md) | 자료·코드 기여 및 필수 검사 |
+
+### 자료 추가와 관리
+
+`knowledge_ingest.py`는 PDF·Markdown·HTML·텍스트에서 **검토 후보**를 만듭니다. 출처의 원문 구간, 저작권, 해석 범위를 사람이 확인해야 하며 승인 전에는 공식 Knowledge로 등록되지 않습니다.
+
+```bash
+python scripts/knowledge_ingest.py --help
+python scripts/knowledge_governance.py --help
+python scripts/knowledge_graph.py impact source:N39
+```
+
+Gemini는 선택 사항입니다. `config.example.json`을 참고하고 `GEMINI_API_KEY`를 별도 설정한 뒤, 외부 전송에 명시적으로 동의한 경우에만 사용합니다. 기본 검색과 자동 검증에는 필요하지 않습니다.
+
+## Development & checks
+
+Python 3.10 이상을 권장합니다. 로컬 검색과 Knowledge 관련 테스트는 표준 라이브러리 위주로 동작합니다. 시각·브라우저 검사는 별도로 Playwright와 Chromium이 필요합니다. PDF 추출에는 `requirements-optional.txt`의 선택 의존성을 사용합니다.
+
+```bash
+python scripts/validate_install.py --root . --smoke
+python scripts/knowledge_graph.py validate
+python scripts/knowledge_health.py --json
+python -m unittest discover -s tests -v
+python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-core.json
+python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-typography.json --top 5
+python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-relevance.json
+```
+
+CI는 설치 구성, 지식 그래프, 전체 단위 테스트, 검색 회귀 및 합성 데이터 규모 테스트를 실행합니다. `tests/`와 `benchmarks/`의 데이터는 **작은 개발용 평가 집합**이며, 독립적인 사용자 연구나 논문 재현 실험이 아닙니다.
+
+## Limits & principles
+
+연구 출처 등록은 학술적 타당성의 자동 인증이 아닙니다. 공식 표준, 초안, 논문 초록, 디자이너 견해는 서로 다른 근거 수준으로 취급합니다. 스크린샷 점검은 미적 품질의 객관적 채점이 아니며, 브라우저 시나리오 통과는 실제 사용자 이해도 검증이 아닙니다. 저작권을 가진 이미지·서체, 개인 데이터, 비공개 고객 자료를 허가 없이 Knowledge에 추가하지 마세요.
