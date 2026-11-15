@@ -38,7 +38,7 @@ def evaluate(dataset,top=3,root=ROOT):
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--dataset",default=str(ROOT/"benchmarks/retrieval-v4.json"))
+    ap.add_argument("--dataset",default=str(ROOT/"benchmarks/retrieval-relevance.json"))
     ap.add_argument("--top",type=int,default=3);ap.add_argument("--out")
     args=ap.parse_args()
     data=json.loads(Path(args.dataset).read_text(encoding="utf-8"))

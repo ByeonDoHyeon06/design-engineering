@@ -1,4 +1,4 @@
-"""current registry integrity and curated natural-language retrieval smoke tests."""
+"""Typography, Korean microcopy and content-layout retrieval regression tests."""
 import json,sys,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]

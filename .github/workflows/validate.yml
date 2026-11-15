@@ -1,11 +1,14 @@
-name: Validate skill and Knowledge
+name: Validate Design Engineering
+
 on:
   push:
     branches: [main]
   pull_request:
   workflow_dispatch:
+
 permissions:
   contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -13,20 +16,25 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-      - name: Full installation smoke
+          python-version: "3.12"
+
+      - name: Check installed skill contents
         run: python scripts/validate_install.py --root . --smoke
-      - name: Knowledge registry health
-        run: python scripts/knowledge_health.py --json
-      - name: Typed Knowledge graph validation
-        run: python scripts/knowledge_graph.py validate
+
+      - name: Validate Knowledge and provenance
+        run: |
+          python scripts/knowledge_health.py --json
+          python scripts/knowledge_graph.py validate
+          python scripts/audit_evidence.py
+
       - name: Unit tests
         run: python -m unittest discover -s tests -v
-      - name: v4 retrieval and growth diagnostics
+
+      - name: Retrieval regressions
         run: |
-          python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-v4.json --top 3
-          python scripts/knowledge_scale_benchmark.py --size 1000 --size 10000 --search-size 1000
-      - name: Knowledge retrieval benchmarks
-        run: |
-          python scripts/retrieval_benchmark.py --dataset benchmarks/retrieval-v38.json --top 3
-          python scripts/retrieval_benchmark.py --dataset benchmarks/retrieval-v39.json --top 5
+          python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-core.json --top 3
+          python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-typography.json --top 5
+          python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-relevance.json --top 3
+
+      - name: Synthetic graph and SQLite scale checks
+        run: python scripts/knowledge_scale_benchmark.py --size 1000 --size 10000 --search-size 1000

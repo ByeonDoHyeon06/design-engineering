@@ -1,0 +1,26 @@
+# Local and generated data
+.cache/
+.local/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# User-specific credentials and models
+config.json
+.env
+.env.*
+!.env.example
+
+# Python environments and IDE state
+.venv/
+venv/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Browser review captures and synthetic diagnostics
+playwright-report/
+test-results/
