@@ -44,3 +44,16 @@ The existing `knowledge_ingest.py` still requires source excerpts and human revi
 - Synthetic 1k/10k graph benchmark does not measure real retrieval speed or human usefulness.
 - Source type, claim support, transfer hypothesis, lifecycle status and implementation result are independent. Don't combine them into a made-up confidence score.
 - v4 intentionally keeps existing files readable; a destructive mass migration is neither needed nor performed.
+
+## Search capacity rehearsal
+
+```bash
+# Bounded synthetic relationship-graph measurements (1k/10k)
+python scripts/knowledge_scale_benchmark.py --size 1000 --size 10000
+# Actual synthetic SQLite FTS build and query (not academic papers)
+python scripts/knowledge_scale_benchmark.py --size 1000 --search-size 1000
+# Optional heavier manual run
+python scripts/knowledge_scale_benchmark.py --size 10000 --search-size 10000
+```
+
+These numbers depend on the runner, filesystem, Python and SQLite versions. Do not extrapolate simulated graph timings into actual 10k-paper performance. For archived source IDs, use `impact` to review dependent methods and claims; an obsolete source must not silently retain the same verified-only search presentation.
