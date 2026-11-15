@@ -14,6 +14,7 @@ import knowledge_graph
 import knowledge_governance
 import knowledge_index
 import query_understanding
+from knowledge_ingest import prepare, commit, IngestError
 
 class V40Tests(unittest.TestCase):
     def test_full_legacy_graph_is_valid_and_nonduplicated(self):
@@ -141,6 +142,23 @@ class V40Tests(unittest.TestCase):
         self.assertIn("navigation_findability",[c["id"] for c in result["concepts"]])
         found=[x["id"] for x in knowledge_index.search(question,top=5)]
         self.assertTrue(set(found)&{"P06","K06"},found)
+
+    def test_duplicate_doi_ingestion_is_rejected_before_catalog_mutation(self):
+        root=self._sandbox()
+        sample=root/"paper.md"
+        sample.write_text("Test participants compared two different interfaces. "*6,encoding="utf-8")
+        review=prepare(sample,title="Candidate duplicate",authors="Researcher",
+                       url="https://www.w3.org/TR/klreq/",local_dir=root/"review-queue")
+        data=json.loads(review.read_text(encoding="utf-8"))
+        data["candidates"][0].update(status="approved",
+            claim_text="A narrow hypothetical claim",
+            limitations="Synthetic test data only",
+            queries=["interface comparison"],problem_signals=["test"])
+        review.write_text(json.dumps(data),encoding="utf-8")
+        before=(root/"knowledge/catalog.json").read_bytes()
+        with self.assertRaisesRegex(IngestError,"already registered"):
+            commit(review,root=root,confirm=True,reviewer="human")
+        self.assertEqual((root/"knowledge/catalog.json").read_bytes(),before)
 
     def test_local_graph_does_not_promote_unreviewed_claims(self):
         g=knowledge_graph.build(ROOT)
