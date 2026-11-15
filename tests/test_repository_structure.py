@@ -107,9 +107,9 @@ class RepositoryStructureTests(unittest.TestCase):
             self.assertEqual(len(sources),len(mobile))
             self.assertEqual(len(re.findall(r'<picture>',content)),4)
             # Empty alt is correct for decorative logos beside explicit agent names.
-            self.assertEqual(len(re.findall(r'<img\\s+[^>]*alt="[^"]*"',content)),
+            self.assertEqual(len(re.findall(r'<img\s+[^>]*alt="[^"]*"',content)),
                              len(images))
-            self.assertEqual(len(re.findall(r'<source\\s+media="\(max-width: 640px\)"',content)),
+            self.assertEqual(len(re.findall(r'<source\s+media="\(max-width: 640px\)"',content)),
                              len(mobile))
             for name in primary | mobile:
                 asset=(path.parent / prefix / name).resolve()
