@@ -143,6 +143,24 @@ class V40Tests(unittest.TestCase):
         found=[x["id"] for x in knowledge_index.search(question,top=5)]
         self.assertTrue(set(found)&{"P06","K06"},found)
 
+    def test_archived_source_is_not_returned_as_current_verified_evidence(self):
+        root=self._sandbox()
+        file=root/knowledge_graph.GOVERNANCE
+        state=json.loads(file.read_text(encoding="utf-8"))
+        state["status_overrides"]["source:S1"]={"status":"archived","reviewer":"researcher",
+            "reason":"Simulated official source withdrawal"}
+        file.write_text(json.dumps(state),encoding="utf-8")
+        query="모바일 앵커 도착점이 고정 헤더 뒤에 가려짐"
+        db=root/"search.sqlite"
+        current=knowledge_index.search(query,root=root,db_path=db,top=15,verified_only=True)
+        historic=knowledge_index.search(query,root=root,db_path=db,top=15,
+                                        verified_only=True,include_inactive=True)
+        self.assertNotIn("K14",[r["id"] for r in current])
+        older=next(r for r in historic if r["id"]=="K14")
+        self.assertEqual(older["evidence_status"],"source_claims_checked_inactive_provenance")
+        self.assertTrue(any(s["id"]=="S1" and s["lifecycle_status"]=="archived"
+                            for s in older["source_context"]))
+
     def test_duplicate_doi_ingestion_is_rejected_before_catalog_mutation(self):
         root=self._sandbox()
         sample=root/"paper.md"
