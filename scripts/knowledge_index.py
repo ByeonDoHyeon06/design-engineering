@@ -199,12 +199,15 @@ def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=N
             raw_overlap=sum(min(count,meta_grams.get(gram,0))
                             for gram,count in qgrams.items())/qgram_total
             domain_anchor=any(c.get('has_domain_anchor',False) for c,_ in concept_matches)
+            # A highly specific token occurring literally in a card body is a
+            # valid retrieval signal, even if it is not indexed as a concept.
+            literal_body_hit=any(len(tok)>=5 and tok in norm(body) for tok in direct_tokens)
             score=conceptual+fts_score+char_score+direct_score+embedding_score
             if not concept_matches and id_ not in fts and char[i]<0.12 and (embed is None or embed[i]<0.44):continue
             if score<0.14:continue
             # No evidence of a design task? Abstain instead of filling top-N
             # with cards connected only through generic words and expansions.
-            if not domain_anchor and strong_meta_hits<2 and raw_overlap<0.16 and (
+            if not domain_anchor and not literal_body_hit and strong_meta_hits<2 and raw_overlap<0.16 and (
                     embed is None or embed[i]<0.5):continue
             details=[]
             for cid in claim_ids:
