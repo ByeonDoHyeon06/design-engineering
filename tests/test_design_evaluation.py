@@ -138,6 +138,8 @@ class DesignEvaluationTests(unittest.TestCase):
         card_path.write_text(json.dumps(score),encoding="utf-8")
         report=ev.report(run=self.run,judgment_files=[card_path])
         self.assertEqual(report["status"],"PILOT_REVIEWED")
+        self.assertEqual(report["summary"]["effort_metrics"]["duration_seconds"]["paired_cases"],2)
+        self.assertEqual(report["summary"]["effort_metrics"]["cost_usd"]["mean_difference_skill_minus_baseline"],0.0)
         self.assertEqual(report["summary"]["skill_preferred_tasks"],1)
         self.assertEqual(report["summary"]["tie_tasks"],1)
         self.assertEqual(report["summary"]["baseline_preferred_tasks"],0)
@@ -145,6 +147,20 @@ class DesignEvaluationTests(unittest.TestCase):
         self.assertEqual(report["summary"]["paired_rating_differences"]["originality"]
                          ["mean_skill_minus_baseline"],2.0)
         self.assertTrue(any("causal improvement" in caveat for caveat in report["limitations"]))
+
+    def test_missing_cost_information_is_not_invented(self):
+        self.begin()
+        task=ev.load_tasks(self.catalog)["tasks"][0]["id"]
+        ev.attach(run=self.run,task_id=task,condition="baseline",
+                  desktop=self.png,mobile=self.png)
+        ev.attach(run=self.run,task_id=task,condition="skill",
+                  desktop=self.png,mobile=self.png,duration_seconds=19.0,
+                  input_tokens=1500,cost_usd=0.023)
+        data=ev.report(run=self.run,judgment_files=[])
+        self.assertEqual(data["status"],"NO_OBSERVATIONS")
+        self.assertEqual(data["summary"]["effort_metrics"]["cost_usd"]["paired_cases"],0)
+        self.assertIsNone(data["summary"]["effort_metrics"]["cost_usd"]["mean_skill"])
+        self.assertIsNone(data["summary"]["effort_metrics"]["duration_seconds"]["mean_difference_skill_minus_baseline"])
 
     def test_invalid_scores_and_duplicate_reviewer_are_rejected(self):
         self.begin()
