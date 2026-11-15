@@ -121,6 +121,7 @@ The report includes:
 - Task-level skill wins, baseline wins, ties, and unresolved split verdicts (one vote per task after reviewer-majority aggregation).
 - Win share **excluding ties**, or `null` when no decisive preference exists.
 - Paired 1–5 rating differences per category for *descriptive inspection only*.
+- Matched **duration, input/output tokens, and USD cost** where both arms report actual measurements. Missing metrics remain `null`, never zero.
 - Judge counts and transparent limitations, including subjective rating uncertainty.
 
 If no scorecards contain actual judgments, the report status is **`NO_OBSERVATIONS`** and the win share is **`null`**. Missing tasks yield `INCOMPLETE`. The tool cannot silently generate winners, scores, model outputs, screenshots, or A/B experiment conclusions.
