@@ -72,3 +72,7 @@ For a consumer project outside the current working directory supply the **global
 5. Before designing, use `de context` for personal preferences and `de search` for separately labelled research; explain any conflict between saved preference, project constraints and current request.
 
 AI interpretation is useful for drafting/organizing prose, **not** for inventing source identities or autonomously promoting research as verified.
+
+## Potential preference clashes
+
+Use `de context --conflicts --json` to find **possible** opposing statements within the displayed local guidance. This is a conservative lexical review cue based on explicit prefer/avoid language and shared topic words. It can miss paraphrases and produce false positives. The CLI never declares a contradiction proven, resolves priority automatically, deletes one of the statements or treats preferences as research. A human or agent must interpret the actual task, scope and user intent.

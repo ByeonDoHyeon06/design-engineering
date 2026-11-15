@@ -77,3 +77,9 @@ Record public-safe metadata only. Keep project-specific UX observations, origina
 ## Personal knowledge (non-academic)
 
 Use `de add` to propose user/project/session preferences, principles, observations or reference bookmarks, then `de review --approve --reviewer ...` after explicit authorization. Personal entries never enter `knowledge/catalog.json` or `knowledge/claims.json` and do not acquire verified-claim IDs. To add source-backed research to the common repository, use `de add --type evidence --scope core --file ...` and the existing reviewed ingester. See [Personal Knowledge](personal-knowledge.md).
+
+## Retrieval coverage, explicit review due dates and gap handling
+
+Use `de search "question" --explain --json` to inspect `why_matched` concept/FTS/lexical signals and registered claim links. A `no_registered_card_match` finding means **this installed library returned no card at the current threshold**; it is not a claim that the academic literature contains no answer. `matched_cards_without_explicit_checked_claim` means retrieved cards have no registered reviewed claim link, not that their practitioner methods are useless.
+
+`de check --review-due --json` reports only **explicitly scheduled** `review_due` records and `needs_review` lifecycle overrides; it does not infer a universal one-year expiry date or silently reclassify research. For absent/weak results, propose new sources through the existing human-reviewed ingestion route. Neither gap reporting nor review queues automatically add, archive or rewrite Knowledge.

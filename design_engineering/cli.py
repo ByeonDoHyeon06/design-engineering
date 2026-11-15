@@ -53,6 +53,9 @@ def _search(args):
         top=args.top) if scopes and not args.verified_only else []
     result = {"query": args.query, "research": scientific, "personal_guidance": guidance,
               "notice": "Personal guidance is user supplied, not peer-reviewed evidence; research scores are relevance heuristics."}
+    if args.explain:
+        from .knowledge_intelligence import explain
+        result["coverage"] = explain(args.query,scientific,guidance)
     if args.json:
         _print(result, True)
     else:
@@ -64,6 +67,9 @@ def _search(args):
         _format_guidance(guidance)
         if not guidance:
             print("  No matching user/project/session guidance.")
+        if args.explain:
+            print("COVERAGE:",result["coverage"]["state"])
+            print("  "+result["coverage"]["recommendation"])
     return 0
 
 
@@ -160,13 +166,22 @@ def _context(args):
     scopes=("session","project","user") if args.scope=="all" else (args.scope,)
     rows=personal.search(args.query or "", **_scope_paths(args), scopes=scopes,
                          include_all=not args.query,top=args.top)
+    result={"scope":args.scope,"guidance":rows,
+            "notice":"User-authored preferences/principles, not verified research."}
+    if args.conflicts:
+        from .knowledge_intelligence import conflict_candidates
+        result["conflict_review"] = conflict_candidates(rows)
+        result["conflict_review"]["scope_notice"] = "Only displayed, active records were scanned; max 100 by default."
     if args.json:
-        _print({"scope":args.scope,"guidance":rows,
-                "notice":"User-authored preferences/principles, not verified research."},True)
+        _print(result, True)
     else:
         _format_guidance(rows)
         if not rows:
             print("No saved guidance. Use de add to propose a new item.")
+        if args.conflicts:
+            print("Potential preference clashes:",result["conflict_review"]["candidate_count"])
+            for item in result["conflict_review"]["candidates"]:
+                print("  "+", ".join(item["ids"])+" — common terms: "+", ".join(item["common_terms"]))
     return 0
 
 
@@ -213,6 +228,9 @@ def _check(args):
             result["smoke"]={"error":run.stderr or run.stdout}
         if run.returncode:
             issues.append("Knowledge smoke failed")
+    if args.review_due:
+        from .knowledge_intelligence import source_review_queue
+        result["recorded_review_queue"] = source_review_queue(ROOT)
     result["ok"]=not bool(issues)
     if args.json:
         _print(result,True)
@@ -222,6 +240,8 @@ def _check(args):
         print("Graph:",len(graph["errors"]),"errors,",len(graph["warnings"]),"warnings")
         if args.smoke:
             print("Smoke:", "PASS" if result["smoke"].get("complete") else "FAIL")
+        if args.review_due:
+            print("Recorded review candidates:", len(result["recorded_review_queue"]["items"]))
     return int(bool(issues))
 
 
@@ -310,6 +330,7 @@ def parser():
     s.add_argument("--scope",choices=("all","core","user","project","session"),default="all")
     s.add_argument("--top",type=int,default=5)
     s.add_argument("--verified-only",action="store_true",help="Show only explicitly verified core claims.")
+    s.add_argument("--explain",action="store_true",help="Explain registered coverage, match signals and knowledge gaps.")
     s.add_argument("--relative-cutoff",type=float,default=0.2)
     s.add_argument("--include-inactive",action="store_true")
     s.add_argument("--json",action="store_true")
@@ -344,6 +365,7 @@ def parser():
     c=sub.add_parser("context",help="Show active personal/project guidance in scope priority.")
     c.add_argument("--scope",choices=("all","user","project","session"),default="all")
     c.add_argument("--query",default="")
+    c.add_argument("--conflicts",action="store_true",help="Show lexical preference conflicts for human review.")
     c.add_argument("--top",type=int,default=100)
     c.add_argument("--json",action="store_true")
     c.set_defaults(func=_context)
@@ -355,6 +377,7 @@ def parser():
 
     check=sub.add_parser("check",help="Inspect installation and core Knowledge health.")
     check.add_argument("--smoke",action="store_true")
+    check.add_argument("--review-due",action="store_true",help="Show explicitly registered source/card review-due items.")
     check.add_argument("--json",action="store_true")
     check.set_defaults(func=_check)
 

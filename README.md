@@ -126,6 +126,8 @@ de search "How should mixed Korean and Latin headings wrap?"
 de check
 ```
 
+For deeper inspection: `de search "question" --explain --json` explains registered evidence coverage; `de context --conflicts` highlights local preference tensions without automatically resolving them.
+
 For managed plugin installations where editing the plugin is undesirable, use the portable launcher: `python /path/to/design-engineering/scripts/de.py --help`.
 
 <details>

@@ -78,3 +78,7 @@ Personal data is held separately by `design_engineering/local_knowledge.py` at u
 ## Paired design evaluation
 
 `design_engineering/evaluation.py` supports balanced A/B assignment, private arm mapping, local blind packets, separate mobile/desktop PNG captures and human-authored reviews through the existing `de eval` CLI namespace. It does **not** execute agents or infer design scores. A report without actual judgments explicitly has no observations. The curated task briefs live at `benchmarks/design-tasks.json`; evaluation runs stay outside version control. See [Design evaluation](design-evaluation.md) for the protocol and confounders.
+
+## Read-only Knowledge intelligence
+
+`design_engineering/knowledge_intelligence.py` provides explainable **registered coverage**, explicit-governance review queues and tentative local preference conflict flags. Existing `knowledge_index.py` remains the only scientific retrieval engine and already reports `why_matched` with provenance; the new diagnostics do not rank subjective knowledge as scientific certainty. All results are read-only and bounded to the installed library; no automatic external research, generated paper claims or destructive conflict resolution occurs.
