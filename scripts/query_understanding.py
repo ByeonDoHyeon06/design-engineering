@@ -31,6 +31,13 @@ def _cue_matches(q, cue):
     # Latin single words: don't match infixes like "form" inside "performance".
     if re.fullmatch(r"[a-z0-9_-]+",c):
         return bool(re.search(r"(?<![a-z0-9_])"+re.escape(c)+r"(?![a-z0-9_])",q))
+    # Verb nominalizations like 찾기 need a separate inflection rule
+    # BEFORE generic two-character noun matching (찾는 / 찾아 / 찾도록).
+    if re.fullmatch(r"[가-힣]+",c) and len(c)>=2 and c.endswith(("기","다")):
+        stem=c[:-1]
+        endings=("는","기","다","아","어","아서","어서","고","을","으려","으려면","으면","도록","는데","게")
+        if any(t==stem+ending for t in q.split() for ending in endings):
+            return True
     # Short Korean cues: reject unrelated compounds such as 구조 in 구조론.
     if re.fullmatch(r"[가-힣]+",c) and len(c)<=2:
         allowed=("은","는","이","가","을","를","과","와","에","에서","으로",
