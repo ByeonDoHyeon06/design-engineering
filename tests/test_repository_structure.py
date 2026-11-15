@@ -71,32 +71,62 @@ class RepositoryStructureTests(unittest.TestCase):
                 self.assertNotIn(name,content,f"{path.relative_to(ROOT)} has stale reference {name}")
 
     def test_internal_document_links_resolve(self):
-        docs = [ROOT/"README.md",ROOT/"knowledge/README.md",
+        docs = [ROOT/"README.md",ROOT/"i18n/README.ko.md",ROOT/"knowledge/README.md",
                 ROOT/"docs/architecture.md",ROOT/"docs/knowledge-management.md"]
         for file in docs:
             text=file.read_text(encoding="utf-8")
-            for path in re.findall(r"\]\(([^)]+)\)",text):
+            for path in re.findall(r"\]\(([^)]+)\)",text) + re.findall(r'<a\s+[^>]*href="([^"]+)"', text):
                 if "://" in path or path.startswith("#"):
                     continue
                 target=file.parent/path.split("#",1)[0]
                 self.assertTrue(target.is_file(),f"{file}: broken Markdown link: {path}")
 
-    def test_readme_illustrations_are_local_safe_and_valid(self):
-        readme=(ROOT/"README.md").read_text(encoding="utf-8")
-        assets=re.findall(r'<img\s+[^>]*src="(assets/[^"]+)"[^>]*>',readme)
-        self.assertEqual(set(assets),{"assets/hero-system.svg","assets/process-loop.svg"})
-        for path in assets:
-            file=ROOT/path
-            self.assertTrue(file.is_file(),path)
-            content=file.read_text(encoding="utf-8")
-            self.assertNotIn("<script",content.lower())
-            self.assertNotIn("<foreignObject",content)
-            self.assertNotIn("http://",content.replace('http://www.w3.org/2000/svg',''))
-            root=ET.fromstring(content)
-            self.assertEqual(root.tag,"{http://www.w3.org/2000/svg}svg")
-            self.assertTrue(root.attrib.get("viewBox"))
-            self.assertGreater(file.stat().st_size,1000)
-        self.assertEqual(len(re.findall(r'<img\s+[^>]*alt="[^"]+"',readme)),len(assets))
+    def test_bilingual_readmes_share_the_same_local_safe_artwork(self):
+        expected = {
+            "design-engineering-mark.svg",
+            "hero-system.svg",
+            "process-loop.svg",
+            "knowledge-context.svg",
+            "validation-study.svg",
+        }
+        svg_ns = "{http://www.w3.org/2000/svg}"
+        for path,prefix in [
+            (ROOT/"README.md", "assets/"),
+            (ROOT/"i18n/README.ko.md", "../assets/"),
+        ]:
+            content = path.read_text(encoding="utf-8")
+            images = re.findall(r'<img\\s+[^>]*src="([^"]+)"[^>]*>', content)
+            self.assertEqual(set(images), {prefix + name for name in expected})
+            self.assertEqual(len(images), len(expected))
+            self.assertEqual(len(re.findall(r'<img\\s+[^>]*alt="[^"]+"',content)),
+                             len(images), "Image alt text is required for both languages.")
+            for src in images:
+                asset = (path.parent / src).resolve()
+                self.assertTrue(asset.is_file(), src)
+                text = asset.read_text(encoding="utf-8")
+                self.assertNotIn("<script", text.lower())
+                self.assertNotIn("<foreignobject", text.lower())
+                self.assertNotIn("<image ", text.lower())
+                self.assertNotIn("https://", text.replace('https://www.w3.org/2000/svg',''))
+                self.assertNotIn("http://", text.replace('http://www.w3.org/2000/svg',''))
+                tree = ET.fromstring(text)
+                self.assertEqual(tree.tag, svg_ns + "svg")
+                self.assertTrue(tree.attrib.get("viewBox"))
+                self.assertIsNotNone(tree.find(svg_ns + "title"))
+                self.assertIsNotNone(tree.find(svg_ns + "desc"))
+                self.assertGreater(asset.stat().st_size, 500)
+
+    def test_default_readme_is_english_and_korean_translation_is_linked(self):
+        english = (ROOT/"README.md").read_text(encoding="utf-8")
+        korean = (ROOT/"i18n/README.ko.md").read_text(encoding="utf-8")
+        self.assertIn('href="i18n/README.ko.md"', english)
+        self.assertIn('href="../README.md"', korean)
+        self.assertIn("## Overview", english)
+        self.assertIn("## Getting started", english)
+        self.assertIn("## 프로젝트 소개", korean)
+        self.assertIn("## 시작하기", korean)
+        self.assertEqual(english.count('assets/hero-system.svg'),
+                         korean.count('../assets/hero-system.svg'))
 
     def test_source_registry_has_no_orphans_or_duplicate_aliases(self):
         result=knowledge_health.inspect(ROOT)
