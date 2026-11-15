@@ -16,6 +16,7 @@ Find relevant knowledge, design for actual context, and validate the result.
 
 <p>
   <a href="#overview">Overview</a> ·
+  <a href="#see-the-cli-in-action">CLI demo</a> ·
   <a href="#approach">Approach</a> ·
   <a href="#getting-started">Get started</a> ·
   <a href="#documentation">Documentation</a>
@@ -59,6 +60,26 @@ It does **not** impose a house style, component library, or universal page templ
   </tr>
 </table>
 
+## See the CLI in action
+
+The research and review workflow is also available through a local command-line interface.
+
+![Illustrative macOS-style terminal showing research search, source coverage, and repository checks](assets/readme/terminal-showcase.svg)
+
+<sub>Illustrative terminal example, not an actual CLI recording or benchmark result.</sub>
+
+### From question to checks
+
+![Animated illustration of a CLI sequence from research to verification](assets/readme/cli-workflow.svg)
+
+```bash
+de search "How should mixed Korean and Latin headings wrap?"
+de search "How should mixed Korean and Latin headings wrap?" --explain
+de check
+```
+
+The search surfaces relevant evidence with provenance and limitations. Repository checks complement — but do not replace — inspection of the rendered interface.
+
 ## Approach
 
 <p align="center">
@@ -82,6 +103,18 @@ Start with the question and the real content. Look up only the knowledge needed,
 </p>
 
 Core evidence stays separate from user, project, and session preferences. AI-assisted additions begin as drafts and require review before they become active guidance.
+
+##### Example: reviewing project direction
+
+![Illustrative terminal example of drafting and reviewing project guidance](assets/readme/project-context.svg)
+
+```bash
+de add "Prefer precise square layouts and clear typography" --scope project
+de review --list
+de context --conflicts
+```
+
+<sub>Illustrative command sequence; project preferences remain separate from verified research.</sub>
 
 #### Inspect, revise, and verify
 
