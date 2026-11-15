@@ -1,11 +1,11 @@
-import importlib.util, json, re, unittest
+import json, re, sys, unittest
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 CAT=json.loads((ROOT/'knowledge/catalog.json').read_text(encoding='utf8'))
 SRC=json.loads((ROOT/'knowledge/sources.json').read_text(encoding='utf8'))
-SPEC=importlib.util.spec_from_file_location('knowledge_lookup',ROOT/'scripts/knowledge_lookup.py')
-mod=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(mod)
+sys.path.insert(0,str(ROOT/'scripts'))
+import knowledge_index as mod
 
 class KnowledgeIntegrityTests(unittest.TestCase):
     def test_registry_paths_and_references(self):

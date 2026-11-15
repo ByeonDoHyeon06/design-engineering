@@ -9,8 +9,7 @@ verification does NOT establish its transfer to a particular interface.
 import argparse, hashlib, json, math, re, sqlite3
 from collections import Counter
 from pathlib import Path
-from knowledge_lookup import ROOT
-from query_understanding import analyze, norm
+from query_understanding import ROOT, analyze, norm
 
 INDEX=ROOT/'.cache'/'knowledge.sqlite'
 CAT=ROOT/'knowledge/catalog.json'
@@ -249,6 +248,17 @@ def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=N
             res=[r for r in res if r['score']>=threshold]
         return res[:max(1,top)]
     finally:db.close()
+
+
+def rank(query, catalog=None, verified_only=False):
+    """Catalog-enriched local results (used by optional external metadata selector)."""
+    results = search(query, top=38, verified_only=verified_only)
+    if catalog is None:
+        catalog = json.loads(CAT.read_text(encoding='utf-8'))
+    by_id = {r['id']: r for r in catalog['records']}
+    return [dict(by_id[r['id']], **{k: v for k, v in r.items()
+                                    if k not in by_id[r['id']]})
+            for r in results if r['id'] in by_id]
 
 
 def main():
