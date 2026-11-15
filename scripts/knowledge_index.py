@@ -14,7 +14,7 @@ from query_understanding import analyze, norm
 
 INDEX=ROOT/'.cache'/'knowledge.sqlite'
 CAT=ROOT/'knowledge/catalog.json'
-CLAIMS=ROOT/'knowledge/verified/claims.json'
+CLAIMS=ROOT/'knowledge/claims.json'
 SOURCES=ROOT/'knowledge/sources.json'
 
 
@@ -25,7 +25,7 @@ def db_open(path=INDEX):
 
 def _load_registry(root):
     cats=json.loads((root/'knowledge/catalog.json').read_text(encoding='utf-8'))['records']
-    claims={c['id']:c for c in json.loads((root/'knowledge/verified/claims.json').read_text(encoding='utf-8'))['claims']}
+    claims={c['id']:c for c in json.loads((root/'knowledge/claims.json').read_text(encoding='utf-8'))['claims']}
     sources={s['id']:s for s in json.loads((root/'knowledge/sources.json').read_text(encoding='utf-8'))['records']}
     return cats,claims,sources
 
@@ -51,8 +51,8 @@ def _proof_for_card(row, body, claims, sources):
 
 
 def _signature(root):
-    paths=[root/'knowledge/catalog.json',root/'knowledge/verified/claims.json',root/'knowledge/sources.json',root/'knowledge/concepts.json']
-    governance=root/'knowledge/v4/governance.json'
+    paths=[root/'knowledge/catalog.json',root/'knowledge/claims.json',root/'knowledge/sources.json',root/'knowledge/concepts.json']
+    governance=root/'knowledge/governance.json'
     if governance.is_file():paths.append(governance)
     cat=json.loads(paths[0].read_text(encoding='utf-8'))['records']
     paths.extend(root/r['path'] for r in cat)
@@ -175,8 +175,8 @@ def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=N
               _embedding_similarities(q,docs,embedding_model) if embedding_model else None)
         if embed is not None and len(embed)!=len(entries):raise ValueError('Embedding score length mismatch.')
         sources={s['id']:s for s in json.loads((root/'knowledge/sources.json').read_text(encoding='utf-8'))['records']}
-        claims={c['id']:c for c in json.loads((root/'knowledge/verified/claims.json').read_text(encoding='utf-8'))['claims']}
-        gov_file=root/'knowledge/v4/governance.json'
+        claims={c['id']:c for c in json.loads((root/'knowledge/claims.json').read_text(encoding='utf-8'))['claims']}
+        gov_file=root/'knowledge/governance.json'
         lifecycle=json.loads(gov_file.read_text(encoding='utf-8')).get('status_overrides',{}) if gov_file.is_file() else {}
         res=[]
         for i,row in enumerate(entries):
