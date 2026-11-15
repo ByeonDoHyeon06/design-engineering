@@ -33,6 +33,17 @@ jobs:
           de --version
           de check
           python scripts/de.py --version
+      - name: Build and validate isolated distribution wheel
+        run: |
+          python -m pip wheel . --no-deps --wheel-dir "$RUNNER_TEMP/wheels"
+          python -m venv "$RUNNER_TEMP/wheel-venv"
+          "$RUNNER_TEMP/wheel-venv/bin/pip" install --no-index --find-links="$RUNNER_TEMP/wheels" design-engineering-skill
+          mkdir -p "$RUNNER_TEMP/wheel-consumer"
+          cd "$RUNNER_TEMP/wheel-consumer"
+          "$RUNNER_TEMP/wheel-venv/bin/de" --version
+          DE_CACHE_HOME="$RUNNER_TEMP/wheel-cache" "$RUNNER_TEMP/wheel-venv/bin/de" check --smoke
+          DE_CACHE_HOME="$RUNNER_TEMP/wheel-cache" "$RUNNER_TEMP/wheel-venv/bin/de" search "한글 폰트 줄바꿈" --scope core --json > search.json
+          "$RUNNER_TEMP/wheel-venv/bin/python" -c 'import json; from pathlib import Path; assert json.loads(Path("search.json").read_text())["research"]'
       - name: Unit tests
         run: python -m unittest discover -s tests -v
 

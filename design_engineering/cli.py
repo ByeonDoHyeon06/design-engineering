@@ -8,10 +8,10 @@ from pathlib import Path
 import subprocess
 import sys
 
-from . import __version__
+from . import __version__, resource_root
 from . import local_knowledge as personal
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = resource_root()
 SCRIPTS = ROOT / "scripts"
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))

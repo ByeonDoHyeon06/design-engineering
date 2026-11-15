@@ -11,7 +11,23 @@ from collections import Counter
 from pathlib import Path
 from query_understanding import ROOT, analyze, norm
 
-INDEX=ROOT/'.cache'/'knowledge.sqlite'
+def _default_index():
+    import os
+    import tempfile
+    if os.environ.get("DE_CACHE_HOME"):
+        return Path(os.environ["DE_CACHE_HOME"]).expanduser() / "knowledge.sqlite"
+    if ROOT.name == "_bundled":
+        if os.environ.get("XDG_CACHE_HOME"):
+            base = Path(os.environ["XDG_CACHE_HOME"])
+        elif os.name == "nt" and os.environ.get("LOCALAPPDATA"):
+            base = Path(os.environ["LOCALAPPDATA"])
+        else:
+            base = Path.home() / ".cache"
+        return base / "design-engineering" / "knowledge.sqlite"
+    return ROOT / ".cache" / "knowledge.sqlite"
+
+
+INDEX=_default_index()
 CAT=ROOT/'knowledge/catalog.json'
 CLAIMS=ROOT/'knowledge/claims.json'
 SOURCES=ROOT/'knowledge/sources.json'

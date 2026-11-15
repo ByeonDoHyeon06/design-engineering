@@ -126,6 +126,8 @@ de search "한글과 영문이 섞인 제목은 어떻게 줄바꿈할까?"
 de check
 ```
 
+저장한 취향은 `de knowledge list`로 확인하고, `de knowledge edit`으로 수정 초안을 만들거나 `de knowledge archive`로 이력과 함께 보관할 수 있어.
+
 추가 진단을 위해 `de search "질문" --explain --json`은 검색 근거를, `de context --conflicts`는 잠재적인 개인 선호 충돌 후보를 보여줘. 어느 쪽도 자동으로 결론을 확정하지 않아.
 
 플러그인 폴더를 변경하기 어렵다면 설치 없이 `python /path/to/design-engineering/scripts/de.py --help`를 실행할 수 있습니다.

@@ -11,7 +11,14 @@ REQUIRED_DIRS = ("knowledge/cards", "methods", "templates")
 
 def inspect(root):
     root=Path(root).expanduser().resolve()
-    files={p:(root/p).is_file() for p in REQUIRED_FILES}
+    files={}
+    for p in REQUIRED_FILES:
+        target=root/p
+        # Wheel bundles all canonical data under design_engineering/_bundled,
+        # while CLI code lives in the parent installed Python package.
+        if not target.is_file() and root.name=="_bundled" and root.parent.name=="design_engineering" and p.startswith("design_engineering/"):
+            target=root.parent/p.split("/",1)[1]
+        files[p]=target.is_file()
     directories={p:(root/p).is_dir() for p in REQUIRED_DIRS}
     skill=root/"SKILL.md"
     size=skill.stat().st_size if skill.is_file() else None
