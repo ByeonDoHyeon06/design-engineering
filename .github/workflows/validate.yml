@@ -89,8 +89,9 @@ jobs:
             DE="$ROOT_DIR/.wheel-venv/bin/de"
           fi
           "$PY" -m pip install --no-index --find-links wheelhouse design-engineering-skill
-          mkdir -p external-consumer
-          cd external-consumer
+          # The consumer directory is a sibling of the source checkout, not beneath it.
+          mkdir -p "$ROOT_DIR/../wheel-consumer"
+          cd "$ROOT_DIR/../wheel-consumer"
           "$DE" --version
           "$DE" check --smoke --json
           "$DE" search "한글 폰트 줄바꿈" --scope core --json > result.json
