@@ -84,8 +84,9 @@ def load_tasks(path):
         if task_id in ids:
             raise EvaluationError(f"Duplicate task ID: {task_id}")
         ids.add(task_id)
-        if not all(isinstance(task.get(k), str) and len(task[k].strip()) >= 12
-                   for k in ("brief", "audience", "category")):
+        if (not isinstance(task.get("category"), str) or not task["category"].strip()
+            or not isinstance(task.get("audience"), str) or len(task["audience"].strip()) < 6
+            or not isinstance(task.get("brief"), str) or len(task["brief"].strip()) < 12):
             raise EvaluationError(f"Missing category, audience or full brief: {task_id}")
         for key in ("task_goals", "required_states", "review_checks"):
             vals = task.get(key)
