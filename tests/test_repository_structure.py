@@ -3,6 +3,7 @@ import json
 import re
 import sys
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -79,6 +80,23 @@ class RepositoryStructureTests(unittest.TestCase):
                     continue
                 target=file.parent/path.split("#",1)[0]
                 self.assertTrue(target.is_file(),f"{file}: broken Markdown link: {path}")
+
+    def test_readme_illustrations_are_local_safe_and_valid(self):
+        readme=(ROOT/"README.md").read_text(encoding="utf-8")
+        assets=re.findall(r'<img\\s+[^>]*src="(assets/[^"]+)"[^>]*>',readme)
+        self.assertEqual(set(assets),{"assets/hero-system.svg","assets/process-loop.svg"})
+        for path in assets:
+            file=ROOT/path
+            self.assertTrue(file.is_file(),path)
+            content=file.read_text(encoding="utf-8")
+            self.assertNotIn("<script",content.lower())
+            self.assertNotIn("<foreignObject",content)
+            self.assertNotIn("http://",content.replace('http://www.w3.org/2000/svg',''))
+            root=ET.fromstring(content)
+            self.assertEqual(root.tag,"{http://www.w3.org/2000/svg}svg")
+            self.assertTrue(root.attrib.get("viewBox"))
+            self.assertGreater(file.stat().st_size,1000)
+        self.assertEqual(len(re.findall(r'<img\\s+[^>]*alt="[^"]+"',readme)),len(assets))
 
     def test_source_registry_has_no_orphans_or_duplicate_aliases(self):
         result=knowledge_health.inspect(ROOT)
