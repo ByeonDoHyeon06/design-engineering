@@ -4,7 +4,7 @@ import argparse, json, os, subprocess, sys
 from pathlib import Path
 
 REQUIRED_FILES = (
-    "SKILL.md", "scripts/knowledge_index.py", "knowledge/catalog.json",
+    "SKILL.md", "pyproject.toml", "scripts/de.py", "design_engineering/cli.py", "design_engineering/local_knowledge.py", "scripts/knowledge_index.py", "knowledge/catalog.json",
     "knowledge/sources.json", "knowledge/concepts.json", "knowledge/claims.json", "knowledge/governance.json",
 )
 REQUIRED_DIRS = ("knowledge/cards", "methods", "templates")

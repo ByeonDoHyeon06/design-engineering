@@ -1,0 +1,330 @@
+"""Single user-facing CLI for Design Engineering. Underlying tools remain modular."""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+from . import __version__
+from . import local_knowledge as personal
+
+ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS = ROOT / "scripts"
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+
+
+def _print(result, as_json=False):
+    if as_json or isinstance(result, (dict, list)):
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        print(result)
+
+
+def _scope_paths(args):
+    return dict(project=args.project, home=args.user_home, session_id=args.session_id)
+
+
+def _format_research(results):
+    for item in results:
+        print(f"  {item['id']} [{item.get('evidence_status','unknown')}] {item['title']}")
+        print(f"    {item['path']}")
+
+
+def _format_guidance(results):
+    for item in results:
+        print(f"  {item['id']} [{item['scope']}/{item['kind']}; personal, not evidence] {item['text']}")
+
+
+def _search(args):
+    from knowledge_index import search
+    scoped = args.scope
+    scientific = [] if scoped not in ("all", "core") else search(
+        args.query, top=args.top, verified_only=args.verified_only,
+        relative_cutoff=args.relative_cutoff,
+        include_inactive=args.include_inactive)
+    scopes = ("session", "project", "user") if scoped == "all" else (
+        () if scoped == "core" else (scoped,))
+    guidance = personal.search(
+        args.query, **_scope_paths(args), scopes=scopes,
+        top=args.top) if scopes and not args.verified_only else []
+    result = {"query": args.query, "research": scientific, "personal_guidance": guidance,
+              "notice": "Personal guidance is user supplied, not peer-reviewed evidence; research scores are relevance heuristics."}
+    if args.json:
+        _print(result, True)
+    else:
+        print("RESEARCH (core, source-scoped):")
+        _format_research(scientific)
+        if not scientific:
+            print("  No relevant research found.")
+        print("PERSONAL GUIDANCE (separate from research):")
+        _format_guidance(guidance)
+        if not guidance:
+            print("  No matching user/project/session guidance.")
+    return 0
+
+
+def _add(args):
+    from knowledge_ingest import prepare
+    from pathlib import Path
+    kind = args.type or ("evidence" if args.scope == "core" else
+                         "reference" if args.file else "preference")
+    if kind == "evidence":
+        if args.scope != "core" or not args.file or not args.title or not args.authors:
+            raise personal.LocalKnowledgeError(
+                "Core evidence needs --scope core --file FILE --title TITLE --authors AUTHORS.")
+        path = prepare(args.file, title=args.title, authors=args.authors, url=args.url or "",
+                       rights=args.rights, mode=args.mode,
+                       approve_external=args.approve_external,
+                       allow_private_content=args.allow_private_content,
+                       local_dir=ROOT/".local"/"ingestion")
+        result = {"proposal": str(path), "kind": "evidence", "scope": "core",
+                  "status": "pending_human_source_review",
+                  "notice": "Review actual excerpts and claims in JSON. No source or verified claim published."}
+    else:
+        if args.scope == "core":
+            raise personal.LocalKnowledgeError(
+                "Do not insert personal preferences/principles directly into core scientific Knowledge.")
+        if args.mode != "local" or args.approve_external or args.allow_private_content:
+            raise personal.LocalKnowledgeError(
+                "Optional external extraction applies only to document-based core evidence.")
+        if kind not in personal.KINDS:
+            raise personal.LocalKnowledgeError("Use preference, principle, observation, reference, or evidence.")
+        note = args.text or (args.title or Path(args.file).name if args.file else None)
+        result = personal.propose(
+            note, kind=kind, scope=args.scope, **_scope_paths(args),
+            context=args.context, outcome=args.outcome, tags=args.tag or (),
+            source_file=args.file, title=args.title,
+            authors=args.authors, url=args.url)
+    _print(result, args.json)
+    return 0
+
+
+def _review(args):
+    from knowledge_ingest import commit
+    if args.list:
+        pending = personal.drafts(**_scope_paths(args))
+        directory = ROOT/".local"/"ingestion"
+        if directory.exists():
+            for path in sorted(directory.glob("*.review.json")):
+                try:
+                    doc=json.loads(path.read_text(encoding="utf-8"))
+                except (OSError, json.JSONDecodeError):
+                    continue
+                if doc.get("status") == "pending_review":
+                    pending.append({"proposal": str(path), "scope": "core",
+                                    "kind": "evidence", "text": doc.get("source",{}).get("title")})
+        _print({"pending": pending}, args.json)
+        return 0
+    if args.archive:
+        if args.scope == "core":
+            raise personal.LocalKnowledgeError("Use the reviewed core governance workflow for core source archival.")
+        if not args.approve or not args.reviewer:
+            raise personal.LocalKnowledgeError("Archival requires --approve and --reviewer.")
+        result=personal.archive(args.archive, scope=args.scope, reviewer=args.reviewer,
+                                **_scope_paths(args))
+        _print(result,args.json)
+        return 0
+    if not args.proposal:
+        raise personal.LocalKnowledgeError("Provide a proposal path, --list, or --archive ID.")
+    if not args.approve:
+        path=Path(args.proposal).expanduser()
+        if not path.is_file():
+            raise personal.LocalKnowledgeError("Draft file not found: "+str(path))
+        doc=json.loads(path.read_text(encoding="utf-8"))
+        view = {k:v for k,v in doc.items() if k not in ("source_path",)}
+        _print({"proposal": str(path.resolve()), "draft": view,
+                "notice": "Preview only. Use --approve --reviewer NAME to commit."},args.json)
+        return 0
+    if not args.reviewer:
+        raise personal.LocalKnowledgeError("Explicit approval requires --reviewer.")
+    doc=json.loads(Path(args.proposal).read_text(encoding="utf-8"))
+    if doc.get("source") and isinstance(doc.get("candidates"), list) and doc.get("schema_version")==1:
+        # Only maintainers working from an editable repository should publish core research.
+        result=commit(args.proposal, reviewer=args.reviewer, confirm=True, root=ROOT)
+        _print({"published_core_cards":[x["id"] for x in result],
+                "notice":"Human-reviewed excerpt claims, not independently replicated research."},args.json)
+    else:
+        result=personal.approve(args.proposal, reviewer=args.reviewer,
+                                **_scope_paths(args))
+        _print(result,args.json)
+    return 0
+
+
+def _context(args):
+    if args.scope == "core":
+        raise personal.LocalKnowledgeError("Use de search for core research; context is for scoped user guidance.")
+    scopes=("session","project","user") if args.scope=="all" else (args.scope,)
+    rows=personal.search(args.query or "", **_scope_paths(args), scopes=scopes,
+                         include_all=not args.query,top=args.top)
+    if args.json:
+        _print({"scope":args.scope,"guidance":rows,
+                "notice":"User-authored preferences/principles, not verified research."},True)
+    else:
+        _format_guidance(rows)
+        if not rows:
+            print("No saved guidance. Use de add to propose a new item.")
+    return 0
+
+
+def _inspect(args):
+    if args.id.startswith("local:"):
+        entries=personal.records(**_scope_paths(args),include_archived=True)
+        row=next((r for r in entries if r["id"]==args.id),None)
+        if not row:
+            raise personal.LocalKnowledgeError("Personal record not found in visible scopes.")
+        _print(row,args.json)
+        return 0
+    from knowledge_graph import build, impact
+    graph=build(ROOT)
+    if graph["errors"]:
+        raise personal.LocalKnowledgeError("Core graph invalid: "+"; ".join(graph["errors"][:4]))
+    row=next((r for r in graph["nodes"] if r["id"]==args.id),None)
+    if not row:
+        raise personal.LocalKnowledgeError("Unknown node; use typed ID such as source:N39 or method:K16.")
+    result={"node":row,"dependencies":impact(graph,args.id)["affected"]}
+    _print(result,args.json)
+    return 0
+
+
+def _check(args):
+    from validate_install import inspect
+    from knowledge_health import inspect as health
+    from knowledge_graph import build
+    inst=inspect(ROOT)
+    if not inst["complete"]:
+        _print({"installation":inst,"status":"INCOMPLETE"},True)
+        return 1
+    h=health(ROOT)
+    graph=build(ROOT)
+    result={"installation":inst,"knowledge_health":h,"graph":{
+        "counts":graph["counts"],"errors":graph["errors"],"warnings":graph["warnings"]}}
+    issues=h["errors"]+graph["errors"]
+    if args.smoke:
+        run=subprocess.run([sys.executable,str(SCRIPTS/"validate_install.py"),
+                            "--root",str(ROOT),"--smoke","--json"],
+                           cwd=ROOT,capture_output=True,text=True)
+        try:
+            result["smoke"]=json.loads(run.stdout)
+        except json.JSONDecodeError:
+            result["smoke"]={"error":run.stderr or run.stdout}
+        if run.returncode:
+            issues.append("Knowledge smoke failed")
+    result["ok"]=not bool(issues)
+    if args.json:
+        _print(result,True)
+    else:
+        print("Installation:", "OK" if inst["complete"] else "INCOMPLETE")
+        print("Knowledge:", len(h["errors"]), "errors,",len(h["warnings"]),"warnings")
+        print("Graph:",len(graph["errors"]),"errors,",len(graph["warnings"]),"warnings")
+        if args.smoke:
+            print("Smoke:", "PASS" if result["smoke"].get("complete") else "FAIL")
+    return int(bool(issues))
+
+
+def _qa(args):
+    if args.mode=="visual":
+        if not args.out:
+            raise personal.LocalKnowledgeError("Visual QA needs --out PATH.")
+        cmd=[str(SCRIPTS/"visual_critique.py"),"start",args.html,"--out",args.out]
+    elif args.mode=="tasks":
+        if not args.tasks or not args.out:
+            raise personal.LocalKnowledgeError("Task QA needs --tasks JSON --out PATH.")
+        cmd=[str(SCRIPTS/"ux_scenarios.py"),"run",args.html,args.tasks,"--out",args.out,
+             "--width",str(args.width)]
+    else:
+        cmd=[str(SCRIPTS/"static_page_audit.py"),args.html]
+        if args.json:
+            cmd.append("--json")
+    result=subprocess.run([sys.executable]+cmd,cwd=Path.cwd())
+    return result.returncode
+
+
+def parser():
+    p=argparse.ArgumentParser(prog="de",
+        description="Design Engineering — research, personal Knowledge, and real UI validation.")
+    p.add_argument("--project",default=None,help="Consumer project root; defaults to current working directory.")
+    p.add_argument("--user-home",default=None,help="Override personal Knowledge root (useful for tests).")
+    p.add_argument("--session-id",default=None,help="Required for ephemeral session-scoped Knowledge.")
+    p.add_argument("--version",action="version",version="Design Engineering "+__version__)
+    sub=p.add_subparsers(dest="command",required=True)
+
+    s=sub.add_parser("search",help="Search research and separate scoped guidance.")
+    s.add_argument("query")
+    s.add_argument("--scope",choices=("all","core","user","project","session"),default="all")
+    s.add_argument("--top",type=int,default=5)
+    s.add_argument("--verified-only",action="store_true",help="Show only explicitly verified core claims.")
+    s.add_argument("--relative-cutoff",type=float,default=0.2)
+    s.add_argument("--include-inactive",action="store_true")
+    s.add_argument("--json",action="store_true")
+    s.set_defaults(func=_search)
+
+    a=sub.add_parser("add",help="Create a draft from natural text or a local source file.")
+    a.add_argument("text",nargs="?",help="Natural-language preference, principle, observation or note.")
+    a.add_argument("--type",choices=("preference","principle","observation","reference","evidence"))
+    a.add_argument("--scope",choices=("user","project","session","core"),default="project")
+    a.add_argument("--file",help="Local document to bookmark (reference) or review (core evidence).")
+    a.add_argument("--title");a.add_argument("--authors");a.add_argument("--url")
+    a.add_argument("--context",help="When it applies, or observation conditions.")
+    a.add_argument("--outcome",help="Required for observation.")
+    a.add_argument("--tag",action="append",default=[])
+    a.add_argument("--mode",choices=("local","gemini"),default="local")
+    a.add_argument("--approve-external",action="store_true")
+    a.add_argument("--allow-private-content",action="store_true")
+    a.add_argument("--rights",default="user-provided-unverified")
+    a.add_argument("--json",action="store_true")
+    a.set_defaults(func=_add)
+
+    r=sub.add_parser("review",help="List, preview, approve or archive Knowledge entries.")
+    r.add_argument("proposal",nargs="?")
+    r.add_argument("--list",action="store_true")
+    r.add_argument("--approve",action="store_true",help="Explicit approval; requires reviewer.")
+    r.add_argument("--archive",metavar="LOCAL_ID",help="Archive approved local guidance.")
+    r.add_argument("--scope",choices=("user","project","session"),default="project")
+    r.add_argument("--reviewer")
+    r.add_argument("--json",action="store_true")
+    r.set_defaults(func=_review)
+
+    c=sub.add_parser("context",help="Show active personal/project guidance in scope priority.")
+    c.add_argument("--scope",choices=("all","user","project","session"),default="all")
+    c.add_argument("--query",default="")
+    c.add_argument("--top",type=int,default=100)
+    c.add_argument("--json",action="store_true")
+    c.set_defaults(func=_context)
+
+    i=sub.add_parser("inspect",help="Inspect typed core dependencies or a local item.")
+    i.add_argument("id")
+    i.add_argument("--json",action="store_true")
+    i.set_defaults(func=_inspect)
+
+    check=sub.add_parser("check",help="Inspect installation and core Knowledge health.")
+    check.add_argument("--smoke",action="store_true")
+    check.add_argument("--json",action="store_true")
+    check.set_defaults(func=_check)
+
+    qa=sub.add_parser("qa",help="Run visual, task or static HTML checks.")
+    qa.add_argument("html")
+    qa.add_argument("--mode",choices=("visual","tasks","static"),default="visual")
+    qa.add_argument("--tasks",help="Required for mode=tasks.")
+    qa.add_argument("--out",help="Output directory.")
+    qa.add_argument("--width",type=int,default=390)
+    qa.add_argument("--json",action="store_true")
+    qa.set_defaults(func=_qa)
+    return p
+
+
+def main(argv=None):
+    args=parser().parse_args(argv)
+    try:
+        return int(args.func(args))
+    except (personal.LocalKnowledgeError,ValueError,PermissionError,
+            FileNotFoundError,KeyError, OSError, json.JSONDecodeError) as exc:
+        print("de:",str(exc),file=sys.stderr)
+        return 2
+
+
+if __name__=="__main__":
+    raise SystemExit(main())

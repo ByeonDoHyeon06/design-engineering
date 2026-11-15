@@ -36,3 +36,11 @@ For changes to the search implementation also run `python scripts/knowledge_scal
 ## Pull requests
 
 Describe **problem, changes, data provenance, tests, and limitations**. Keep unrelated historical cleanup separate from new research claims. CI and a passing review do not certify real-user comprehension or the aesthetic quality of generated designs.
+
+## Personal Knowledge and CLI contributions
+
+- Keep one CLI entry point in `design_engineering/cli.py`; do not add new user-facing commands as unrelated script executables.
+- Personal records belong to OS user, project or explicit session scope, **never** directly to core `knowledge/` files.
+- An AI's text classification is a draft; approvals must be explicit. No automatic write from casual conversations or fabricated research claims.
+- Include duplicate rejection, cross-project isolation, stale draft handling and agent-neutral CLI smoke tests for additions.
+- Document scope, privacy and CLI examples in `docs/personal-knowledge.md`.

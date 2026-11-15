@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "design-engineering-skill"
+version = "4.1.0"
+description = "Research-informed design engineering CLI and scoped Knowledge"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+de = "design_engineering.cli:main"
+design-engineering = "design_engineering.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["design_engineering*"]

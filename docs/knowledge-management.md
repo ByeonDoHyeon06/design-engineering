@@ -73,3 +73,7 @@ Include negative/no-answer queries when changing search heuristics, and explain 
 Do not automatically delete unreferenced sources: they can be historical breadcrumbs awaiting review. When a source is withdrawn, `knowledge_graph.py` flags current dependents for reassessment. Never promote an unreviewed claim because a filename starts with `K` or because an AI model suggested it.
 
 Record public-safe metadata only. Keep project-specific UX observations, original user research, screenshots, API keys and copyrighted full-text documents outside this repository unless sharing is explicitly authorized.
+
+## Personal knowledge (non-academic)
+
+Use `de add` to propose user/project/session preferences, principles, observations or reference bookmarks, then `de review --approve --reviewer ...` after explicit authorization. Personal entries never enter `knowledge/catalog.json` or `knowledge/claims.json` and do not acquire verified-claim IDs. To add source-backed research to the common repository, use `de add --type evidence --scope core --file ...` and the existing reviewed ingester. See [Personal Knowledge](personal-knowledge.md).

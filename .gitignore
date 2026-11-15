@@ -24,3 +24,9 @@ Thumbs.db
 # Browser review captures and synthetic diagnostics
 playwright-report/
 test-results/
+
+# Local project Knowledge and editable-package build products
+.design-engineering/
+*.egg-info/
+build/
+dist/
