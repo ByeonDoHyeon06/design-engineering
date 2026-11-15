@@ -195,6 +195,35 @@ def propose(text, *, kind="preference", scope="project", project=None, home=None
             "related_candidates": proposal["related_candidates"], "state": "pending_review"}
 
 
+def propose_revision(identity, text, *, scope="project", project=None, home=None,
+                     session_id=None, context=None, outcome=None, tags=None):
+    """Create a review draft for a record replacement; history remains immutable."""
+    folder = location(scope, project=project, home=home, session_id=session_id)
+    data = _load(folder)
+    matches = [r for r in data["records"] if r.get("id") == identity
+               and r.get("status") == "active" and r.get("scope") == scope]
+    if len(matches) != 1:
+        raise LocalKnowledgeError("Active record not found in the selected scope.")
+    existing = matches[0]
+    if existing["kind"] == "reference":
+        raise LocalKnowledgeError("Reference revisions need a new source fingerprint; create a new --type reference draft.")
+    if _clean(text) == _clean(existing["text"]):
+        raise LocalKnowledgeError("Revision text is identical to the active record.")
+    chosen_tags = tags if tags is not None else existing.get("tags", [])
+    result = propose(text, kind=existing["kind"], scope=scope, project=project, home=home,
+                     session_id=session_id, context=context if context is not None else existing.get("context"),
+                     outcome=outcome if outcome is not None else existing.get("outcome"),
+                     tags=chosen_tags, origin="explicit_revision_draft")
+    path = Path(result["proposal"])
+    draft = json.loads(path.read_text(encoding="utf-8"))
+    draft["replaces"] = identity
+    draft["review_notice"] = ("Replacement requires explicit reviewer approval. Original is archived "
+                              "only when new record is approved; past versions are retained.")
+    _private_write(path, draft)
+    result["replaces"] = identity
+    return result
+
+
 def read_proposal(path):
     path = Path(path).expanduser().resolve()
     if not path.is_file():
@@ -235,6 +264,16 @@ def approve(path, *, reviewer, project=None, home=None, session_id=None):
     row = {key: proposal.get(key) for key in
            ("id", "kind", "scope", "text", "context", "outcome", "tags", "source", "created_at", "origin", "provenance")}
     row.update({"status": "active", "reviewer": str(reviewer).strip(), "approved_at": _now()})
+    replacement = proposal.get("replaces")
+    if replacement:
+        targets = [r for r in data["records"] if r.get("id") == replacement
+                   and r.get("status") == "active" and r.get("scope") == scope
+                   and r.get("kind") == kind]
+        if len(targets) != 1:
+            raise LocalKnowledgeError("Replacement target is not active; re-propose with current data.")
+        targets[0].update({"status": "archived", "archived_at": row["approved_at"],
+                           "archived_by": row["reviewer"], "replaced_by": row["id"]})
+        row["replaces"] = replacement
     data["records"].append(row)
     _private_write(store_path, data)
     proposal["status"] = "approved"
