@@ -8,10 +8,10 @@ from pathlib import Path
 import subprocess
 import sys
 
-from . import __version__
+from . import __version__, resource_root
 from . import local_knowledge as personal
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = resource_root()
 SCRIPTS = ROOT / "scripts"
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
@@ -53,6 +53,9 @@ def _search(args):
         top=args.top) if scopes and not args.verified_only else []
     result = {"query": args.query, "research": scientific, "personal_guidance": guidance,
               "notice": "Personal guidance is user supplied, not peer-reviewed evidence; research scores are relevance heuristics."}
+    if args.explain:
+        from .knowledge_intelligence import explain
+        result["coverage"] = explain(args.query,scientific,guidance)
     if args.json:
         _print(result, True)
     else:
@@ -64,6 +67,9 @@ def _search(args):
         _format_guidance(guidance)
         if not guidance:
             print("  No matching user/project/session guidance.")
+        if args.explain:
+            print("COVERAGE:",result["coverage"]["state"])
+            print("  "+result["coverage"]["recommendation"])
     return 0
 
 
@@ -160,13 +166,22 @@ def _context(args):
     scopes=("session","project","user") if args.scope=="all" else (args.scope,)
     rows=personal.search(args.query or "", **_scope_paths(args), scopes=scopes,
                          include_all=not args.query,top=args.top)
+    result={"scope":args.scope,"guidance":rows,
+            "notice":"User-authored preferences/principles, not verified research."}
+    if args.conflicts:
+        from .knowledge_intelligence import conflict_candidates
+        result["conflict_review"] = conflict_candidates(rows)
+        result["conflict_review"]["scope_notice"] = "Only displayed, active records were scanned; max 100 by default."
     if args.json:
-        _print({"scope":args.scope,"guidance":rows,
-                "notice":"User-authored preferences/principles, not verified research."},True)
+        _print(result, True)
     else:
         _format_guidance(rows)
         if not rows:
             print("No saved guidance. Use de add to propose a new item.")
+        if args.conflicts:
+            print("Potential preference clashes:",result["conflict_review"]["candidate_count"])
+            for item in result["conflict_review"]["candidates"]:
+                print("  "+", ".join(item["ids"])+" — common terms: "+", ".join(item["common_terms"]))
     return 0
 
 
@@ -213,6 +228,9 @@ def _check(args):
             result["smoke"]={"error":run.stderr or run.stdout}
         if run.returncode:
             issues.append("Knowledge smoke failed")
+    if args.review_due:
+        from .knowledge_intelligence import source_review_queue
+        result["recorded_review_queue"] = source_review_queue(ROOT)
     result["ok"]=not bool(issues)
     if args.json:
         _print(result,True)
@@ -222,6 +240,8 @@ def _check(args):
         print("Graph:",len(graph["errors"]),"errors,",len(graph["warnings"]),"warnings")
         if args.smoke:
             print("Smoke:", "PASS" if result["smoke"].get("complete") else "FAIL")
+        if args.review_due:
+            print("Recorded review candidates:", len(result["recorded_review_queue"]["items"]))
     return int(bool(issues))
 
 
@@ -276,6 +296,56 @@ def _evaluation(args):
     return 0
 
 
+def _design(args):
+    from . import design_plan
+    if args.design_action == "plan":
+        result = design_plan.create(args.brief, args.out)
+    elif args.design_action == "validate":
+        result = design_plan.validate(args.file, require_ready=args.require_ready)
+        _print(result, args.json)
+        return 0 if result["ok"] else 1
+    elif args.design_action == "review":
+        from visual_critique import audit
+        doc = json.loads(Path(args.file).read_text(encoding="utf-8"))
+        result = audit(doc, Path(args.file).resolve().parent)
+        _print(result, args.json)
+        return 0 if result["ok"] else 1
+    else:
+        raise design_plan.DesignPlanError("Unknown design action.")
+    _print(result, args.json)
+    return 0
+
+
+def _knowledge(args):
+    """Consistent local Knowledge CRUD, always with explicit review for writes."""
+    if args.knowledge_action == "list":
+        scope = ("session","project","user") if args.scope == "all" else (args.scope,)
+        items = personal.records(**_scope_paths(args), scopes=scope,
+                                 include_archived=args.include_archived)
+        result = {"records": items, "count": len(items),
+                  "notice": "Local context only; never registered scientific claims."}
+    elif args.knowledge_action == "conflicts":
+        from .knowledge_intelligence import conflict_candidates
+        scopes = ("session","project","user") if args.scope == "all" else (args.scope,)
+        rows = personal.records(**_scope_paths(args), scopes=scopes)
+        result = conflict_candidates(rows)
+    elif args.knowledge_action == "edit":
+        if args.scope == "all":
+            raise personal.LocalKnowledgeError("Select one scope before proposing a revision.")
+        result = personal.propose_revision(
+            args.id, args.text, scope=args.scope, **_scope_paths(args),
+            context=args.context, outcome=args.outcome, tags=args.tag)
+    elif args.knowledge_action == "archive":
+        if args.scope == "all" or not args.approve or not args.reviewer:
+            raise personal.LocalKnowledgeError("Archival needs one scope, --approve and --reviewer.")
+        result = personal.archive(args.id, scope=args.scope, reviewer=args.reviewer,
+                                  **_scope_paths(args))
+    else:
+        raise personal.LocalKnowledgeError("Unknown local Knowledge operation.")
+    _print(result, args.json)
+    return 0
+
+
 def parser():
     p=argparse.ArgumentParser(prog="de",
         description="Design Engineering — research, personal Knowledge, and real UI validation.")
@@ -290,6 +360,7 @@ def parser():
     s.add_argument("--scope",choices=("all","core","user","project","session"),default="all")
     s.add_argument("--top",type=int,default=5)
     s.add_argument("--verified-only",action="store_true",help="Show only explicitly verified core claims.")
+    s.add_argument("--explain",action="store_true",help="Explain registered coverage, match signals and knowledge gaps.")
     s.add_argument("--relative-cutoff",type=float,default=0.2)
     s.add_argument("--include-inactive",action="store_true")
     s.add_argument("--json",action="store_true")
@@ -324,6 +395,7 @@ def parser():
     c=sub.add_parser("context",help="Show active personal/project guidance in scope priority.")
     c.add_argument("--scope",choices=("all","user","project","session"),default="all")
     c.add_argument("--query",default="")
+    c.add_argument("--conflicts",action="store_true",help="Show lexical preference conflicts for human review.")
     c.add_argument("--top",type=int,default=100)
     c.add_argument("--json",action="store_true")
     c.set_defaults(func=_context)
@@ -335,6 +407,7 @@ def parser():
 
     check=sub.add_parser("check",help="Inspect installation and core Knowledge health.")
     check.add_argument("--smoke",action="store_true")
+    check.add_argument("--review-due",action="store_true",help="Show explicitly registered source/card review-due items.")
     check.add_argument("--json",action="store_true")
     check.set_defaults(func=_check)
 
@@ -399,10 +472,63 @@ def parser():
     report.add_argument("--json", action="store_true")
     report.set_defaults(func=_evaluation)
 
+    design = sub.add_parser("design", help="Content-led design planning and source-aware visual review.")
+    dsub = design.add_subparsers(dest="design_action", required=True)
+    plan = dsub.add_parser("plan", help="Create an editable design and visual asset direction plan.")
+    plan.add_argument("--brief", required=True, help="JSON with real content roles and constraints.")
+    plan.add_argument("--out", required=True)
+    plan.add_argument("--json", action="store_true")
+    plan.set_defaults(func=_design)
+
+    check_plan = dsub.add_parser("validate", help="Audit real content, concept contrast, image rights and viewport plan.")
+    check_plan.add_argument("file")
+    check_plan.add_argument("--require-ready", action="store_true")
+    check_plan.add_argument("--json", action="store_true")
+    check_plan.set_defaults(func=_design)
+
+    review = dsub.add_parser("review", help="Validate screenshot-anchored critique and revision evidence.")
+    review.add_argument("file", help="Existing visual-critique JSON file.")
+    review.add_argument("--json", action="store_true")
+    review.set_defaults(func=_design)
+
+    knowledge = sub.add_parser("knowledge", help="Manage locally reviewed design guidance.")
+    ksub = knowledge.add_subparsers(dest="knowledge_action", required=True)
+    kl = ksub.add_parser("list", help="List active personal/user/project records.")
+    kl.add_argument("--scope", choices=("all","user","project","session"), default="all")
+    kl.add_argument("--include-archived", action="store_true")
+    kl.add_argument("--json",action="store_true")
+    kl.set_defaults(func=_knowledge)
+    kc = ksub.add_parser("conflicts", help="Review possible opposing preferences; no automatic resolution.")
+    kc.add_argument("--scope", choices=("all","user","project","session"), default="all")
+    kc.add_argument("--json",action="store_true")
+    kc.set_defaults(func=_knowledge)
+    ke = ksub.add_parser("edit", help="Draft a revision. Use de review --approve to apply.")
+    ke.add_argument("id")
+    ke.add_argument("text")
+    ke.add_argument("--scope", choices=("user","project","session"), default="project")
+    ke.add_argument("--context")
+    ke.add_argument("--outcome")
+    ke.add_argument("--tag",action="append",default=None)
+    ke.add_argument("--json",action="store_true")
+    ke.set_defaults(func=_knowledge)
+    ka = ksub.add_parser("archive", help="Archive one active local note, retaining its history.")
+    ka.add_argument("id")
+    ka.add_argument("--scope",choices=("user","project","session"),default="project")
+    ka.add_argument("--approve",action="store_true")
+    ka.add_argument("--reviewer")
+    ka.add_argument("--json",action="store_true")
+    ka.set_defaults(func=_knowledge)
+
     return p
 
 
 def main(argv=None):
+    # Git Bash and redirected pipes on Windows may default to cp1252, which cannot
+    # represent Korean Knowledge output. Keep the CLI's output Unicode-capable.
+    if sys.platform == "win32":
+        for stream in (sys.stdout, sys.stderr):
+            if hasattr(stream, "reconfigure"):
+                stream.reconfigure(encoding="utf-8")
     args=parser().parse_args(argv)
     try:
         return int(args.func(args))

@@ -12,10 +12,14 @@ import knowledge_health
 
 class RepositoryStructureTests(unittest.TestCase):
     def test_one_canonical_skill_and_complete_install(self):
-        self.assertEqual([p.relative_to(ROOT).as_posix() for p in ROOT.rglob("SKILL.md")],
-                         ["SKILL.md"])
+        tracked_skill_paths = [
+            p.relative_to(ROOT).as_posix() for p in ROOT.rglob("SKILL.md")
+            if not any(part in {"build", "dist", ".venv", ".cache"} for part in p.relative_to(ROOT).parts)
+        ]
+        self.assertEqual(tracked_skill_paths, ["SKILL.md"])
         for name in (
-            "README.md", "CONTRIBUTING.md", "pyproject.toml", "scripts/de.py",
+            "README.md", "CONTRIBUTING.md", "pyproject.toml", "setup.py",
+            "MANIFEST.in", "scripts/de.py",
             "design_engineering/cli.py", "design_engineering/local_knowledge.py",
             "design_engineering/evaluation.py", "docs/design-evaluation.md",
             "benchmarks/design-tasks.json",

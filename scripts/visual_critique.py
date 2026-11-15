@@ -2,7 +2,7 @@
 """Visual Critique Loop scaffold + evidence audit. Never automatically judges beauty.
 `start` captures real screenshots; `validate` audits human/AI observations and revisions.
 """
-import argparse,json,sys
+import argparse,hashlib,json,sys
 from pathlib import Path
 from visual_qa_capture import run as screenshot_run
 
@@ -36,22 +36,43 @@ def scaffold(report,site):
         'instructions':'View screenshots yourself. Add observations with dimensions, screenshot evidence, hypothesis and proposed change. Mark fixed only when a revised screenshot is inspected. No automatic aesthetic score.'}
 
 
+def _capture(root, shot):
+    """Reject absolute/escaping screenshot refs and missing files."""
+    if not isinstance(shot, str) or not shot.strip():
+        return None
+    root = Path(root).resolve()
+    candidate = (root / shot).resolve()
+    if not candidate.is_relative_to(root) or not candidate.is_file():
+        return None
+    return candidate
+
+
 def audit(doc,root):
     errors=[];warnings=[];closed=0
     screenshots={s for s in doc.get('screenshots',[]) if isinstance(s,str)}
     for shot in screenshots:
-        if not (root/shot).is_file():warnings.append('Missing capture '+shot)
+        if not _capture(root,shot):warnings.append('Missing or unsafe capture '+shot)
     for i,obs in enumerate(doc.get('observations',[]),1):
         label=f'observations[{i}]'
         if obs.get('dimension') not in DIMENSIONS:errors.append(label+': invalid dimension')
         if not obs.get('observation','').strip():errors.append(label+': description required')
         before=obs.get('before_screenshot')
-        if not before or not (root/before).is_file():errors.append(label+': before screenshot missing')
+        before_path=_capture(root,before)
+        if not before_path:errors.append(label+': before screenshot missing or unsafe')
         if obs.get('status')=='fixed':
             after=obs.get('after_screenshot')
-            if not after or not (root/after).is_file():errors.append(label+': fixed without actual after screenshot')
+            after_path=_capture(root,after)
+            if not after_path:
+                errors.append(label+': fixed without actual after screenshot')
+            elif before_path:
+                # A copied or renamed unchanged image is NOT evidence of a successful revision.
+                if hashlib.sha256(after_path.read_bytes()).digest()==hashlib.sha256(before_path.read_bytes()).digest():
+                    errors.append(label+': before and after screenshots have identical bytes')
+            if after_path and before_path and after_path==before_path:
+                errors.append(label+': before and after reference the same file')
             if not obs.get('after_observation'):errors.append(label+': missing after observation')
-            closed+=1
+            if before_path and after_path and before_path!=after_path and hashlib.sha256(after_path.read_bytes()).digest()!=hashlib.sha256(before_path.read_bytes()).digest() and obs.get('after_observation'):
+                closed+=1
         elif obs.get('status') not in {'open','rejected','not_tested'}:
             errors.append(label+': invalid issue status')
         if obs.get('detected_by')=='manual' and not obs.get('proposed_change'):

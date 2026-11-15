@@ -78,3 +78,13 @@ Personal data is held separately by `design_engineering/local_knowledge.py` at u
 ## Paired design evaluation
 
 `design_engineering/evaluation.py` supports balanced A/B assignment, private arm mapping, local blind packets, separate mobile/desktop PNG captures and human-authored reviews through the existing `de eval` CLI namespace. It does **not** execute agents or infer design scores. A report without actual judgments explicitly has no observations. The curated task briefs live at `benchmarks/design-tasks.json`; evaluation runs stay outside version control. See [Design evaluation](design-evaluation.md) for the protocol and confounders.
+
+## Read-only Knowledge intelligence
+
+`design_engineering/knowledge_intelligence.py` provides explainable **registered coverage**, explicit-governance review queues and tentative local preference conflict flags. Existing `knowledge_index.py` remains the only scientific retrieval engine and already reports `why_matched` with provenance; the new diagnostics do not rank subjective knowledge as scientific certainty. All results are read-only and bounded to the installed library; no automatic external research, generated paper claims or destructive conflict resolution occurs.
+
+## Complete wheel distribution
+
+The project root remains the **single canonical** copy of `knowledge/`, `scripts/`, `assets/`, and other resources in source control. `setup.py` copies these source assets into the build-only `design_engineering/_bundled/` directory when creating a Python wheel. `resource_root()` selects a full source checkout or the installed resource bundle; a wheel installed outside the repo must support `de check --smoke`. The SQLite index for wheels lives in the user's OS cache (or `DE_CACHE_HOME`), **never in read-only site-packages**.
+
+The bundler does not ship private `.local/` user data, source-control metadata or generated SQLite files. This does not make local preferences encrypted or make an installed wheel into a Claude plugin; agents still use the full repository plugin.

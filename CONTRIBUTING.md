@@ -49,3 +49,7 @@ Describe **problem, changes, data provenance, tests, and limitations**. Keep unr
 
 To demonstrate changes in design quality, use [Design evaluation](docs/design-evaluation.md) rather than only curated retrieval scores. Keep control/skill model and tools matched, collect actual two-viewport screenshots, avoid exposing condition labels to reviewers, and disclose **all missing, negative and tied outcomes**. Do not insert mock human ratings or fake benchmark improvements into the repository. The 12 sample tasks are a development pilot, not independent evidence of success.
 
+
+## Distribution and release verification
+
+The repository and the wheel must expose the **same canonical Knowledge and script resources**. Packaging is build-only through `setup.py`; do not maintain duplicated Knowledge copies in Git. CI must install the built wheel in a separate virtual environment and **run `de check --smoke` outside the source tree**, including Korean search, to catch missing resources and read-only cache errors. Do not claim a release is portable based solely on editable install tests.

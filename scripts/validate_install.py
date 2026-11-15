@@ -11,7 +11,14 @@ REQUIRED_DIRS = ("knowledge/cards", "methods", "templates")
 
 def inspect(root):
     root=Path(root).expanduser().resolve()
-    files={p:(root/p).is_file() for p in REQUIRED_FILES}
+    files={}
+    for p in REQUIRED_FILES:
+        target=root/p
+        # Wheel bundles all canonical data under design_engineering/_bundled,
+        # while CLI code lives in the parent installed Python package.
+        if not target.is_file() and root.name=="_bundled" and root.parent.name=="design_engineering" and p.startswith("design_engineering/"):
+            target=root.parent/p.split("/",1)[1]
+        files[p]=target.is_file()
     directories={p:(root/p).is_dir() for p in REQUIRED_DIRS}
     skill=root/"SKILL.md"
     size=skill.stat().st_size if skill.is_file() else None
@@ -32,7 +39,10 @@ def main():
             [sys.executable,str(base/"scripts/knowledge_index.py"),"rebuild"],
             [sys.executable,str(base/"scripts/knowledge_index.py"),"search","한글 폰트 줄바꿈과 타이포그래피","--top","5","--json"],
         ):
-            x=subprocess.run(argv,cwd=base,text=True,capture_output=True,timeout=90)
+            env=dict(os.environ)
+            env["PYTHONIOENCODING"]="utf-8"
+            x=subprocess.run(argv,cwd=base,text=True,encoding="utf-8",
+                             capture_output=True,timeout=90,env=env)
             results.append({"command":argv[2:],"returncode":x.returncode,
                             "stdout":x.stdout[-3500:],"stderr":x.stderr[-1200:]})
             if x.returncode:break
@@ -40,7 +50,7 @@ def main():
         report["complete"]=report["complete"] and len(results)==2 and all(x["returncode"]==0 for x in results)
     elif a.smoke:
         report["smoke"]=[];report["error"]="Incomplete installation; no Knowledge commands executed"
-    if a.json:print(json.dumps(report,ensure_ascii=False,indent=2))
+    if a.json:print(json.dumps(report,ensure_ascii=True,indent=2))
     else:
         print("Skill root:",report["root"])
         print("SKILL.md bytes:",report["skill_bytes"])

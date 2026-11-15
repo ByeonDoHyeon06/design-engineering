@@ -126,6 +126,10 @@ de search "한글과 영문이 섞인 제목은 어떻게 줄바꿈할까?"
 de check
 ```
 
+저장한 취향은 `de knowledge list`로 확인하고, `de knowledge edit`으로 수정 초안을 만들거나 `de knowledge archive`로 이력과 함께 보관할 수 있어.
+
+추가 진단을 위해 `de search "질문" --explain --json`은 검색 근거를, `de context --conflicts`는 잠재적인 개인 선호 충돌 후보를 보여줘. 어느 쪽도 자동으로 결론을 확정하지 않아.
+
 플러그인 폴더를 변경하기 어렵다면 설치 없이 `python /path/to/design-engineering/scripts/de.py --help`를 실행할 수 있습니다.
 
 <details>
@@ -154,6 +158,7 @@ de context
 | [Evidence policy](../knowledge/VERIFICATION-POLICY.md) | 출처와 주장이 입증하는 범위 및 한계 |
 | [Typography & writing](../docs/typography-writing.md) | 한글 조판, UX 문장, 콘텐츠 구조 |
 | [Visual critique](../docs/visual-critique.md) · [UX validation](../docs/ux-validation.md) | 실제 화면·사용자 과제 검토 |
+| [Design execution](../docs/design-execution.md) | 실제 콘텐츠와 시각적 에셋 방향, 수정 근거 관리 |
 | [Design evaluation](../docs/design-evaluation.md) | 스킬 적용 전후 블라인드 비교 평가 방법 |
 | [Contributing](../CONTRIBUTING.md) | 기여 방법과 필수 검증 |
 

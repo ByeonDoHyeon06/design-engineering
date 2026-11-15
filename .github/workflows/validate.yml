@@ -33,6 +33,17 @@ jobs:
           de --version
           de check
           python scripts/de.py --version
+      - name: Build and validate isolated distribution wheel
+        run: |
+          python -m pip wheel . --no-deps --wheel-dir "$RUNNER_TEMP/wheels"
+          python -m venv "$RUNNER_TEMP/wheel-venv"
+          "$RUNNER_TEMP/wheel-venv/bin/pip" install --no-index --find-links="$RUNNER_TEMP/wheels" design-engineering-skill
+          mkdir -p "$RUNNER_TEMP/wheel-consumer"
+          cd "$RUNNER_TEMP/wheel-consumer"
+          "$RUNNER_TEMP/wheel-venv/bin/de" --version
+          DE_CACHE_HOME="$RUNNER_TEMP/wheel-cache" "$RUNNER_TEMP/wheel-venv/bin/de" check --smoke
+          DE_CACHE_HOME="$RUNNER_TEMP/wheel-cache" "$RUNNER_TEMP/wheel-venv/bin/de" search "한글 폰트 줄바꿈" --scope core --json > search.json
+          "$RUNNER_TEMP/wheel-venv/bin/python" -c 'import json; from pathlib import Path; assert json.loads(Path("search.json").read_text())["research"]'
       - name: Unit tests
         run: python -m unittest discover -s tests -v
 
@@ -51,3 +62,37 @@ jobs:
 
       - name: Synthetic graph and SQLite scale checks
         run: python scripts/knowledge_scale_benchmark.py --size 1000 --size 10000 --search-size 1000
+
+  wheel-portability:
+    name: Wheel portability (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build wheel and exercise CLI outside checkout
+        shell: bash
+        run: |
+          python -m pip wheel . --no-deps --wheel-dir wheelhouse
+          python -m venv .wheel-venv
+          ROOT_DIR="$PWD"
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            PY="$ROOT_DIR/.wheel-venv/Scripts/python.exe"
+            DE="$ROOT_DIR/.wheel-venv/Scripts/de.exe"
+          else
+            PY="$ROOT_DIR/.wheel-venv/bin/python"
+            DE="$ROOT_DIR/.wheel-venv/bin/de"
+          fi
+          "$PY" -m pip install --no-index --find-links wheelhouse design-engineering-skill
+          # The consumer directory is a sibling of the source checkout, not beneath it.
+          mkdir -p "$ROOT_DIR/../wheel-consumer"
+          cd "$ROOT_DIR/../wheel-consumer"
+          "$DE" --version
+          "$DE" check --smoke --json
+          "$DE" search "한글 폰트 줄바꿈" --scope core --json > result.json
+          "$PY" -c 'import json; from pathlib import Path; assert json.loads(Path("result.json").read_text(encoding="utf-8"))["research"]'

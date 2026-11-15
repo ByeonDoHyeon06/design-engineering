@@ -101,7 +101,7 @@ class RetrievalWorkflowTests(unittest.TestCase):
             self.assertTrue(visual_critique.audit(doc,root)['ok'])
             issue=doc['observations'][0];issue['status']='fixed'
             self.assertFalse(visual_critique.audit(doc,root)['ok'])
-            (root/'after.png').write_bytes(b'PNG');issue['after_screenshot']='after.png'
+            (root/'after.png').write_bytes(b'PNG altered after a real revision');issue['after_screenshot']='after.png'
             issue['after_observation']='Actual screenshot inspected: no overflow'
             self.assertTrue(visual_critique.audit(doc,root)['ok'])
 
