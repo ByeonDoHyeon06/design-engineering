@@ -34,7 +34,8 @@ def _cue_matches(q, cue):
     # Short Korean cues: reject unrelated compounds such as 구조 in 구조론.
     if re.fullmatch(r"[가-힣]+",c) and len(c)<=2:
         allowed=("은","는","이","가","을","를","과","와","에","에서","으로",
-                 "로","의","도","만","에게","에선","이다","인지","에도")
+                 "로","의","도","만","에게","에선","이다","인지","에도",
+                 "하게","하다","하는","한다","해","한","했으며","했다","하면","하도록","되지","되게")
         return any(t==c or any(t==c+suffix for suffix in allowed) for t in q.split())
     if c in q:return True
     # Conservative basic inflection for noun-form verb cues such as 찾기 -> 찾는.
