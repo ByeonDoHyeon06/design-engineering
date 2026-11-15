@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="210" viewBox="0 0 1440 210" role="img" aria-labelledby="title desc"><title id="title">Design Engineering working loop</title><desc id="desc">Six connected phases: Understand, Research, Explore, Build, Validate, Refine; the review loop returns feedback into the next design iteration.</desc><rect width="1440" height="210" fill="#F0EEE8"/>
+<path d="M24 24h1392M24 186h1392" stroke="#C9CBC7" stroke-width="1"/>
+<rect x="26" y="44" width="213" height="116" fill="#FAF9F4" stroke="#CFD1CC" stroke-width="1"/>
+<rect x="26" y="44" width="213" height="5" fill="#738BFE"/>
+<text x="45" y="76" fill="#7883A0" font-family="Arial,Helvetica,sans-serif" font-size="12" letter-spacing="1.7" font-weight="700">01</text>
+<text x="45" y="108" fill="#182233" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700" letter-spacing=".8">UNDERSTAND</text>
+<text x="45" y="132" fill="#697380" font-family="Arial,Helvetica,sans-serif" font-size="12">Define the question</text><path d="M241 101h18m-7-5 7 5-7 5" fill="none" stroke="#6D7D9B" stroke-width="1.5" stroke-linejoin="miter"/><rect x="264" y="44" width="213" height="116" fill="#FAF9F4" stroke="#CFD1CC" stroke-width="1"/>
+<rect x="264" y="44" width="213" height="5" fill="#738BFE"/>
+<text x="283" y="76" fill="#7883A0" font-family="Arial,Helvetica,sans-serif" font-size="12" letter-spacing="1.7" font-weight="700">02</text>
+<text x="283" y="108" fill="#182233" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700" letter-spacing=".8">RESEARCH</text>
+<text x="283" y="132" fill="#697380" font-family="Arial,Helvetica,sans-serif" font-size="12">Check evidence</text><path d="M479 101h18m-7-5 7 5-7 5" fill="none" stroke="#6D7D9B" stroke-width="1.5" stroke-linejoin="miter"/><rect x="502" y="44" width="213" height="116" fill="#FAF9F4" stroke="#CFD1CC" stroke-width="1"/>
+<rect x="502" y="44" width="213" height="5" fill="#738BFE"/>
+<text x="521" y="76" fill="#7883A0" font-family="Arial,Helvetica,sans-serif" font-size="12" letter-spacing="1.7" font-weight="700">03</text>
+<text x="521" y="108" fill="#182233" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700" letter-spacing=".8">EXPLORE</text>
+<text x="521" y="132" fill="#697380" font-family="Arial,Helvetica,sans-serif" font-size="12">Compare directions</text><path d="M717 101h18m-7-5 7 5-7 5" fill="none" stroke="#6D7D9B" stroke-width="1.5" stroke-linejoin="miter"/><rect x="740" y="44" width="213" height="116" fill="#FAF9F4" stroke="#CFD1CC" stroke-width="1"/>
+<rect x="740" y="44" width="213" height="5" fill="#738BFE"/>
+<text x="759" y="76" fill="#7883A0" font-family="Arial,Helvetica,sans-serif" font-size="12" letter-spacing="1.7" font-weight="700">04</text>
+<text x="759" y="108" fill="#182233" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700" letter-spacing=".8">BUILD</text>
+<text x="759" y="132" fill="#697380" font-family="Arial,Helvetica,sans-serif" font-size="12">Make it tangible</text><path d="M955 101h18m-7-5 7 5-7 5" fill="none" stroke="#6D7D9B" stroke-width="1.5" stroke-linejoin="miter"/><rect x="978" y="44" width="213" height="116" fill="#172232" stroke="#172232" stroke-width="1"/>
+<rect x="978" y="44" width="213" height="5" fill="#FFAF85"/>
+<text x="997" y="76" fill="#AFC0FF" font-family="Arial,Helvetica,sans-serif" font-size="12" letter-spacing="1.7" font-weight="700">05</text>
+<text x="997" y="108" fill="#F5F5F1" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700" letter-spacing=".8">VALIDATE</text>
+<text x="997" y="132" fill="#B4C1D6" font-family="Arial,Helvetica,sans-serif" font-size="12">Inspect real output</text><path d="M1193 101h18m-7-5 7 5-7 5" fill="none" stroke="#6D7D9B" stroke-width="1.5" stroke-linejoin="miter"/><rect x="1216" y="44" width="213" height="116" fill="#FAF9F4" stroke="#CFD1CC" stroke-width="1"/>
+<rect x="1216" y="44" width="213" height="5" fill="#8399FF"/>
+<text x="1235" y="76" fill="#7883A0" font-family="Arial,Helvetica,sans-serif" font-size="12" letter-spacing="1.7" font-weight="700">06</text>
+<text x="1235" y="108" fill="#182233" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700" letter-spacing=".8">REFINE</text>
+<text x="1235" y="132" fill="#697380" font-family="Arial,Helvetica,sans-serif" font-size="12">Revise and repeat</text><path d="M1324 166v19H135v-18" fill="none" stroke="#728BFF" stroke-width="1.5" stroke-dasharray="5 6"/>
+<path d="M130 173l5-7 5 7" fill="none" stroke="#728BFF" stroke-width="1.5"/>
+</svg>
