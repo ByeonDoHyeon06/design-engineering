@@ -49,7 +49,7 @@ class DesignEvaluationTests(unittest.TestCase):
         for task in ev.load_tasks(self.catalog)["tasks"]:
             for arm in ev.ARMS:
                 ev.attach(run=self.run, task_id=task["id"], condition=arm,
-                          screenshot=self.png, duration_seconds=8.0, input_tokens=10,
+                          desktop=self.png, mobile=self.png, duration_seconds=8.0, input_tokens=10,
                           output_tokens=50, cost_usd=0.003)
 
     def test_catalog_is_valid_and_balances_conditions(self):
@@ -80,19 +80,19 @@ class DesignEvaluationTests(unittest.TestCase):
         self.begin()
         task = ev.load_tasks(self.catalog)["tasks"][0]["id"]
         data = ev.attach(run=self.run, task_id=task, condition="baseline",
-                         screenshot=self.png)
-        copied = Path(data["blind_artifact"]).read_bytes()
+                         desktop=self.png, mobile=self.png)
+        copied = Path(data["blind_artifacts"]["desktop"]).read_bytes()
         self.assertTrue(copied.startswith(ev.PNG_SIGNATURE))
         self.assertNotIn(b"baseline",copied)
         self.assertNotIn(b"tEXt",copied)
         self.assertIn(b"IDAT",copied)
         self.assertFalse(ev.validate_run(self.run)["ready_for_review"])
         with self.assertRaisesRegex(ev.EvaluationError,"already attached"):
-            ev.attach(run=self.run, task_id=task, condition="baseline",screenshot=self.png)
+            ev.attach(run=self.run, task_id=task, condition="baseline",desktop=self.png, mobile=self.png)
         corrupted = self.tmp/"bad.png"
         corrupted.write_bytes(b"Not a PNG")
         with self.assertRaisesRegex(ev.EvaluationError,"PNG"):
-            ev.attach(run=self.run, task_id=task, condition="skill",screenshot=corrupted)
+            ev.attach(run=self.run, task_id=task, condition="skill",desktop=corrupted, mobile=self.png)
 
     def test_blind_packet_never_contains_condition_mapping(self):
         self.begin()
@@ -110,7 +110,7 @@ class DesignEvaluationTests(unittest.TestCase):
         self.assertEqual(report["status"],"NO_OBSERVATIONS")
         self.assertIsNone(report["summary"]["skill_win_share_excluding_ties"])
         self.assertEqual(report["summary"]["rated_tasks"],0)
-        self.assertEqual(len(report["evidence"]["missing_blind_screenshots"]),4)
+        self.assertEqual(len(report["evidence"]["missing_blind_screenshots"]),8)
         with self.assertRaisesRegex(ev.EvaluationError,"Complete and verify"):
             ev.scorecard(run=self.run,judge="independent01",out=self.tmp/"judges.json")
 
@@ -168,7 +168,7 @@ class DesignEvaluationTests(unittest.TestCase):
     def test_tampering_changes_report_readiness(self):
         self.begin()
         self.attach_all()
-        img=next((self.run/"blind").glob("*/*.png"))
+        img=next((self.run/"blind").glob("*/A-desktop.png"))
         img.write_bytes(img.read_bytes()+b"attack")
         status=ev.validate_run(self.run)
         self.assertFalse(status["ok"])
