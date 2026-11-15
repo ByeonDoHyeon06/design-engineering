@@ -1,6 +1,6 @@
 # Proposal: Design Engineering 4.0 — Knowledge as a governed system
 
-**Status:** RFC / not implemented. **Scope:** architecture, schema, migration and acceptance criteria. **Purpose:** stop unchecked accumulation of cards/keywords as the catalog grows. Maintain one platform-neutral root `SKILL.md`.
+**Status:** v4 implementation in progress (typed runtime and sparse lifecycle implemented; schema migration of all records intentionally not performed). **Scope:** architecture, schema, migration and acceptance criteria. **Purpose:** stop unchecked accumulation of cards/keywords as the catalog grows. Maintain one platform-neutral root `SKILL.md`.
 
 ## 1. What is wrong with the current shape?
 
@@ -110,7 +110,7 @@ Rejection reasons and non-promoted candidate records should be auditable. Extern
 
 **Human checkpoints:** review provenance for public-facing claims; inspect Korean copy and actual rendered typography; inspect source scope before labelling findings verified. No automated "aesthetic 90/100" claims.
 
-V3.9 pilot: `python scripts/knowledge_health.py --json` implements a **read-only integrity audit and review warnings**. It does NOT migrate records, review original research, merge aliases, or replace the existing evidence audit.
+v3.9 pilot: `python scripts/knowledge_health.py --json` implements a **read-only integrity audit and review warnings**. It does NOT migrate records, review original research, merge aliases, or replace the existing evidence audit.
 
 ## 7. v4.0 staged migration
 
@@ -135,3 +135,10 @@ Do **not** start Phase 1 by manually rewriting all 41 cards. Write read-only exp
 - A generated production design can cite actual source scope *without* leaking research metadata into end-user copy.
 
 **Decision request:** approve typed schema + staged migration in a v4.0 RFC before creating more than a small number of new cards.
+
+
+## Implementation status at v4.0
+
+The operational projection is implemented by `scripts/knowledge_graph.py` over the existing registries; source/claim text is **not duplicated**. `knowledge/v4/governance.json` stores typed lifecycle metadata and relationships with explicit reviewer proposals (`scripts/knowledge_governance.py`). Retrieval excludes inactive methods by default, and `scripts/retrieval_evaluation.py` reports diagnostic positives and no-result false positives. Duplicate DOI checks now guard ingestion. See `knowledge/v4/README.md`.
+
+Not shipped: a fully normalized replacement database, semantic embeddings as a default, independent paper review, automatic source contradiction detection, an actual 10k-paper production benchmark, or empirical user studies. Those require independent validation; synthetic benchmark numbers are not real-world capacity promises.

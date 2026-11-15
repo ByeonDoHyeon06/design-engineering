@@ -1,0 +1,25 @@
+{
+  "schema_version": 4,
+  "description": "Sparse, reviewed metadata overlay. Source/card/claim/concept text remains in the existing authoritative registries; do not duplicate research findings.",
+  "status_overrides": {},
+  "aliases": {},
+  "equivalences": [],
+  "concept_relations": [
+    {
+      "source": "concept:hangul_typography",
+      "target": "concept:visual_composition",
+      "relation": "broader"
+    },
+    {
+      "source": "concept:korean_copy",
+      "target": "concept:content_structure",
+      "relation": "broader"
+    },
+    {
+      "source": "concept:content_layout",
+      "target": "concept:content_structure",
+      "relation": "broader"
+    }
+  ],
+  "observations": []
+}

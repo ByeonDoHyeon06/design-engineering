@@ -1,6 +1,8 @@
-# Design Engineering — Knowledge → Design → Critique
+# Design Engineering v4.0 — Knowledge → Design → Critique
 
 Codex·Claude Code 등 다양한 에이전트에서 사용할 수 있는 범용 디자인공학 Skill. 논문·학술 연구·디자이너의 문제 해결 방식에서 **판단 근거**를 찾고, 실제 UI 제작과 시각적 비평·사용자 과제 검증을 연결합니다. 특정 홈페이지, 대시보드, 관리자 화면을 정해진 스타일로 만드는 템플릿이 아닙니다.
+
+**v4.0:** 출처·검증 주장·개념·방법·관찰 관계를 하나의 타입화된 그래프로 조회하고, 지식 중복·수명주기를 명시적인 검토자 승인 절차로 관리합니다. 기존 Knowledge 파일은 중복 저장하거나 파괴적으로 마이그레이션하지 않습니다. [v4 운영 가이드](knowledge/v4/README.md) / [설계 RFC](docs/v4-knowledge-architecture.md).
 
 **v3.9:** 실제 한글 조판·타이포그래피(K16), 자연스러운 한국어 UX Writing(K17), 콘텐츠와 레이아웃 통합 설계(K18)를 공통 스킬에 연결했습니다. W3C 초안과 GOV.UK 실무 지침은 각각 원문 지위와 전이 한계를 구분하며, 새로운 경험적 효과가 입증됐다고 주장하지 않습니다. `docs/type-language-content-review.md`에 적용·검토 절차가 있습니다.
 
@@ -67,6 +69,18 @@ python scripts/knowledge_index.py search '한글 폰트 줄바꿈과 타이포�
 검색은 강한 결과가 존재할 때 약한 상대 점수의 후보를 제외하도록 개선했습니다. 이 점수는 확률이나 학술 근거의 신뢰도가 아닙니다. `source_context`는 출처의 종류와 검증 수준을 표시하고, `verified_claims`는 실제로 검증 등록된 주장만 표시합니다.
 
 `knowledge_health.py`는 구조 오류를 실패 처리하고, 중복 DOI·참조되지 않는 출처는 **검토용 경고**로 보고합니다. 데이터를 임의로 병합·삭제하지 않습니다. 향후 지식 모델을 정규화하기 위한 RFC: [v4.0 Knowledge Architecture](docs/v4-knowledge-architecture.md). **v4.0 마이그레이션은 아직 수행하지 않았습니다.**
+
+## v4.0 Knowledge 운영
+
+```bash
+python scripts/knowledge_graph.py validate
+python scripts/knowledge_graph.py impact source:N39
+python scripts/knowledge_governance.py --help
+python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-v4.json --top 3
+python scripts/knowledge_scale_benchmark.py --size 1000 --size 10000
+```
+
+`active`는 검색 가능한 수명주기 상태이지 연구가 검증되었다는 뜻이 아닙니다. DOI 중복·미사용 출처는 자동 삭제하지 않고 검토 목록으로 유지합니다. v4 구조와 사용자 과제 기반 디자인 품질은 별도로 평가해야 합니다.
 
 ## 빠른 시작
 

@@ -1,0 +1,37 @@
+{
+  "schema_version": 4,
+  "contract": "runtime-validated offline registry (no jsonschema dependency required)",
+  "node_types": [
+    "source",
+    "claim",
+    "concept",
+    "method",
+    "practice",
+    "observation"
+  ],
+  "node_id_prefixes": {
+    "source": "source:",
+    "claim": "claim:",
+    "concept": "concept:",
+    "method": "method:",
+    "practice": "practice:",
+    "observation": "observation:"
+  },
+  "statuses": [
+    "active",
+    "needs_review",
+    "superseded",
+    "archived"
+  ],
+  "allowed_relations": [
+    "cites",
+    "supported_by",
+    "retrieves",
+    "broader",
+    "related",
+    "observed_method",
+    "observed_claim"
+  ],
+  "description": "Do not duplicate v3 sources, claims or card text. Graph nodes are materialized dynamically and exported only as generated artifacts.",
+  "security": "Observations must not contain confidential customer data or private artifact contents when contributed to a public repository."
+}

@@ -26,3 +26,9 @@ The library intentionally excludes screenshots, live-site design galleries, borr
 ## Curated source-checking layer
 
 Read `VERIFICATION-POLICY.md` before treating an academic claim as verified. New K-cards contain deep context-specific examples; source-level summaries and limitations live in `verified/claims.json`. Existing source aliases and unchecked bibliographic records are retained but not promoted.
+
+## v4 typed governance layer
+
+Read [v4 operations](v4/README.md). The existing catalog, sources, claims and concept JSON files remain **the authoritative records**; `v4/governance.json` is a sparse overlay for lifecycle states, manually reviewed aliases/equivalences, concept relations and optional public-safe observations. `scripts/knowledge_graph.py` materializes a deterministic Source → Claim → Concept → Method → Observation view, with dependency tracing and validation; it does not copy or replace research content.
+
+**No automatic publication, retraction, or false academic confidence scoring.** Retired sources flag still-active dependent cards for review. Normal `knowledge_index.py` search skips archived or superseded methods, and `--include-inactive` restores them for historical audits. Verified-only retrieval rejects inactive-source claims unless historical audit is explicitly requested.

@@ -20,16 +20,49 @@ def parts(question):
     return [x.strip() for x in chunks if x.strip()] or [question.strip()]
 
 
+# A subset of short generic words cannot establish a UI-design intent by themselves.
+# This is a lexical safeguard, NOT a semantic topic classifier.
+CONTEXT_DEPENDENT_CUES=frozenset(("구조","표현","의미","관계","역할","분류","비교","문제","상태","동작","완료"))
+
+def _cue_matches(q, cue):
+    c=norm(cue)
+    if not c:return False
+    if " " in c:return c in q
+    # Latin single words: don't match infixes like "form" inside "performance".
+    if re.fullmatch(r"[a-z0-9_-]+",c):
+        return bool(re.search(r"(?<![a-z0-9_])"+re.escape(c)+r"(?![a-z0-9_])",q))
+    # Verb nominalizations like 찾기 need a separate inflection rule
+    # BEFORE generic two-character noun matching (찾는 / 찾아 / 찾도록).
+    if re.fullmatch(r"[가-힣]+",c) and len(c)>=2 and c.endswith(("기","다")):
+        stem=c[:-1]
+        endings=("는","기","다","아","어","아서","어서","고","을","으려","으려면","으면","도록","는데","게")
+        if any(t==stem+ending for t in q.split() for ending in endings):
+            return True
+    # Short Korean cues: reject unrelated compounds such as 구조 in 구조론.
+    if re.fullmatch(r"[가-힣]+",c) and len(c)<=2:
+        allowed=("은","는","이","가","을","를","과","와","에","에서","으로",
+                 "로","의","도","만","에게","에선","이다","인지","에도",
+                 "하게","하다","하는","한다","해","한","했으며","했다","하면","하도록","되지","되게")
+        return any(t==c or any(t==c+suffix for suffix in allowed) for t in q.split())
+    if c in q:return True
+    # Conservative basic inflection for noun-form verb cues such as 찾기 -> 찾는.
+    if re.fullmatch(r"[가-힣]+",c) and len(c)>=2 and c.endswith(("기","다")):
+        stem=c[:-1]
+        endings=("는","기","다","아","어","아서","어서","고","을","으려","으려면","으면","도록","는데","게")
+        return any(t==stem+ending for t in q.split() for ending in endings)
+    return False
+
 def analyze(question, concepts_path=CONCEPTS):
     data=json.loads(Path(concepts_path).read_text(encoding='utf-8'))
     q=norm(question)
     matches=[]
     for concept in data['concepts']:
         cues=[norm(c) for c in concept['cues']]
-        found=[c for c in cues if c and c in q]
+        found=[c for c in cues if _cue_matches(q,c)]
         if found:
             matches.append({'id':concept['id'],'matched':found,'expand':concept['expand'],
-                            'cards':concept['cards'],'strength':min(3,len(found))})
+                            'cards':concept['cards'],'strength':min(3,len(found)),
+                            'has_domain_anchor':any(c not in CONTEXT_DEPENDENT_CUES for c in found)})
     matches.sort(key=lambda x:(-x['strength'],x['id']))
     expanded=[]
     for concept in matches[:6]:

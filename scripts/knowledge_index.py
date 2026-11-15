@@ -52,6 +52,8 @@ def _proof_for_card(row, body, claims, sources):
 
 def _signature(root):
     paths=[root/'knowledge/catalog.json',root/'knowledge/verified/claims.json',root/'knowledge/sources.json',root/'knowledge/concepts.json']
+    governance=root/'knowledge/v4/governance.json'
+    if governance.is_file():paths.append(governance)
     cat=json.loads(paths[0].read_text(encoding='utf-8'))['records']
     paths.extend(root/r['path'] for r in cat)
     h=hashlib.sha256()
@@ -148,7 +150,7 @@ def _fts(db,terms,top=100):
     except sqlite3.OperationalError:return {}
 
 
-def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=None,semantic_scores=None,relative_cutoff=0.20):
+def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=None,semantic_scores=None,relative_cutoff=0.20,include_inactive=False):
     if not 0 <= relative_cutoff <= 1:raise ValueError('relative_cutoff must be between 0 and 1')
     if not str(q).strip():return []
     root=Path(root);db_path=Path(db_path)
@@ -165,15 +167,23 @@ def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=N
         fts=_fts(db,[q]+expansions[:14])
         docs=[f'{row[1]} {row[1]} {row[7]} {row[6][:2200]}' for row in entries]
         char=_similarities(q+' '+' '.join(expansions[:10]),docs)
+        # A concept hint alone may be accidental (e.g. Korean '구조' in geology).
+        # Require independent direct query support for generic concept cues.
+        qgrams=_grams(q)
+        qgram_total=sum(qgrams.values()) or 1
         embed=list(semantic_scores) if semantic_scores is not None else (
               _embedding_similarities(q,docs,embedding_model) if embedding_model else None)
         if embed is not None and len(embed)!=len(entries):raise ValueError('Embedding score length mismatch.')
         sources={s['id']:s for s in json.loads((root/'knowledge/sources.json').read_text(encoding='utf-8'))['records']}
         claims={c['id']:c for c in json.loads((root/'knowledge/verified/claims.json').read_text(encoding='utf-8'))['claims']}
+        gov_file=root/'knowledge/v4/governance.json'
+        lifecycle=json.loads(gov_file.read_text(encoding='utf-8')).get('status_overrides',{}) if gov_file.is_file() else {}
         res=[]
         for i,row in enumerate(entries):
             id_,title,path,kind,src_json,claim_json,body,hints,issue_json=row
             claim_ids=json.loads(claim_json);issues=json.loads(issue_json)
+            lifecycle_status=lifecycle.get('method:'+id_,{}).get('status','active')
+            if not include_inactive and lifecycle_status in ('superseded','archived'):continue
             if verified_only and not claim_ids:continue
             concept_matches=[(c,pos) for c in analysis['concepts'] for pos,card_id in enumerate(c['cards']) if card_id==id_]
             conceptual=sum((2.2*c['strength'])/(2+pos) for c,pos in concept_matches)
@@ -183,9 +193,22 @@ def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=N
             direct_tokens=[x for x in re.findall(r'[\w가-힣]+',norm(q)) if len(x)>=2]
             meta_norm=norm(title+' '+hints)
             direct_score=min(1.5,sum(0.15 for tok in direct_tokens if tok in meta_norm))
+            strong_meta_hits=sum(1 for tok in set(direct_tokens)
+                                 if len(tok)>=3 and tok in meta_norm)
+            meta_grams=_grams(meta_norm)
+            raw_overlap=sum(min(count,meta_grams.get(gram,0))
+                            for gram,count in qgrams.items())/qgram_total
+            domain_anchor=any(c.get('has_domain_anchor',False) for c,_ in concept_matches)
+            # A highly specific token occurring literally in a card body is a
+            # valid retrieval signal, even if it is not indexed as a concept.
+            literal_body_hit=any(len(tok)>=5 and tok in norm(body) for tok in direct_tokens)
             score=conceptual+fts_score+char_score+direct_score+embedding_score
             if not concept_matches and id_ not in fts and char[i]<0.12 and (embed is None or embed[i]<0.44):continue
             if score<0.14:continue
+            # No evidence of a design task? Abstain instead of filling top-N
+            # with cards connected only through generic words and expansions.
+            if not domain_anchor and not literal_body_hit and strong_meta_hits<2 and raw_overlap<0.16 and (
+                    embed is None or embed[i]<0.5):continue
             details=[]
             for cid in claim_ids:
                 cl=claims.get(cid)
@@ -194,16 +217,27 @@ def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=N
                                     'verification_basis':cl.get('verification_basis'),
                                     'source_scope':cl.get('source_scope'),
                                     'do_not_infer':cl.get('do_not_infer')})
-            status='source_claims_checked' if details and not issues else 'no_explicit_reviewed_claim_link'
+            inactive_provenance=any(
+                lifecycle.get('source:'+item['source_id'],{}).get('status') in ('archived','superseded')
+                for item in details)
+            if verified_only and inactive_provenance and not include_inactive:
+                continue
+            status=('source_claims_checked_inactive_provenance' if inactive_provenance
+                    else 'source_claims_checked' if details and not issues
+                    else 'no_explicit_reviewed_claim_link')
             res.append({'id':id_,'title':title,'path':path,'kind':kind,'source_ids':json.loads(src_json),
                         'verified_claim_ids':claim_ids,'verified_claims':details,
-                        'evidence_status':status,'source_context':[
+                        'evidence_status':status,'lifecycle_status':lifecycle_status,'source_context':[
                             {'id':sid,'type':sources.get(sid,{}).get('type'),
                              'access_level':sources.get(sid,{}).get('access_level'),
-                             'reverified_at':sources.get(sid,{}).get('reverified_at')}
+                             'reverified_at':sources.get(sid,{}).get('reverified_at'),
+                             'lifecycle_status':lifecycle.get('source:'+sid,{}).get('status','active'),
+                             'review_due':lifecycle.get('source:'+sid,{}).get('review_due')}
                             for sid in json.loads(src_json)],
                         'score':round(score,5),
                         'why_matched':{'concepts':[c['id'] for c,_ in concept_matches],
+                                       'domain_anchor':domain_anchor,
+                                       'raw_metadata_overlap':round(raw_overlap,3),
                                        'fts':id_ in fts,'character_similarity':round(char[i],3),
                                        'local_embeddings':embed is not None}})
         res.sort(key=lambda r:(-r['score'],r['id']))
@@ -224,12 +258,13 @@ def main():
     a.add_argument('query');a.add_argument('--top',type=int,default=5);a.add_argument('--json',action='store_true')
     a.add_argument('--verified-only',action='store_true',help='Requires explicit claim linked to verified source, not card ID prefix')
     a.add_argument('--embedding-model',help='Optional already-downloaded LOCAL sentence-transformers model directory')
+    a.add_argument('--include-inactive',action='store_true',help='Include superseded/archived cards for audits; default excludes them')
     a.add_argument('--relative-cutoff',type=float,default=0.20,
                    help='Query-relative weak-match suppression when best score >= 2; 0 disables it. Heuristic, not probability.')
     opts=p.parse_args()
     if opts.cmd=='rebuild':print(json.dumps(rebuild(),ensure_ascii=False))
     else:
-        results=search(opts.query,opts.top,verified_only=opts.verified_only,embedding_model=opts.embedding_model,relative_cutoff=opts.relative_cutoff)
+        results=search(opts.query,opts.top,verified_only=opts.verified_only,embedding_model=opts.embedding_model,relative_cutoff=opts.relative_cutoff,include_inactive=opts.include_inactive)
         if opts.json:print(json.dumps(results,ensure_ascii=False,indent=2))
         else:
             for r in results:
