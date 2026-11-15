@@ -52,6 +52,8 @@ def _proof_for_card(row, body, claims, sources):
 
 def _signature(root):
     paths=[root/'knowledge/catalog.json',root/'knowledge/verified/claims.json',root/'knowledge/sources.json',root/'knowledge/concepts.json']
+    governance=root/'knowledge/v4/governance.json'
+    if governance.is_file():paths.append(governance)
     cat=json.loads(paths[0].read_text(encoding='utf-8'))['records']
     paths.extend(root/r['path'] for r in cat)
     h=hashlib.sha256()
@@ -148,7 +150,7 @@ def _fts(db,terms,top=100):
     except sqlite3.OperationalError:return {}
 
 
-def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=None,semantic_scores=None,relative_cutoff=0.20):
+def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=None,semantic_scores=None,relative_cutoff=0.20,include_inactive=False):
     if not 0 <= relative_cutoff <= 1:raise ValueError('relative_cutoff must be between 0 and 1')
     if not str(q).strip():return []
     root=Path(root);db_path=Path(db_path)
@@ -170,10 +172,14 @@ def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=N
         if embed is not None and len(embed)!=len(entries):raise ValueError('Embedding score length mismatch.')
         sources={s['id']:s for s in json.loads((root/'knowledge/sources.json').read_text(encoding='utf-8'))['records']}
         claims={c['id']:c for c in json.loads((root/'knowledge/verified/claims.json').read_text(encoding='utf-8'))['claims']}
+        gov_file=root/'knowledge/v4/governance.json'
+        lifecycle=json.loads(gov_file.read_text(encoding='utf-8')).get('status_overrides',{}) if gov_file.is_file() else {}
         res=[]
         for i,row in enumerate(entries):
             id_,title,path,kind,src_json,claim_json,body,hints,issue_json=row
             claim_ids=json.loads(claim_json);issues=json.loads(issue_json)
+            lifecycle_status=lifecycle.get('method:'+id_,{}).get('status','active')
+            if not include_inactive and lifecycle_status in ('superseded','archived'):continue
             if verified_only and not claim_ids:continue
             concept_matches=[(c,pos) for c in analysis['concepts'] for pos,card_id in enumerate(c['cards']) if card_id==id_]
             conceptual=sum((2.2*c['strength'])/(2+pos) for c,pos in concept_matches)
@@ -197,7 +203,7 @@ def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=N
             status='source_claims_checked' if details and not issues else 'no_explicit_reviewed_claim_link'
             res.append({'id':id_,'title':title,'path':path,'kind':kind,'source_ids':json.loads(src_json),
                         'verified_claim_ids':claim_ids,'verified_claims':details,
-                        'evidence_status':status,'source_context':[
+                        'evidence_status':status,'lifecycle_status':lifecycle_status,'source_context':[
                             {'id':sid,'type':sources.get(sid,{}).get('type'),
                              'access_level':sources.get(sid,{}).get('access_level'),
                              'reverified_at':sources.get(sid,{}).get('reverified_at')}
@@ -224,12 +230,13 @@ def main():
     a.add_argument('query');a.add_argument('--top',type=int,default=5);a.add_argument('--json',action='store_true')
     a.add_argument('--verified-only',action='store_true',help='Requires explicit claim linked to verified source, not card ID prefix')
     a.add_argument('--embedding-model',help='Optional already-downloaded LOCAL sentence-transformers model directory')
+    a.add_argument('--include-inactive',action='store_true',help='Include superseded/archived cards for audits; default excludes them')
     a.add_argument('--relative-cutoff',type=float,default=0.20,
                    help='Query-relative weak-match suppression when best score >= 2; 0 disables it. Heuristic, not probability.')
     opts=p.parse_args()
     if opts.cmd=='rebuild':print(json.dumps(rebuild(),ensure_ascii=False))
     else:
-        results=search(opts.query,opts.top,verified_only=opts.verified_only,embedding_model=opts.embedding_model,relative_cutoff=opts.relative_cutoff)
+        results=search(opts.query,opts.top,verified_only=opts.verified_only,embedding_model=opts.embedding_model,relative_cutoff=opts.relative_cutoff,include_inactive=opts.include_inactive)
         if opts.json:print(json.dumps(results,ensure_ascii=False,indent=2))
         else:
             for r in results:
