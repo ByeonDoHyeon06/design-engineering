@@ -44,3 +44,8 @@ Describe **problem, changes, data provenance, tests, and limitations**. Keep unr
 - An AI's text classification is a draft; approvals must be explicit. No automatic write from casual conversations or fabricated research claims.
 - Include duplicate rejection, cross-project isolation, stale draft handling and agent-neutral CLI smoke tests for additions.
 - Document scope, privacy and CLI examples in `docs/personal-knowledge.md`.
+
+## Controlled design evaluation
+
+To demonstrate changes in design quality, use [Design evaluation](docs/design-evaluation.md) rather than only curated retrieval scores. Keep control/skill model and tools matched, collect actual two-viewport screenshots, avoid exposing condition labels to reviewers, and disclose **all missing, negative and tied outcomes**. Do not insert mock human ratings or fake benchmark improvements into the repository. The 12 sample tasks are a development pilot, not independent evidence of success.
+

@@ -154,6 +154,7 @@ Personal guidance is stored locally and labeled separately from scientific evide
 | [Evidence policy](knowledge/VERIFICATION-POLICY.md) | What a source or claim does—and does not—establish |
 | [Typography & writing](docs/typography-writing.md) | Korean text layout, microcopy, and content structure |
 | [Visual critique](docs/visual-critique.md) · [UX validation](docs/ux-validation.md) | Rendered-screen and task-based review |
+| [Design evaluation](docs/design-evaluation.md) | How to run transparent, blinded skill vs baseline studies |
 | [Contributing](CONTRIBUTING.md) | Contribution process and required checks |
 
 <details>

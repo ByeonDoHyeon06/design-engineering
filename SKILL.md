@@ -11,7 +11,7 @@ Design for **meaning, clarity, and user tasks**, not a stock aesthetic. Preserve
 
 This is the **only** canonical `SKILL.md` for Codex and Claude Code. Resolve resource paths relative to the directory containing this file, **not** the user's application directory or a platform-specific parent. Before claiming research retrieval, check `knowledge/catalog.json`, `knowledge/claims.json`, `knowledge/governance.json` and `scripts/knowledge_index.py`. If files are missing, report an incomplete installation; do not fabricate studies or substitute unrelated evidence.
 
-## Unified CLI and personal Knowledge (v4.1)
+## Unified CLI and personal Knowledge
 
 The user-facing command is `de`. The full package also supports `python -m design_engineering` from the skill repository and the portable launcher `python <SKILL_ROOT>/scripts/de.py` from any consumer project without installing the package. The **consumer project's working directory** determines project scope; never treat the installed skill root as the consumer project. Run `de --project /path/to/project ...` when needed.
 
@@ -36,6 +36,10 @@ The user-facing command is `de`. The full package also supports `python -m desig
 ## Typography, Korean and content
 
 For real text-layout problems, query K16 (Hangul typography and mixed-script layout), K17 (natural Korean UX copy) and K18 (content roles and layout), as applicable. Preserve legal/brand terminology, product facts and exact actions; review Korean honorific tone, translationese, line wrapping, truncation and cross-viewport typography **in the rendered UI**. W3C Hangul layout is a Group Note Draft, and English practitioner guidance does not experimentally validate Korean wording choices. Details: `docs/typography-writing.md`.
+
+## Controlled design evaluation (optional)
+
+When asked to **measure whether this skill improves outputs**, do not manufacture outcomes or compare unrelated designs. Use `de eval tasks` and `de eval init` to prepare matched baseline-versus-skill trials, capture **actual desktop and mobile PNGs for both**, and share only `blind/` with independent reviewers. Only human-authored, evidence-linked reviews may enter `de eval report`; without them the status is `NO_OBSERVATIONS`. Preserve negative results and missing pairs. The CLI does **not** generate webpages, perform human studies or supply aesthetic scores. See `docs/design-evaluation.md`. This procedure is not required for ordinary interface design work.
 
 ## Knowledge and governance
 
