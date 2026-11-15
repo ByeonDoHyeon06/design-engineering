@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/design-engineering-mark.svg" width="76" height="76" alt="Design Engineering logo: intersecting precision frames" />
+<img src="assets/design-engineering-mark.webp" width="76" height="76" alt="Design Engineering logo: intersecting precision frames" />
 
 # Design Engineering
 
@@ -24,7 +24,10 @@ Find relevant knowledge, design for actual context, and validate the result.
 </div>
 
 <p align="center">
-  <img src="assets/hero-system.svg" width="100%" alt="Editorial illustration of research evidence becoming a deliberate interface, with visual review annotations." />
+  <picture>
+    <source media="(max-width: 640px)" srcset="assets/hero-system-mobile.svg" />
+    <img src="assets/hero-system.svg" width="100%" alt="Editorial illustration of research evidence becoming a deliberate interface, with visual review annotations." />
+  </picture>
 </p>
 
 ## Overview
@@ -59,33 +62,43 @@ It does **not** impose a house style, component library, or universal page templ
 ## Approach
 
 <p align="center">
-  <img src="assets/process-loop.svg" width="100%" alt="The six-stage Design Engineering loop: Understand, Research, Explore, Build, Validate, and Refine." />
+  <picture>
+    <source media="(max-width: 640px)" srcset="assets/process-loop-mobile.svg" />
+    <img src="assets/process-loop.svg" width="100%" alt="The six-stage Design Engineering loop: Understand, Research, Explore, Build, Validate, and Refine." />
+  </picture>
 </p>
 
 Start with the question and the real content. Look up only the knowledge needed, compare meaningful directions, build a working artifact, and inspect the rendered result. A passing automated test is **not** automatically a successful user experience.
 
 ### Knowledge is contextual, not a pile of prompts
 
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <img src="assets/knowledge-context.svg" width="100%" alt="Conceptual diagram: source-backed research and separately scoped personal knowledge inform design decisions without being conflated." />
-      <p><strong>Knowledge with boundaries</strong></p>
-      <p>Core evidence stays separate from user, project, and session preferences. AI-assisted additions begin as drafts and require review.</p>
-    </td>
-    <td width="50%" valign="top">
-      <img src="assets/validation-study.svg" width="100%" alt="Conceptual before and after interface views with annotations for a layout problem and its subsequent revision." />
-      <p><strong>Review the actual output</strong></p>
-      <p>Visual critique focuses on hierarchy, typography, layout, and interaction states. Revisions should be re-captured and checked.</p>
-    </td>
-  </tr>
-</table>
+#### Separate evidence from personal direction
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 640px)" srcset="assets/knowledge-context-mobile.svg" />
+    <img src="assets/knowledge-context.svg" width="100%" alt="Conceptual diagram: source-backed research and separately scoped personal preferences inform a design decision without being conflated." />
+  </picture>
+</p>
+
+Core evidence stays separate from user, project, and session preferences. AI-assisted additions begin as drafts and require review before they become active guidance.
+
+#### Inspect, revise, and verify
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 640px)" srcset="assets/validation-study-mobile.svg" />
+    <img src="assets/validation-study.svg" width="100%" alt="Conceptual before-and-after interface views: a problem is identified, the layout is revised, and the result is inspected again." />
+  </picture>
+</p>
+
+Visual critique examines hierarchy, typography, spacing, and interaction states. These illustrations explain the **review workflow**, not real product test results.
 
 ## Getting started
 
 Install the **complete repository**, not just `SKILL.md`. The knowledge library and validation tools live alongside it.
 
-### Claude Code
+### <img src="assets/integrations/claude.svg" width="24" height="24" alt="" /> Claude Code
 
 Run these commands in Claude Code:
 
@@ -94,7 +107,7 @@ Run these commands in Claude Code:
 /plugin install design-engineering@design-engineering-marketplace
 ```
 
-### Codex
+### <img src="assets/integrations/codex.svg" width="24" height="24" alt="" /> Codex
 
 Clone the skill into your project's skills directory:
 
