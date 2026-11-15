@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="560" viewBox="0 0 1440 560" role="img" aria-labelledby="title desc"><title id="title">Design Engineering — evidence into intent</title><desc id="desc">Abstract visual explanation of three design stages: inspected evidence, structured composition, and an interface reviewed through annotations.</desc><defs><pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" fill="none" stroke="#768399" stroke-width=".5" opacity=".21"/></pattern><pattern id="micro" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".5" fill="#657184" opacity=".25"/></pattern></defs>
+<rect width="1440" height="560" fill="#111720"/><rect x="22" y="20" width="1396" height="520" fill="url(#grid)" stroke="#414A5B" stroke-width="1"/>
+<path d="M48 42h68M48 42v68M1392 518h-68M1392 518v-68" fill="none" stroke="#8693A9" stroke-width="1" opacity=".65"/>
+<text x="80" y="48" fill="#8994A7" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" letter-spacing="3">FROM QUESTION TO COMPOSITION</text>
+<text x="1362" y="48" text-anchor="end" fill="#8994A7" font-family="Arial,Helvetica,sans-serif" font-size="11" letter-spacing="3">DESIGN SYSTEM STUDY / 001</text>
+<!-- Left: reviewable research records -->
+<rect x="82" y="78" width="346" height="392" fill="#F1EFE9"/><rect x="82" y="78" width="346" height="45" fill="#DFE1DB"/>
+<text x="103" y="106" fill="#242D3A" font-family="Arial,Helvetica,sans-serif" font-size="12" letter-spacing="2.2" font-weight="700">01  /  EVIDENCE</text>
+<circle cx="399" cy="101" r="5" fill="#627BFE"/>
+<rect x="106" y="148" width="127" height="9" fill="#242C3B"/>
+<rect x="106" y="169" width="210" height="5" fill="#9C9F9F"/>
+<rect x="106" y="182" width="259" height="5" fill="#ADB0AE"/>
+<rect x="106" y="195" width="241" height="5" fill="#ADB0AE"/>
+<rect x="106" y="215" width="298" height="1" fill="#BEC0BE"/>
+<rect x="106" y="230" width="144" height="88" fill="#D7DBDF"/><rect x="250" y="230" width="151" height="88" fill="#E0E2DB"/>
+<path d="M120 293l27-23 20 11 30-32 36-9" stroke="#506CF2" stroke-width="2.5" fill="none"/><circle cx="233" cy="240" r="4" fill="#506CF2"/>
+<rect x="269" y="253" width="112" height="6" fill="#ADB7B4"/><rect x="269" y="268" width="97" height="6" fill="#ADB7B4"/><rect x="269" y="283" width="105" height="6" fill="#ADB7B4"/>
+<text x="106" y="346" fill="#5A6271" font-family="Arial,Helvetica,sans-serif" font-size="10" letter-spacing="1.7" font-weight="700">SCOPE</text>
+<rect x="106" y="360" width="118" height="6" fill="#A7AFB3" rx="1"/><rect x="106" y="373" width="71.98" height="6" fill="#A7AFB3" rx="1"/>
+<text x="267" y="346" fill="#5A6271" font-family="Arial,Helvetica,sans-serif" font-size="10" letter-spacing="1.7" font-weight="700">CONTEXT</text>
+<rect x="267" y="360" width="112" height="6" fill="#A7AFB3" rx="1"/><rect x="267" y="373" width="68.32" height="6" fill="#A7AFB3" rx="1"/>
+<rect x="106" y="414" width="295" height="34" fill="#242D3C"/>
+<text x="122" y="435" fill="#F3F4F0" font-family="Arial,Helvetica,sans-serif" font-size="10" letter-spacing="1.5" font-weight="700">CLAIM  /  LIMITATION  /  SOURCE</text>
+<!-- connectors -->
+<path d="M428 272h70" stroke="#95A9FF" stroke-width="2" stroke-dasharray="6 6"/><circle cx="462" cy="272" r="5" fill="#95A9FF"/>
+<circle cx="428" cy="272" r="5" fill="#95A9FF"/><circle cx="498" cy="272" r="5" fill="#95A9FF"/>
+<!-- Middle: construction and intent -->
+<rect x="498" y="103" width="350" height="345" fill="#182333" stroke="#7D8AA2" stroke-width="1"/>
+<text x="520" y="129" fill="#CFD8EB" font-family="Arial,Helvetica,sans-serif" font-size="12" letter-spacing="2" font-weight="700">02  /  COMPOSITION</text>
+<path d="M520 152H825M520 414H825M549 151V414M624 151V414M700 151V414M775 151V414" stroke="#66778E" opacity=".55" stroke-width=".8" stroke-dasharray="4 6"/>
+<rect x="549" y="180" width="226" height="56" fill="#F2F1E9"/>
+<rect x="566" y="196" width="134" height="8" fill="#1B2A3B"/><rect x="566" y="213" width="96" height="5" fill="#949BA3"/>
+<rect x="549" y="253" width="101" height="111" fill="#8096FF"/>
+<rect x="665" y="253" width="110" height="43" fill="#E8E7E1"/>
+<rect x="665" y="306" width="110" height="58" fill="#B7C2DB"/>
+<rect x="549" y="380" width="226" height="12" fill="#DEE3ED" opacity=".32"/>
+<path d="M537 174v210M533 174h8M533 384h8M787 251h10M792 246v10" stroke="#F1AD83" stroke-width="2"/>
+<circle cx="549" cy="253" r="5" fill="#F6B48B" stroke="#152232" stroke-width="2"/>
+<circle cx="775" cy="364" r="5" fill="#F6B48B" stroke="#152232" stroke-width="2"/>
+<path d="M848 272h87" stroke="#95A9FF" stroke-width="2" stroke-dasharray="6 6"/><circle cx="891" cy="272" r="5" fill="#95A9FF"/>
+<!-- Right: interface and validation -->
+<rect x="935" y="78" width="424" height="392" fill="#F3F1E9"/>
+<rect x="935" y="78" width="424" height="48" fill="#DCDDE0"/>
+<text x="959" y="107" fill="#273042" font-family="Arial,Helvetica,sans-serif" font-size="12" letter-spacing="2" font-weight="700">03  /  EVALUATED INTERFACE</text>
+<rect x="1327" y="95" width="12" height="12" fill="#6680FC"/>
+<rect x="957" y="148" width="380" height="29" fill="#F3F1E9" stroke="#A5ACAF" stroke-width="1"/>
+<rect x="967" y="158" width="65" height="6" fill="#253247"/>
+<rect x="1220" y="159" width="27" height="5" fill="#A5ABAC"/><rect x="1258" y="159" width="27" height="5" fill="#A5ABAC"/><rect x="1296" y="159" width="27" height="5" fill="#A5ABAC"/>
+<rect x="957" y="195" width="238" height="223" fill="#EAEBEA"/>
+<text x="977" y="226" fill="#586272" font-family="Arial,Helvetica,sans-serif" font-size="10" letter-spacing="1.5" font-weight="700">INTERFACE STUDY</text>
+<rect x="977" y="245" width="175" height="12" fill="#273346"/>
+<rect x="977" y="268" width="122" height="11" fill="#273346"/>
+<rect x="977" y="296" width="185" height="5" fill="#B2B7BA"/><rect x="977" y="309" width="173" height="5" fill="#B2B7BA"/><rect x="977" y="322" width="180" height="5" fill="#B2B7BA"/>
+<rect x="977" y="354" width="107" height="36" fill="#526FF1"/>
+<rect x="1211" y="195" width="126" height="105" fill="#C9D0DC"/>
+<path d="M1226 276l25-27 23 11 21-38 25-3" stroke="#516EF1" stroke-width="2.5" fill="none"/>
+<rect x="1211" y="315" width="126" height="103" fill="#E3E3DB"/>
+<rect x="1224" y="332" width="99" height="7" fill="#A6B0B7"/><rect x="1224" y="347" width="81" height="7" fill="#A6B0B7"/>
+<rect x="1224" y="378" width="48" height="20" fill="#B5C1E0"/>
+<!-- review annotation -->
+<rect x="951" y="189" width="248" height="234" fill="none" stroke="#728BFF" stroke-width="2"/>
+<path d="M1199 221h50v-26" stroke="#728BFF" stroke-width="2" fill="none"/>
+<circle cx="1249" cy="193" r="13" fill="#728BFF"/><path d="M1244 193l4 4 7-8" fill="none" stroke="#121721" stroke-width="2.5" stroke-linecap="square"/>
+<!-- footer -->
+<text x="86" y="506" fill="#A2ADBF" font-family="Arial,Helvetica,sans-serif" font-size="10" letter-spacing="2.1" font-weight="700">OBSERVE THE SOURCE</text>
+<text x="505" y="506" fill="#A2ADBF" font-family="Arial,Helvetica,sans-serif" font-size="10" letter-spacing="2.1" font-weight="700">DESIGN THE RELATIONSHIPS</text>
+<text x="946" y="506" fill="#A2ADBF" font-family="Arial,Helvetica,sans-serif" font-size="10" letter-spacing="2.1" font-weight="700">CHECK THE RESULT</text>
+<rect x="82" y="519" width="1275" height="1" fill="#647184" opacity=".6"/>
+</svg>
