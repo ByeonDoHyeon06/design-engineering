@@ -128,10 +128,12 @@ class DesignEvaluationTests(unittest.TestCase):
         skill_side=next(k for k in ev.SIDES
                         if private["assignments"][0][k]["condition"]=="skill")
         for n,item in enumerate(score["judgments"]):
+            own_skill_side=next(side for side in ev.SIDES
+                                if private["assignments"][n][side]["condition"]=="skill")
             item["preferred"]=skill_side if n==0 else "tie"
             item["artifacts_reviewed"]=True
             item["reason"]="A reviewer inspected both actual images and recorded a task-specific rationale."
-            item["ratings"]={side:{dim:(4 if side==skill_side else 2)
+            item["ratings"]={side:{dim:(4 if side==own_skill_side else 2)
                                   for dim in ev.DIMENSIONS} for side in ev.SIDES}
         card_path.write_text(json.dumps(score),encoding="utf-8")
         report=ev.report(run=self.run,judgment_files=[card_path])
