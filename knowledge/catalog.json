@@ -1179,6 +1179,101 @@
       ],
       "usage": "retrieve_by_question_not_page_category",
       "review": "publisher/institution abstract or official normative text; no full-text guarantee"
+    },
+    {
+      "id": "K16",
+      "name": "hangul-typography",
+      "title": "Typography as a context-sensitive reading system",
+      "kind": "STANDARD",
+      "path": "knowledge/cards/K16-hangul-typography.md",
+      "source_ids": [
+        "N39",
+        "S1"
+      ],
+      "claims": [],
+      "signals": [
+        "Korean headings wrap awkwardly and mixed Hangul/Latin type feels imbalanced."
+      ],
+      "queries": [
+        "한글 타이포그래피",
+        "폰트",
+        "서체",
+        "폰트 조합",
+        "글꼴",
+        "행간",
+        "자간",
+        "줄바꿈",
+        "가독성",
+        "타이포",
+        "typography",
+        "font pairing",
+        "line breaking",
+        "text spacing",
+        "hangul"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "W3C Korean typography Group Note Draft, NOT endorsed standard; no font performance claims"
+    },
+    {
+      "id": "K17",
+      "name": "korean-ux-writing",
+      "title": "Korean UX writing: meaning before fluency",
+      "kind": "PRACTITIONER",
+      "path": "knowledge/cards/K17-korean-ux-writing.md",
+      "source_ids": [
+        "N40"
+      ],
+      "claims": [],
+      "signals": [
+        "UI Korean is grammatical but translation-like, vague or unhelpful."
+      ],
+      "queries": [
+        "자연스러운 한국어",
+        "한국어 문법",
+        "문장",
+        "번역투",
+        "마이크로카피",
+        "톤앤매너",
+        "버튼 문구",
+        "오류 메시지",
+        "UX 라이팅",
+        "writing",
+        "microcopy",
+        "korean",
+        "tone"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "UK English content guidance transferred as explicitly unverified Korean design hypothesis"
+    },
+    {
+      "id": "K18",
+      "name": "content-layout-codesign",
+      "title": "Content and layout should be designed together",
+      "kind": "PRACTITIONER",
+      "path": "knowledge/cards/K18-content-layout-codesign.md",
+      "source_ids": [
+        "N40",
+        "N41"
+      ],
+      "claims": [],
+      "signals": [
+        "Generic cards squeeze different content roles into an identical layout."
+      ],
+      "queries": [
+        "콘텐츠 설계",
+        "정보 위계",
+        "레이아웃",
+        "내용 중심",
+        "정보 구조",
+        "글과 디자인",
+        "content design",
+        "information architecture",
+        "layout",
+        "reading order",
+        "user needs"
+      ],
+      "usage": "retrieve_by_question_not_page_category",
+      "review": "official public-sector practitioner guidance; specific layout effects not proven"
     }
   ],
   "version": "3.7-verified-depth"

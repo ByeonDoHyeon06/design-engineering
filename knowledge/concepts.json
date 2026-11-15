@@ -564,6 +564,90 @@
         "P16",
         "P09"
       ]
+    },
+    {
+      "id": "hangul_typography",
+      "cues": [
+        "폰트",
+        "글꼴",
+        "서체",
+        "타이포그래피",
+        "행간",
+        "자간",
+        "줄바꿈",
+        "한글 조판",
+        "font",
+        "typeface",
+        "typography",
+        "line height"
+      ],
+      "expand": [
+        "typeface",
+        "hangul",
+        "font",
+        "line breaking",
+        "letter spacing",
+        "한글",
+        "조판",
+        "서체"
+      ],
+      "cards": [
+        "K16",
+        "K14"
+      ]
+    },
+    {
+      "id": "korean_copy",
+      "cues": [
+        "한국어",
+        "번역투",
+        "문법",
+        "문장",
+        "버튼 문구",
+        "자연스러운",
+        "마이크로카피",
+        "tone",
+        "microcopy",
+        "writing"
+      ],
+      "expand": [
+        "Korean",
+        "copywriting",
+        "microcopy",
+        "clarity",
+        "action labels",
+        "한국어",
+        "문장"
+      ],
+      "cards": [
+        "K17",
+        "K18"
+      ]
+    },
+    {
+      "id": "content_layout",
+      "cues": [
+        "콘텐츠",
+        "정보 구조",
+        "레이아웃",
+        "정보 위계",
+        "content",
+        "layout",
+        "information architecture",
+        "reading order"
+      ],
+      "expand": [
+        "content",
+        "structure",
+        "information hierarchy",
+        "user needs",
+        "콘텐츠",
+        "구조"
+      ],
+      "cards": [
+        "K18",
+        "K06"
+      ]
     }
   ]
 }

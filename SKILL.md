@@ -21,6 +21,15 @@ This root `SKILL.md` is the **only** canonical skill instruction for every agent
 6. **Render, critique, test and revise:** Inspect actual desktop/mobile screenshots for hierarchy, proportion, density, rhythm, meaningful graphic expression, typography and cropping. Run browser geometry smoke tests, **and** separately verify representative user-task flows, state changes, error recovery and keyboard behavior. Link each discovered issue to a concrete revision and a fresh observation. If a hypothesis fails, change it; do not merely decorate or hide the problem.
 7. **Report with limits:** State artifact, important tradeoffs, what was actually inspected/tested, what failed or remains untested. Do not call automated browser assertions a user study, screenshot inspection a WCAG audit, or AI preference a measured usability result.
 
+## Text, typography and content decisions (v3.9)
+
+When text and layout decisions matter, analyze **meaning and user tasks together** rather than fitting placeholder copy into predefined grids. Retrieve only relevant cards:
+- **K16** for typeface coverage, Hangul/Latin mixed typography, line breaking and spacing-override resilience. W3C Korean text layout is a **Group Note Draft**; it is not an endorsed normative font prescription.
+- **K17** for naturally phrased Korean UX copy, task-specific labels, and actionable errors. GOV.UK English writing guidance is *practitioner material*; adapting it to Korean is a **design hypothesis**, not a validated Korean-language rule.
+- **K18** for connecting content roles (evidence, comparison, sequence, action) to structure, with real text lengths and responsive revision.
+
+Preserve facts, constraints, brand/legal terminology and actions before rephrasing. Test real Korean and mixed-script text at representative widths; revise layout when copy no longer fits. Do not claim automatic grammar/style checking or font recommendation is proven. Use `docs/type-language-content-review.md` for high-stakes or text-heavy tasks; skip ceremony for minor fixes.
+
 ## Knowledge Retrieval 2.0
 
 - `python scripts/knowledge_index.py rebuild` — disposable offline FTS5 index from the catalog and cards.

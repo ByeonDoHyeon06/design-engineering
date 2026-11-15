@@ -2,6 +2,8 @@
 
 Codex·Claude Code 등 다양한 에이전트에서 사용할 수 있는 범용 디자인공학 Skill. 논문·학술 연구·디자이너의 문제 해결 방식에서 **판단 근거**를 찾고, 실제 UI 제작과 시각적 비평·사용자 과제 검증을 연결합니다. 특정 홈페이지, 대시보드, 관리자 화면을 정해진 스타일로 만드는 템플릿이 아닙니다.
 
+**v3.9 (개발 브랜치):** 실제 한글 조판·타이포그래피(K16), 자연스러운 한국어 UX Writing(K17), 콘텐츠와 레이아웃 통합 설계(K18)를 공통 스킬에 연결했습니다. W3C 초안과 GOV.UK 실무 지침은 각각 원문 지위와 전이 한계를 구분하며, 새로운 경험적 효과가 입증됐다고 주장하지 않습니다. `docs/type-language-content-review.md`에 적용·검토 절차가 있습니다.
+
 **v3.8 주요 변화:** 검색 실패 개선, 출처·주장 단위 검증, 설계 결정 추적, 실제 스크린샷 비평과 재검증, 의미 중심 콘셉트 탐색, 브라우저 과제 시나리오 테스트. 연구 카드 수를 늘리지 않고 이미 존재하는 지식을 제대로 적용하는 데 집중했습니다.
 
 ## 설치 (공통 Skill 원본)
@@ -49,6 +51,8 @@ python scripts/knowledge_index.py rebuild
 python scripts/knowledge_index.py search '행사 홈페이지에서 정보를 명확하게 전달하는 방법' --top 5 --json
 python scripts/knowledge_index.py search '데이터 차트 비교 정확도' --verified-only --top 5
 python scripts/retrieval_benchmark.py
+python scripts/retrieval_benchmark.py --dataset benchmarks/retrieval-v39.json --top 5
+python -m unittest discover -s tests -p 'test_v39.py'
 ```
 
 결과의 `verified_claims`는 학술 연구 또는 표준의 **확인 범위**이지, 현 프로젝트에서 그 디자인을 썼을 때 효과가 입증된 것은 아닙니다. `--verified-only`는 카드 이름이 아닌 검증된 주장 ID 연결을 검사합니다.
@@ -106,7 +110,7 @@ design-engineering/
 │   ├── concepts.json        # 범용 설계 개념 및 동의어(스타일 처방 아님)
 │   ├── verified/claims.json # 연구 주장 및 적용 범위
 │   ├── sources.json         # 출처·검토 수준
-│   └── cards/               # 연구·방법론 38개 카드
+│   └── cards/               # 연구·방법론 카드 (v3.9에서 3개 추가)
 ├── scripts/
 │   ├── knowledge_index.py   # 혼합 로컬 검색
 │   ├── query_understanding.py
