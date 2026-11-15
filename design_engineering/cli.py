@@ -523,6 +523,12 @@ def parser():
 
 
 def main(argv=None):
+    # Git Bash and redirected pipes on Windows may default to cp1252, which cannot
+    # represent Korean Knowledge output. Keep the CLI's output Unicode-capable.
+    if sys.platform == "win32":
+        for stream in (sys.stdout, sys.stderr):
+            if hasattr(stream, "reconfigure"):
+                stream.reconfigure(encoding="utf-8")
     args=parser().parse_args(argv)
     try:
         return int(args.func(args))
