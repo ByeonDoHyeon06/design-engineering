@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "design-engineering-skill"
-version = "4.5.0"
+version = "4.6.0"
 description = "Research-informed design engineering CLI and scoped Knowledge"
 requires-python = ">=3.10"
 dependencies = []

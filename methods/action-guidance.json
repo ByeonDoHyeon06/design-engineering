@@ -1,0 +1,341 @@
+{
+  "schema_version": 1,
+  "purpose": "Conditionally selected design hypotheses that turn already-retrieved Knowledge into actionable exploration and checks. These are not peer-reviewed UI outcomes or universal prescriptions.",
+  "usage_policy": "Require an actual query cue and a retrieved linked Knowledge card. Never show arbitrary advice, invent evidence, treat the link as proof, or force a visual style.",
+  "practices": [
+    {
+      "id": "AG01",
+      "name": "Dense schedules and discoverable program information",
+      "topic_cues": [
+        "세션",
+        "프로그램",
+        "일정",
+        "연사",
+        "schedule",
+        "session",
+        "track",
+        "speaker"
+      ],
+      "linked_card_ids": [
+        "K06",
+        "P06",
+        "P05",
+        "K18"
+      ],
+      "problem": "People must find and compare a relevant item among a dense schedule without losing date, topic or speaker context.",
+      "when": "Many sessions or items span multiple dates and tracks, and users need targeted lookup rather than linear reading.",
+      "options": [
+        "Group sessions by date or another task-relevant primary dimension, then offer a visible secondary filter.",
+        "Show the active filter state and count of visible matches; provide an obvious reset path.",
+        "Keep time, title, speaker and track scannable before expanding descriptions.",
+        "On narrow screens, prioritize task-relevant metadata rather than scaling a desktop grid."
+      ],
+      "failure_modes": [
+        "Repeated cards that hide temporal relationships.",
+        "A filter with no active-state indicator or empty-results explanation.",
+        "Dense program information compressed into unreadable columns."
+      ],
+      "countercases": [
+        "For five sessions on one day, a simple annotated list may be clearer than multi-step filters.",
+        "If speakers are intentionally unannounced, do not invent speaker identities."
+      ],
+      "checks": [
+        "Find an AI session on a chosen date and return to all sessions.",
+        "Locate a session by speaker and identify the time.",
+        "At 320px confirm title, time and category remain distinguishable.",
+        "Using keyboard only, change and clear filters; confirm results update."
+      ],
+      "guidance_kind": "practitioner_design_hypothesis"
+    },
+    {
+      "id": "AG02",
+      "name": "Content relationships and information density",
+      "topic_cues": [
+        "밀도",
+        "카드",
+        "그리드",
+        "여백",
+        "공백",
+        "리스트",
+        "표",
+        "그룹",
+        "density",
+        "card",
+        "grid",
+        "grouping",
+        "layout"
+      ],
+      "linked_card_ids": [
+        "P05",
+        "P07",
+        "K18",
+        "P10"
+      ],
+      "problem": "The layout hides semantic relationships behind repetitive containers, equal emphasis or arbitrary empty space.",
+      "when": "A screen presents heterogeneous content and its information hierarchy is unclear, especially across repeated sections.",
+      "options": [
+        "List content roles and relationships before choosing a grid, table, timeline, comparison or narrative layout.",
+        "Create one dominant visual anchor and vary supporting element weight according to the task.",
+        "Group content through spacing and alignment before adding another border or card.",
+        "Compare at least one structurally different organization when the hierarchy remains ambiguous."
+      ],
+      "failure_modes": [
+        "Using cards for every type of content without explaining why.",
+        "Equal-sized headings and sections that flatten priorities.",
+        "Removing so much decoration that the resulting page loses substance or useful emphasis."
+      ],
+      "countercases": [
+        "Cards are effective when each item is an independently actionable peer.",
+        "A regular grid can be desirable for intentionally uniform catalogs."
+      ],
+      "checks": [
+        "Ask a reviewer to name the primary action after a short glance.",
+        "Check headings and content relationships in a full-page screenshot.",
+        "Verify that each section communicates what the brief requires without dead space.",
+        "Check that a narrow viewport keeps the meaning rather than merely stacking boxes."
+      ],
+      "guidance_kind": "practitioner_design_hypothesis"
+    },
+    {
+      "id": "AG03",
+      "name": "Mobile composition and cross-viewport continuity",
+      "topic_cues": [
+        "모바일",
+        "반응형",
+        "320px",
+        "390px",
+        "태블릿",
+        "화면",
+        "mobile",
+        "responsive",
+        "viewport",
+        "breakpoint"
+      ],
+      "linked_card_ids": [
+        "K14",
+        "P13",
+        "K18"
+      ],
+      "problem": "The mobile interface is only a squeezed desktop arrangement, weakening labels, content order, interaction or meaningful visual assets.",
+      "when": "The same content must work at 1440px, 390px and 320px, or long Korean content changes layout geometry.",
+      "options": [
+        "Decide which content and actions must remain visible first on narrow screens.",
+        "Recompose navigation, comparisons and metadata presentation instead of only reducing font or column count.",
+        "Use alternative asset framing/cropping when the desktop picture becomes meaningless on mobile.",
+        "Test long headings, active filters, empty states and focus behavior at the narrowest width."
+      ],
+      "failure_modes": [
+        "Unbounded horizontal overflow, clipped buttons or overlapped hero art.",
+        "Tiny labels preserved from a dense desktop dashboard.",
+        "Mobile-only omissions that remove essential task information."
+      ],
+      "countercases": [
+        "Simple single-column content may adapt correctly with only fluid typography and spacing.",
+        "Do not invent a mobile-specific layout when the original already serves users well."
+      ],
+      "checks": [
+        "Inspect first screen and full page at 1440, 390 and 320px.",
+        "Confirm interactive controls and error messages remain operable with a keyboard.",
+        "Compare visual priority of the same content across screen sizes.",
+        "Test a very long localized label and verify no text collision."
+      ],
+      "guidance_kind": "practitioner_design_hypothesis"
+    },
+    {
+      "id": "AG04",
+      "name": "Natural Korean UX writing and readable mixed typography",
+      "topic_cues": [
+        "한글",
+        "한영",
+        "한국어",
+        "줄바꿈",
+        "서체",
+        "글꼴",
+        "폰트",
+        "타이포그래피",
+        "korean",
+        "hangul",
+        "typography",
+        "line break",
+        "microcopy"
+      ],
+      "linked_card_ids": [
+        "K16",
+        "K17",
+        "K18"
+      ],
+      "problem": "Mixed Korean/English content is unclear, unnaturally translated, crowded or truncated in real interface states.",
+      "when": "Text contains mixed scripts, variable Korean line length, honorific decisions, legal or precise product terminology.",
+      "options": [
+        "Preserve meaning, action and actual product terms before improving sentence rhythm.",
+        "Check line breaks and truncation with the real copy rather than short placeholders.",
+        "Distinguish primary heading, actionable label, supporting text and metadata by role and scale.",
+        "Test form errors and confirmation messages for clarity and consistent Korean register."
+      ],
+      "failure_modes": [
+        "A heading used as visual decoration rather than conveying meaning.",
+        "English literal translation that makes Korean error actions ambiguous.",
+        "Assuming W3C draft guidance experimentally proves a specific visual style."
+      ],
+      "countercases": [
+        "Do not rewrite legally required or brand-approved terminology for elegance.",
+        "Multilingual UI may intentionally retain English product vocabulary."
+      ],
+      "checks": [
+        "Read the actual Korean copy out loud and confirm the next action is clear.",
+        "Inspect 320px wraps, long Latin terms and mixed punctuation.",
+        "Test error, disabled and success states with localized content.",
+        "Check that the selected fonts cover characters used in the output."
+      ],
+      "guidance_kind": "practitioner_design_hypothesis"
+    },
+    {
+      "id": "AG05",
+      "name": "Form and choice-state feedback",
+      "topic_cues": [
+        "입력",
+        "폼",
+        "필터",
+        "모달",
+        "검증",
+        "오류",
+        "버튼",
+        "form",
+        "validation",
+        "filter",
+        "modal",
+        "input",
+        "error"
+      ],
+      "linked_card_ids": [
+        "P11",
+        "P12",
+        "P13",
+        "K10"
+      ],
+      "problem": "A working component gives little feedback about its state, errors or keyboard path.",
+      "when": "Users must select, enter, correct or confirm something that has meaningful consequences.",
+      "options": [
+        "Use explicit labels, validation errors close to the relevant control and a recoverable action.",
+        "Show selected filters or options, results counts and a clear reset path where appropriate.",
+        "Make modal focus entry, trapping, escape and restoration behavior predictable.",
+        "Distinguish loading, empty, error and success states with clear language."
+      ],
+      "failure_modes": [
+        "Only color indicates a selected or failed state.",
+        "Errors appear after submission without location or recovery advice.",
+        "Modal appears visually but keyboard focus remains behind it."
+      ],
+      "countercases": [
+        "Do not make trivial interactions artificially complex or add confirmations with no meaningful risk.",
+        "A static display without editing does not need a fake form."
+      ],
+      "checks": [
+        "Complete the primary task with keyboard only.",
+        "Trigger and recover from an invalid input.",
+        "Open and close the modal, then confirm focus returns appropriately.",
+        "Change and clear a filter and observe both count and active state."
+      ],
+      "guidance_kind": "practitioner_design_hypothesis"
+    },
+    {
+      "id": "AG06",
+      "name": "Meaningful design directions before polish",
+      "topic_cues": [
+        "대안",
+        "시안",
+        "방향",
+        "컨셉",
+        "콘셉트",
+        "독창",
+        "고착",
+        "복제",
+        "alternative",
+        "concept",
+        "exploration",
+        "distinct",
+        "originality",
+        "prototype"
+      ],
+      "linked_card_ids": [
+        "K08",
+        "P02",
+        "P03",
+        "P07"
+      ],
+      "problem": "Alternatives only change palette or surface effects while retaining the same information structure.",
+      "when": "A brief allows materially different user journeys or content relationships and early uncertainty is meaningful.",
+      "options": [
+        "Write two distinct interpretations of the user goal before drawing detailed frames.",
+        "Compare content order, information relationships and effort, not just shades and card radii.",
+        "Select a direction using the task requirements; record why competing directions were rejected.",
+        "Prototype only when a static comparison cannot resolve an interaction uncertainty."
+      ],
+      "failure_modes": [
+        "Three near-identical generic SaaS hero sections treated as different concepts.",
+        "Polishing the first idea before validating the core information path.",
+        "Producing options automatically for a trivial, already-settled request."
+      ],
+      "countercases": [
+        "Simple maintenance fixes may not justify exploring multiple architectures.",
+        "Diversity without relevance can increase cost and reduce usability."
+      ],
+      "checks": [
+        "Explain one structural difference between each option without mentioning colors.",
+        "Inspect whether authentic content still fits both options.",
+        "Compare paths for the user's primary task and one failure state.",
+        "Record decision rationale and unresolved uncertainty."
+      ],
+      "guidance_kind": "practitioner_design_hypothesis"
+    },
+    {
+      "id": "AG07",
+      "name": "Evidence-based rendered visual critique",
+      "topic_cues": [
+        "스크린샷",
+        "완성도",
+        "리뷰",
+        "검토",
+        "수정",
+        "겹침",
+        "시각",
+        "screenshot",
+        "critique",
+        "review",
+        "polish",
+        "overlap",
+        "visual"
+      ],
+      "linked_card_ids": [
+        "P15",
+        "K13",
+        "P07",
+        "K14"
+      ],
+      "problem": "Judging code or naming a defect without inspecting the actual rendered interface creates false confidence.",
+      "when": "A page exists and visual hierarchy, rhythm, overflow or responsiveness needs verification or revision.",
+      "options": [
+        "Open captured pixels and prioritize issues by meaning, hierarchy, layout and task impact.",
+        "Record viewport and precise location for the observation; avoid unfounded aesthetic scores.",
+        "Make one meaningful revision before polishing colors, shadows or motion.",
+        "Capture the same viewport and state afterward, then describe observed differences."
+      ],
+      "failure_modes": [
+        "Marking an issue fixed when the same screenshot was copied or renamed.",
+        "Replacing meaningful content with empty space while removing repeated patterns.",
+        "Equating an automatic screenshot check with WCAG certification or a user study."
+      ],
+      "countercases": [
+        "If the issue is purely backend and has no rendered consequence, do not demand screenshot-based validation.",
+        "When the rendering environment is unavailable, report NOT EXECUTED rather than inventing observations."
+      ],
+      "checks": [
+        "View the actual screenshot at the user-requested breakpoints.",
+        "Confirm first-screen purpose, main action, edge alignment and content continuity.",
+        "Verify the before/after files differ and describe what is visibly different.",
+        "Run task-specific functional and keyboard tests separately."
+      ],
+      "guidance_kind": "practitioner_design_hypothesis"
+    }
+  ]
+}

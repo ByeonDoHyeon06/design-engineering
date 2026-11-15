@@ -259,7 +259,40 @@ def attach(*, run, task_id, condition, desktop, mobile, duration_seconds=None,
 
 
 
-def validate_run(run, *, require_complete=False):
+def attach_provenance(*, run, task_id, condition, manifest_file):
+    """Add a private source-identity record, never to the public blind packet."""
+    from . import provenance
+    folder, secret, _ = _run(run)
+    if condition not in ARMS:
+        raise EvaluationError("Condition must be baseline or skill.")
+    pair = next((a for a in secret["assignments"] if a["task_id"] == task_id), None)
+    if pair is None:
+        raise EvaluationError("Unknown task for provenance.")
+    manifest = Path(manifest_file).expanduser().resolve()
+    verified = provenance.verify(manifest)
+    if not verified["ok"]:
+        raise EvaluationError("Provenance manifest is invalid: " + "; ".join(verified["errors"]))
+    data = provenance._read_json(manifest)
+    if data["source"]["expected_repository"].casefold() != provenance.DEFAULT_REPOSITORY.casefold():
+        raise EvaluationError("This study requires the designated Design Engineering repository identity.")
+    if condition == "skill" and not verified["attribution_eligible"]:
+        raise EvaluationError("Skill arm requires matched/complete source and operator-reported execution log.")
+    if condition == "baseline" and data["usage_reported_by_operator"] != "not_executed":
+        raise EvaluationError("Baseline arm must explicitly report NOT_EXECUTED.")
+    if data["evidence"]["alternate_material"]["recorded"]:
+        raise EvaluationError("Alternate material was recorded; do not attribute this run to only the selected skill.")
+    side = next(k for k in SIDES if pair[k]["condition"] == condition)
+    if pair[side].get("provenance"):
+        raise EvaluationError("Provenance already recorded for this task/condition.")
+    pair[side]["provenance"] = {"file": str(manifest), "sha256": _sha(manifest.read_bytes()),
+                               "source_status": verified["source_status"],
+                               "reported_usage": verified["reported_usage"]}
+    _private_json(folder / "private" / "assignments.json", secret)
+    return {"task_id": task_id, "condition": condition, "status": "PRIVATE_ATTRIBUTION_RECORDED",
+            "notice": "Private/ was updated, blind/ was not. Agent invocation is operator-reported, not attested."}
+
+
+def validate_run(run, *, require_complete=False, require_provenance=False):
     folder, secret, packet = _run(run)
     missing = []
     modified = []
@@ -275,6 +308,33 @@ def validate_run(run, *, require_complete=False):
                 elif _sha(image.read_bytes()) != expected:
                     modified.append(label)
     problems = list(modified)
+    missing_provenance = []
+    invalid_provenance = []
+    from . import provenance
+    for assignment in secret["assignments"]:
+        for side in SIDES:
+            task_id = assignment["task_id"]
+            entry = assignment[side].get("provenance")
+            label = task_id + "/" + side
+            if not entry:
+                missing_provenance.append(label)
+                continue
+            try:
+                path = Path(entry["file"])
+                if not path.is_file() or _sha(path.read_bytes()) != entry["sha256"]:
+                    raise EvaluationError("Manifest bytes differ from recorded hash.")
+                verified = provenance.verify(path)
+                usage = verified["reported_usage"]
+                condition = assignment[side]["condition"]
+                if (not verified["ok"]
+                    or (condition == "skill" and not verified["attribution_eligible"])
+                    or (condition == "baseline" and usage != "not_executed")):
+                    raise EvaluationError("Source identity or declared usage no longer passes validation.")
+            except (OSError, KeyError, ValueError) as exc:
+                invalid_provenance.append(label + ": " + str(exc))
+    problems.extend(invalid_provenance)
+    if require_provenance:
+        problems.extend("missing provenance: " + label for label in missing_provenance)
     # Blinded material must never include the hidden condition keys/assignments.
     public = json.dumps(packet, ensure_ascii=False).casefold()
     if any(word in public for word in ('"condition":', '"baseline"', '"skill"')):
@@ -287,7 +347,11 @@ def validate_run(run, *, require_complete=False):
         "tasks": len(secret["assignments"]),
         "attached": len(secret["assignments"]) * 4 - len(missing),
         "missing": missing, "modified": modified, "errors": problems,
-        "note": "Ready for review means that screenshots exist; it is not a usability or design quality pass."
+        "missing_provenance": missing_provenance, "invalid_provenance": invalid_provenance,
+        "attribution_ready": not missing_provenance and not invalid_provenance,
+        "ready_for_attributed_review": not problems and not missing and not missing_provenance,
+        "note": ("Ready for review means screenshots exist, not verified invocation or usability. "
+                 "Attribution requires separate private provenance records and remains operator-reported.")
     }
 
 
@@ -451,10 +515,13 @@ def report(*, run, judgment_files):
                   "seed": secret["seed"], "protocol_note": secret["protocol_note"]},
         "summary": summary, "task_outcomes": outcomes,
         "evidence": {"provided_judgment_files": len(judgment_files),
-                     "missing_blind_screenshots": state["missing"]},
+                     "missing_blind_screenshots": state["missing"],
+                     "missing_private_provenance": state["missing_provenance"],
+                     "attribution_ready": state["attribution_ready"]},
         "limitations": [
             "This tool does not generate designs or user studies. Every score requires an actual supplied review.",
             "Blind labels conceal assignments in the packet but cannot rule out visual/style clues or judge bias.",
+            "Source provenance is not proof of an agent actually executing the designated skill; usage remains operator-reported.",
             "Curated tasks, small sample sizes, model/tool variability, and reviewer judgment limit generalization.",
             "Subjective 1–5 ratings are descriptive; avoid treating them as universally calibrated quality scores.",
             "No claim of causal improvement, WCAG compliance, or user-task success is established by this report alone."

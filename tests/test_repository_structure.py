@@ -22,6 +22,8 @@ class RepositoryStructureTests(unittest.TestCase):
             "MANIFEST.in", "scripts/de.py",
             "design_engineering/cli.py", "design_engineering/local_knowledge.py",
             "design_engineering/evaluation.py", "docs/design-evaluation.md",
+            "design_engineering/provenance.py", "design_engineering/action_guidance.py",
+            "methods/action-guidance.json", "docs/provenance-and-actions.md",
             "benchmarks/design-tasks.json",
             "knowledge/catalog.json", "knowledge/concepts.json",
             "knowledge/sources.json", "knowledge/claims.json",

@@ -32,6 +32,8 @@ jobs:
           python -m pip install -e .
           de --version
           de check
+          de search "한글 폰트 줄바꿈" --scope core --actions --json > "$RUNNER_TEMP/context-actions.json"
+          python -c 'import json,os; from pathlib import Path; d=json.loads((Path(os.environ["RUNNER_TEMP"])/"context-actions.json").read_text(encoding="utf-8")); assert d["research"] and d["practice_guidance"]["suggestions"]'
           python scripts/de.py --version
       - name: Build and validate isolated distribution wheel
         run: |

@@ -56,6 +56,9 @@ def _search(args):
     if args.explain:
         from .knowledge_intelligence import explain
         result["coverage"] = explain(args.query,scientific,guidance)
+    if args.actions:
+        from .action_guidance import suggest
+        result["practice_guidance"] = suggest(args.query, scientific, root=ROOT)
     if args.json:
         _print(result, True)
     else:
@@ -70,6 +73,13 @@ def _search(args):
         if args.explain:
             print("COVERAGE:",result["coverage"]["state"])
             print("  "+result["coverage"]["recommendation"])
+        if args.actions:
+            print("PRACTICE GUIDANCE (hypotheses, not evidence):")
+            for item in result["practice_guidance"]["suggestions"]:
+                print(f"  {item['id']}: {item['name']}")
+                print("    " + item["options_to_consider"][0])
+            if not result["practice_guidance"]["suggestions"]:
+                print("  No contextual guidance; do not pad with unrelated rules.")
     return 0
 
 
@@ -280,8 +290,12 @@ def _evaluation(args):
                            desktop=args.desktop, mobile=args.mobile, duration_seconds=args.seconds,
                            input_tokens=args.input_tokens, output_tokens=args.output_tokens,
                            cost_usd=args.cost_usd)
+    elif args.eval_action == "provenance":
+        result = ev.attach_provenance(run=args.run, task_id=args.task,
+                                      condition=args.condition, manifest_file=args.manifest)
     elif args.eval_action == "validate":
-        result = ev.validate_run(args.run, require_complete=args.require_complete)
+        result = ev.validate_run(args.run, require_complete=args.require_complete,
+                                 require_provenance=args.require_provenance)
         _print(result, args.json)
         return 0 if result["ok"] else 1
     elif args.eval_action == "scorecard":
@@ -346,6 +360,27 @@ def _knowledge(args):
     return 0
 
 
+def _provenance(args):
+    from . import provenance
+    if args.provenance_action == "capture":
+        result = provenance.capture(
+            skill_root=args.skill_root or ROOT, out=args.out,
+            expected_repository=args.expected_repo, usage=args.usage,
+            execution_log=args.execution_log, knowledge_log=args.knowledge_log,
+            browser_log=args.browser_log, alternate_material=args.alternate_material)
+    elif args.provenance_action == "verify":
+        result = provenance.verify(args.manifest)
+        _print(result, args.json)
+        return 0 if result["ok"] else 1
+    elif args.provenance_action == "inspect":
+        result = provenance.source_identity(args.skill_root or ROOT,
+                                            expected_repository=args.expected_repo)
+    else:
+        raise provenance.ProvenanceError("Unknown provenance action.")
+    _print(result, args.json)
+    return 0
+
+
 def parser():
     p=argparse.ArgumentParser(prog="de",
         description="Design Engineering — research, personal Knowledge, and real UI validation.")
@@ -361,6 +396,7 @@ def parser():
     s.add_argument("--top",type=int,default=5)
     s.add_argument("--verified-only",action="store_true",help="Show only explicitly verified core claims.")
     s.add_argument("--explain",action="store_true",help="Explain registered coverage, match signals and knowledge gaps.")
+    s.add_argument("--actions",action="store_true",help="Append context-matched practice hypotheses with countercases and checks.")
     s.add_argument("--relative-cutoff",type=float,default=0.2)
     s.add_argument("--include-inactive",action="store_true")
     s.add_argument("--json",action="store_true")
@@ -452,9 +488,19 @@ def parser():
     attach.add_argument("--json", action="store_true")
     attach.set_defaults(func=_evaluation)
 
+    record_prov = esub.add_parser("provenance", help="Attach a checked private skill attribution manifest to one task/arm.")
+    record_prov.add_argument("--run",required=True)
+    record_prov.add_argument("--task",required=True)
+    record_prov.add_argument("--condition",choices=("baseline","skill"),required=True)
+    record_prov.add_argument("--manifest",required=True)
+    record_prov.add_argument("--json",action="store_true")
+    record_prov.set_defaults(func=_evaluation)
+
     check_eval = esub.add_parser("validate", help="Check task pairs, screenshot hashes and blind packet.")
     check_eval.add_argument("--run", required=True)
     check_eval.add_argument("--require-complete", action="store_true")
+    check_eval.add_argument("--require-provenance", action="store_true",
+                            help="Require private source+usage manifests for all task/arm pairs.")
     check_eval.add_argument("--json", action="store_true")
     check_eval.set_defaults(func=_evaluation)
 
@@ -518,6 +564,30 @@ def parser():
     ka.add_argument("--reviewer")
     ka.add_argument("--json",action="store_true")
     ka.set_defaults(func=_knowledge)
+
+    provenance = sub.add_parser("provenance", help="Inspect skill identity without claiming agent execution.")
+    psub = provenance.add_subparsers(dest="provenance_action",required=True)
+    pi = psub.add_parser("inspect", help="Inspect installed SKILL.md hash, Git origin, commit and completeness.")
+    pi.add_argument("--skill-root",help="Actual installed skill directory.")
+    pi.add_argument("--expected-repo",default="ByeonDoHyeon06/design-engineering")
+    pi.add_argument("--json",action="store_true")
+    pi.set_defaults(func=_provenance)
+    pc = psub.add_parser("capture", help="Create immutable local provenance manifest and optional real logs.")
+    pc.add_argument("--skill-root",help="Actual skill installation directory.")
+    pc.add_argument("--out",required=True)
+    pc.add_argument("--expected-repo",default="ByeonDoHyeon06/design-engineering")
+    pc.add_argument("--usage",choices=("not_executed","documentation_only","skill_invoked"),
+                    default="not_executed")
+    pc.add_argument("--execution-log",help="Required for self-reported invocation.")
+    pc.add_argument("--knowledge-log",help="Actual Knowledge retrieval output.")
+    pc.add_argument("--browser-log",help="Actual browser verification output.")
+    pc.add_argument("--alternate-material",help="Evidence of alternate skill/material used.")
+    pc.add_argument("--json",action="store_true")
+    pc.set_defaults(func=_provenance)
+    pv = psub.add_parser("verify",help="Recheck manifest against current installed bytes and log hashes.")
+    pv.add_argument("manifest")
+    pv.add_argument("--json",action="store_true")
+    pv.set_defaults(func=_provenance)
 
     return p
 

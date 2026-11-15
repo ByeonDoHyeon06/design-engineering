@@ -1,7 +1,7 @@
 """Design Engineering — unified CLI, local-first Knowledge and a complete skill bundle."""
 from pathlib import Path
 
-__version__ = "4.5.0"
+__version__ = "4.6.0"
 
 
 def resource_root():

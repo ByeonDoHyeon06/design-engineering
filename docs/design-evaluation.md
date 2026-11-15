@@ -24,6 +24,10 @@ Record actual agent version, model name, effort level, maximum elapsed time, tok
 
 A judge must not see the condition name, source code comments identifying the arm, prompts mentioning the skill, run logs, or the private random assignment. Use the generated **blind/** directory only. Visual styles can still reveal authorship; "blinded" is an intent and procedural safeguard, not a verified guarantee.
 
+## Provenance: prevent the wrong skill being credited
+
+Before executing either condition, use [Source attribution & action guidance](provenance-and-actions.md) to capture `SKILL.md` hash, absolute installed path, Git source/commit and any real invocation/search/browser logs. Use `de eval provenance` to attach a **private** manifest for each task and condition. The designated skill must match the intended Git repository; a documentation-only run, alternate skill or missing execution log is not a valid Design Engineering skill-arm attribution. The baseline must explicitly record `not_executed`. Run `de eval validate --require-provenance --require-complete` after captures. These checks do **not** attest that the agent truly executed the skill; inspect authentic session logs separately. No source or condition identity belongs in `blind/`.
+
 ## 1. Select tasks and initialize
 
 View the unscored brief catalog:
