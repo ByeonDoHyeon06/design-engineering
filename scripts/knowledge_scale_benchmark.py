@@ -84,10 +84,11 @@ def main():
     sizes_search=args.search_size or []
     if any(n<1 or n>20000 for n in sizes_search):
         p.error("search-size must be 1-20000")
+    search_runs=[search_trial(n) for n in sizes_search]
     print(json.dumps({"runs":[trial(x) for x in sizes],
-        "search_runs":[search_trial(n) for n in sizes_search],
+        "search_runs":search_runs,
         "limitations":"All records are synthetic; index and retrieval timings are environment-dependent. Not real-paper semantic quality or throughput SLA."},
         ensure_ascii=False,indent=2))
-    return 0
+    return int(any(not item["target_found"] for item in search_runs))
 
 if __name__=="__main__":raise SystemExit(main())
