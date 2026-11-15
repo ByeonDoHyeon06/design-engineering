@@ -403,6 +403,32 @@ def report(*, run, judgment_files):
             round(sum(diffs) / len(diffs), 3) if diffs else None)}
         for dim, diffs in ((dim, dimension_diffs.get(dim, [])) for dim in DIMENSIONS)
     }
+    # Only compare observed execution costs where BOTH arms provide real values.
+    # Never turn missing cost/latency measurements into zeros.
+    resource_metrics = {}
+    for field in ("duration_seconds", "input_tokens", "output_tokens", "cost_usd"):
+        comparisons = []
+        for assignment in secret["assignments"]:
+            skill_data = next(assignment[side] for side in SIDES
+                              if assignment[side]["condition"] == "skill")
+            base_data = next(assignment[side] for side in SIDES
+                             if assignment[side]["condition"] == "baseline")
+            if skill_data["metrics"] is None or base_data["metrics"] is None:
+                continue
+            skill_val, base_val = skill_data["metrics"].get(field), base_data["metrics"].get(field)
+            if skill_val is None or base_val is None:
+                continue
+            comparisons.append((skill_val, base_val))
+        resource_metrics[field] = {
+            "paired_cases": len(comparisons),
+            "mean_skill": (round(sum(a for a, _ in comparisons)/len(comparisons), 4)
+                           if comparisons else None),
+            "mean_baseline": (round(sum(b for _, b in comparisons)/len(comparisons), 4)
+                              if comparisons else None),
+            "mean_difference_skill_minus_baseline":
+                (round(sum(a-b for a,b in comparisons)/len(comparisons), 4)
+                 if comparisons else None)
+        }
     summary = {
         "total_tasks": len(packet["pairs"]), "rated_tasks": assessed,
         "unrated_tasks": counts["unrated"], "independent_judges": len(judge_ids),
@@ -410,7 +436,8 @@ def report(*, run, judgment_files):
         "baseline_preferred_tasks": counts["baseline"],
         "tie_tasks": counts["tie"], "unresolved_tasks": counts["unresolved"],
         "skill_win_share_excluding_ties": (round(counts["skill"] / definite, 4) if definite else None),
-        "paired_rating_differences": paired
+        "paired_rating_differences": paired,
+        "effort_metrics": resource_metrics
     }
     if assessed == 0:
         status = "NO_OBSERVATIONS"
