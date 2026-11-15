@@ -217,13 +217,22 @@ def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=N
                                     'verification_basis':cl.get('verification_basis'),
                                     'source_scope':cl.get('source_scope'),
                                     'do_not_infer':cl.get('do_not_infer')})
-            status='source_claims_checked' if details and not issues else 'no_explicit_reviewed_claim_link'
+            inactive_provenance=any(
+                lifecycle.get('source:'+item['source_id'],{}).get('status') in ('archived','superseded')
+                for item in details)
+            if verified_only and inactive_provenance and not include_inactive:
+                continue
+            status=('source_claims_checked_inactive_provenance' if inactive_provenance
+                    else 'source_claims_checked' if details and not issues
+                    else 'no_explicit_reviewed_claim_link')
             res.append({'id':id_,'title':title,'path':path,'kind':kind,'source_ids':json.loads(src_json),
                         'verified_claim_ids':claim_ids,'verified_claims':details,
                         'evidence_status':status,'lifecycle_status':lifecycle_status,'source_context':[
                             {'id':sid,'type':sources.get(sid,{}).get('type'),
                              'access_level':sources.get(sid,{}).get('access_level'),
-                             'reverified_at':sources.get(sid,{}).get('reverified_at')}
+                             'reverified_at':sources.get(sid,{}).get('reverified_at'),
+                             'lifecycle_status':lifecycle.get('source:'+sid,{}).get('status','active'),
+                             'review_due':lifecycle.get('source:'+sid,{}).get('review_due')}
                             for sid in json.loads(src_json)],
                         'score':round(score,5),
                         'why_matched':{'concepts':[c['id'] for c,_ in concept_matches],
