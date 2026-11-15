@@ -159,6 +159,16 @@ def commit(review_path, *, confirm=False, reviewer='', root=None):
     if not approved:raise IngestError('No manually approved candidates. Set status=approved per reviewed candidate.')
     catalog_p=root/'knowledge/catalog.json'; sources_p=root/'knowledge/sources.json'
     catalog=json.loads(catalog_p.read_text(encoding='utf-8')); sources=json.loads(sources_p.read_text(encoding='utf-8'))
+    # v4: identical DOI/URL is a review conflict, not a reason to create a new
+    # source and another card. Do not silently merge distinct editions.
+    if source.get('url'):
+        from knowledge_health import _canonical_url
+        candidate_key=_canonical_url(source['url'])
+        equivalent=[r['id'] for r in sources['records']
+                    if r.get('url') and _canonical_url(r['url'])==candidate_key]
+        if equivalent:
+            raise IngestError('Source URL/DOI already registered as '+', '.join(equivalent)
+                              +'; review existing claims and methods before creating new records.')
     source_id='U'+sha[:12].upper()
     if any(s.get('id')==source_id or s.get('sha256')==sha for s in sources['records']):
         raise IngestError('Source already registered; duplicate ingestion prevented.')
