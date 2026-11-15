@@ -92,6 +92,6 @@ jobs:
           mkdir -p external-consumer
           cd external-consumer
           "$DE" --version
-          "$DE" check --smoke
+          "$DE" check --smoke --json
           "$DE" search "한글 폰트 줄바꿈" --scope core --json > result.json
           "$PY" -c 'import json; from pathlib import Path; assert json.loads(Path("result.json").read_text(encoding="utf-8"))["research"]'
