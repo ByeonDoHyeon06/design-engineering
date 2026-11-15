@@ -36,6 +36,13 @@ jobs:
       - name: Unit tests
         run: python -m unittest discover -s tests -v
 
+      - name: Blinded design-study schema smoke (no agent runs or scores)
+        run: |
+          de eval tasks --json > "$RUNNER_TEMP/evaluation-tasks.json"
+          de eval init --out "$RUNNER_TEMP/design-eval-empty" --seed 42 --agent "ci-schema-only" --model "not-executed" --effort "not-executed"
+          de eval validate --run "$RUNNER_TEMP/design-eval-empty" --json
+          de eval report --run "$RUNNER_TEMP/design-eval-empty" --json > "$RUNNER_TEMP/evaluation-empty.json"
+          python -c 'import json,os; from pathlib import Path; r=json.loads((Path(os.environ["RUNNER_TEMP"])/"evaluation-empty.json").read_text()); assert r["status"]=="NO_OBSERVATIONS"; assert r["summary"]["rated_tasks"]==0'
       - name: Retrieval regressions
         run: |
           python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-core.json --top 3

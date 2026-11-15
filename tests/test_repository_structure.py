@@ -17,6 +17,8 @@ class RepositoryStructureTests(unittest.TestCase):
         for name in (
             "README.md", "CONTRIBUTING.md", "pyproject.toml", "scripts/de.py",
             "design_engineering/cli.py", "design_engineering/local_knowledge.py",
+            "design_engineering/evaluation.py", "docs/design-evaluation.md",
+            "benchmarks/design-tasks.json",
             "knowledge/catalog.json", "knowledge/concepts.json",
             "knowledge/sources.json", "knowledge/claims.json",
             "knowledge/governance.json", "scripts/knowledge_index.py",

@@ -1,7 +1,7 @@
 {
   "name": "design-engineering",
-  "version": "4.1.0",
-  "description": "Unified design engineering skill with a shared CLI and reviewed, locally scoped user/project Knowledge.",
+  "version": "4.2.0",
+  "description": "Research-informed design engineering with unified CLI, reviewed Knowledge and transparent blinded design evaluation.",
   "author": {
     "name": "ByeonDoHyeon06"
   },

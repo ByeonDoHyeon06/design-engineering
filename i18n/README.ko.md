@@ -154,6 +154,7 @@ de context
 | [Evidence policy](../knowledge/VERIFICATION-POLICY.md) | 출처와 주장이 입증하는 범위 및 한계 |
 | [Typography & writing](../docs/typography-writing.md) | 한글 조판, UX 문장, 콘텐츠 구조 |
 | [Visual critique](../docs/visual-critique.md) · [UX validation](../docs/ux-validation.md) | 실제 화면·사용자 과제 검토 |
+| [Design evaluation](../docs/design-evaluation.md) | 스킬 적용 전후 블라인드 비교 평가 방법 |
 | [Contributing](../CONTRIBUTING.md) | 기여 방법과 필수 검증 |
 
 <details>

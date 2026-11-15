@@ -69,8 +69,12 @@ The scripts share a root directory convention. Avoid importing project files fro
 
 The project intentionally avoids mandatory network access, a hosted vector database and an aesthetic score. Research, implementation hypotheses and observed task success remain separate forms of evidence.
 
-## Unified CLI and scoped personal Knowledge (v4.1)
+## Unified CLI and scoped personal Knowledge
 
 `design_engineering/cli.py` is the public entry point, exposed by `pyproject.toml` (`de`/`design-engineering`) and the portable launcher `scripts/de.py`. Existing scripts stay modular behind it. Read-only core evidence retrieval and local preferences are **never combined into one evidence confidence grade**.
 
 Personal data is held separately by `design_engineering/local_knowledge.py` at user, project or explicit session scope. Draft → reviewer approval → local JSON applies a scope-bound checksum guard, source-file fingerprint and exact-duplicate check. These are workflow safeguards, not authenticated multi-user database transactions. See [Personal Knowledge](personal-knowledge.md).
+
+## Paired design evaluation
+
+`design_engineering/evaluation.py` supports balanced A/B assignment, private arm mapping, local blind packets, separate mobile/desktop PNG captures and human-authored reviews through the existing `de eval` CLI namespace. It does **not** execute agents or infer design scores. A report without actual judgments explicitly has no observations. The curated task briefs live at `benchmarks/design-tasks.json`; evaluation runs stay outside version control. See [Design evaluation](design-evaluation.md) for the protocol and confounders.
