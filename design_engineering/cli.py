@@ -257,7 +257,7 @@ def _evaluation(args):
                              effort=args.effort, protocol_note=args.protocol_note)
     elif args.eval_action == "attach":
         result = ev.attach(run=args.run, task_id=args.task, condition=args.condition,
-                           screenshot=args.screenshot, duration_seconds=args.seconds,
+                           desktop=args.desktop, mobile=args.mobile, duration_seconds=args.seconds,
                            input_tokens=args.input_tokens, output_tokens=args.output_tokens,
                            cost_usd=args.cost_usd)
     elif args.eval_action == "validate":
@@ -370,7 +370,8 @@ def parser():
     attach.add_argument("--run", required=True)
     attach.add_argument("--task", required=True)
     attach.add_argument("--condition", choices=("baseline","skill"), required=True)
-    attach.add_argument("--screenshot", required=True, help="Actual PNG capture; no mock output created.")
+    attach.add_argument("--desktop", required=True, help="Actual desktop PNG screenshot.")
+    attach.add_argument("--mobile", required=True, help="Actual mobile PNG screenshot.")
     attach.add_argument("--seconds", type=float, default=None)
     attach.add_argument("--input-tokens", type=int, default=None)
     attach.add_argument("--output-tokens", type=int, default=None)
