@@ -97,6 +97,25 @@ class V40Tests(unittest.TestCase):
         self.assertIn("source:E4",{x["id"] for x in graph["nodes"]})
         self.assertIn("source:A7",{x["id"] for x in graph["nodes"]})
 
+    def test_archive_source_flags_active_dependents_and_overdue_reviews(self):
+        state=knowledge_graph.read_json(ROOT,knowledge_graph.GOVERNANCE)
+        state["status_overrides"]["source:N39"]={"status":"archived",
+            "reason":"Simulated retraction review","reviewer":"tester","review_due":"2020-01-01"}
+        graph=knowledge_graph.build(ROOT,state)
+        self.assertEqual(graph["errors"],[])
+        self.assertTrue(any("review overdue: source:N39" in v for v in graph["warnings"]))
+        self.assertTrue(any("active dependency on inactive source: method:K16" in v
+                            for v in graph["warnings"]))
+
+    def test_reviewed_equivalence_resolves_warning_but_not_records(self):
+        state=knowledge_graph.read_json(ROOT,knowledge_graph.GOVERNANCE)
+        state["equivalences"].append({"a":"source:E4","b":"source:A7",
+            "reviewer":"tester","reason":"Matching DOI inspected"})
+        graph=knowledge_graph.build(ROOT,state)
+        self.assertEqual(graph["errors"],[])
+        self.assertFalse(any("potential source alias: E4, A7" in w for w in graph["warnings"]))
+        self.assertEqual(sum(1 for n in graph["nodes"] if n["id"] in ("source:E4","source:A7")),2)
+
     def test_graph_export_is_deterministic(self):
         a=knowledge_graph.build(ROOT)
         b=knowledge_graph.build(ROOT)
