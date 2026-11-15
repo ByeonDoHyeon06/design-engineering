@@ -83,7 +83,7 @@ class RepositoryStructureTests(unittest.TestCase):
 
     def test_readme_illustrations_are_local_safe_and_valid(self):
         readme=(ROOT/"README.md").read_text(encoding="utf-8")
-        assets=re.findall(r'<img\\s+[^>]*src="(assets/[^"]+)"[^>]*>',readme)
+        assets=re.findall(r'<img\s+[^>]*src="(assets/[^"]+)"[^>]*>',readme)
         self.assertEqual(set(assets),{"assets/hero-system.svg","assets/process-loop.svg"})
         for path in assets:
             file=ROOT/path
@@ -96,7 +96,7 @@ class RepositoryStructureTests(unittest.TestCase):
             self.assertEqual(root.tag,"{http://www.w3.org/2000/svg}svg")
             self.assertTrue(root.attrib.get("viewBox"))
             self.assertGreater(file.stat().st_size,1000)
-        self.assertEqual(len(re.findall(r'<img\\s+[^>]*alt="[^"]+"',readme)),len(assets))
+        self.assertEqual(len(re.findall(r'<img\s+[^>]*alt="[^"]+"',readme)),len(assets))
 
     def test_source_registry_has_no_orphans_or_duplicate_aliases(self):
         result=knowledge_health.inspect(ROOT)
