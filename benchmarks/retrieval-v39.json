@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "note": "Curated smoke probes for three new v3.9 topics; not blind or representative user testing.",
+  "cases": [
+    {
+      "question": "한글 제목의 폰트 자간 행간 조합이 어색하고 줄바꿈이 잘려요",
+      "relevant": [
+        "K16"
+      ]
+    },
+    {
+      "question": "한글과 영어를 섞은 문구의 line break typography",
+      "relevant": [
+        "K16"
+      ]
+    },
+    {
+      "question": "모바일에서 한글 폰트 줄바꿈과 글자 간격이 가독성을 해쳐요",
+      "relevant": [
+        "K16",
+        "K14"
+      ]
+    },
+    {
+      "question": "우리 서비스의 자연스러운 한국어 문장과 번역투를 다듬고 싶다",
+      "relevant": [
+        "K17"
+      ]
+    },
+    {
+      "question": "버튼 문구와 오류 메시지를 한국어로 명확히 표현하려면",
+      "relevant": [
+        "K17"
+      ]
+    },
+    {
+      "question": "문법은 맞는데 UX 라이팅이 너무 기계적이에요",
+      "relevant": [
+        "K17"
+      ]
+    },
+    {
+      "question": "내용이 긴 기능들을 카드에 억지로 넣지 않고 레이아웃 구성",
+      "relevant": [
+        "K18"
+      ]
+    },
+    {
+      "question": "콘텐츠 중요도와 사용자 행동을 고려한 정보 구조 설계",
+      "relevant": [
+        "K18"
+      ]
+    },
+    {
+      "question": "내용의 역할에 따라 비교표와 흐름을 달리 보여주기",
+      "relevant": [
+        "K18"
+      ]
+    }
+  ]
+}
