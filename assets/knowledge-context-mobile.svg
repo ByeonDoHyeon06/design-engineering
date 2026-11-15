@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="780" viewBox="0 0 560 780" role="img" aria-labelledby="title desc">
+<title id="title">Knowledge and personal context — mobile view</title>
+<desc id="desc">A vertically arranged diagram: source-backed research and separately scoped personal knowledge inform a design decision without being treated as the same type of evidence.</desc>
+<rect width="560" height="780" fill="#F1F0EA"/>
+<path d="M28 28h504v724H28z" fill="none" stroke="#CACECB"/>
+<text x="49" y="60" fill="#334255" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700" letter-spacing="1.4">KNOWLEDGE / CONTEXT</text>
+<text x="49" y="85" fill="#6B7A8A" font-family="Arial,Helvetica,sans-serif" font-size="13">Evidence and preferences have different roles.</text>
+<rect x="49" y="111" width="462" height="219" fill="#172438"/>
+<rect x="49" y="111" width="462" height="43" fill="#30445A"/>
+<text x="68" y="139" fill="#F4F3EE" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700">01 / SOURCE-BACKED RESEARCH</text>
+<rect x="68" y="171" width="425" height="139" fill="#F6F6F0"/>
+<rect x="87" y="189" width="146" height="12" fill="#31405A"/>
+<rect x="87" y="213" width="302" height="7" fill="#ACB7BA"/>
+<rect x="87" y="230" width="340" height="7" fill="#B7BEC0"/>
+<rect x="87" y="247" width="286" height="7" fill="#B7BEC0"/>
+<rect x="87" y="279" width="140" height="18" fill="#7891F9"/>
+<rect x="235" y="279" width="167" height="18" fill="#D3DAE6"/>
+<path d="M280 330v24" stroke="#7B8EAB" stroke-width="3" stroke-dasharray="5 4"/>
+<path d="M274 347l6 8 6-8" fill="none" stroke="#7B8EAB" stroke-width="3"/>
+<rect x="49" y="357" width="462" height="174" fill="#FFFDF7" stroke="#C8D0D0"/>
+<text x="68" y="388" fill="#263950" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700">02 / PERSONAL DIRECTION</text>
+<rect x="68" y="407" width="425" height="33" fill="#E3E9FB"/>
+<rect x="68" y="445" width="425" height="33" fill="#F5E7DC"/>
+<rect x="68" y="483" width="425" height="30" fill="#DFE9EB"/>
+<rect x="68" y="407" width="5" height="33" fill="#6C86F4"/>
+<rect x="68" y="445" width="5" height="33" fill="#DB9A77"/>
+<rect x="68" y="483" width="5" height="30" fill="#7E9BAB"/>
+<text x="89" y="428" fill="#2A3A4D" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700">USER</text>
+<text x="89" y="466" fill="#2A3A4D" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700">PROJECT</text>
+<text x="89" y="504" fill="#2A3A4D" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700">SESSION</text>
+<rect x="257" y="419" width="195" height="6" fill="#9FAECA"/>
+<rect x="257" y="457" width="148" height="6" fill="#C6AA99"/>
+<rect x="257" y="495" width="166" height="6" fill="#A9BDC4"/>
+<path d="M280 531v25" stroke="#7B8EAB" stroke-width="3" stroke-dasharray="5 4"/>
+<path d="M274 549l6 8 6-8" fill="none" stroke="#7B8EAB" stroke-width="3"/>
+<rect x="49" y="558" width="462" height="167" fill="#EEF0ED" stroke="#A8BAC4"/>
+<rect x="49" y="558" width="462" height="43" fill="#D6E0EB"/>
+<text x="68" y="586" fill="#29394D" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700">03 / DESIGN DECISION</text>
+<rect x="68" y="618" width="425" height="89" fill="#FBFBF6"/>
+<rect x="89" y="637" width="205" height="12" fill="#2F4156"/>
+<rect x="89" y="660" width="167" height="7" fill="#B4BFC4"/>
+<rect x="89" y="678" width="94" height="17" fill="#728BFF"/>
+<rect x="338" y="636" width="129" height="51" fill="#C8D6E7"/>
+<path d="M353 673l20-18 20 6 23-22 29 5" fill="none" stroke="#667FF3" stroke-width="3"/>
+<text x="49" y="748" fill="#5B6A7C" font-family="Arial,Helvetica,sans-serif" font-size="13" letter-spacing="1">CONTEXT ≠ SCIENTIFIC VERIFICATION</text>
+</svg>
