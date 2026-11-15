@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="770" viewBox="0 0 560 770" role="img" aria-labelledby="t d">
+<title id="t">Design Engineering evidence to interface — mobile</title>
+<desc id="d">Three large vertically stacked cards depict checked research, the construction of a meaningful layout, and evaluation of the finished interface.</desc>
+<rect width="560" height="770" fill="#111A28"/>
+<rect x="22" y="20" width="516" height="729" fill="none" stroke="#46536A"/>
+<text x="48" y="63" fill="#B2C0D8" font-family="Arial,Helvetica,sans-serif" font-size="18" letter-spacing="1.8" font-weight="700">FROM EVIDENCE TO INTERFACE</text>
+<rect x="47" y="94" width="466" height="185" fill="#F3F1EB"/>
+<rect x="47" y="94" width="466" height="41" fill="#D8DFE0"/>
+<text x="68" y="121" fill="#243249" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700">01 / RESEARCH</text>
+<rect x="70" y="151" width="168" height="9" fill="#263750"/>
+<rect x="70" y="172" width="327" height="6" fill="#AEB9C0"/>
+<rect x="70" y="185" width="299" height="6" fill="#BBC2C5"/>
+<rect x="70" y="208" width="204" height="52" fill="#C7CFDD"/>
+<path d="M83 246l34-23 30 11 22-18 28 9" fill="none" stroke="#6480F6" stroke-width="3"/>
+<rect x="288" y="214" width="180" height="7" fill="#ABB4BA"/>
+<rect x="288" y="231" width="161" height="7" fill="#ABB4BA"/>
+<rect x="288" y="249" width="108" height="7" fill="#E1A889"/>
+<path d="M280 280v29" stroke="#8197F6" stroke-width="3" stroke-dasharray="5 5"/>
+<path d="M272 302l8 9 8-9" fill="none" stroke="#8197F6" stroke-width="3"/>
+<rect x="47" y="314" width="466" height="185" fill="#1B2A3D" stroke="#6A7B92"/>
+<text x="68" y="348" fill="#F3F1EB" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700">02 / COMPOSITION</text>
+<rect x="68" y="369" width="426" height="104" fill="#283951"/>
+<path d="M92 369v104M196 369v104M300 369v104M404 369v104" stroke="#61748F" stroke-dasharray="4 5"/>
+<rect x="90" y="387" width="195" height="65" fill="#F3F1EB"/>
+<rect x="108" y="403" width="137" height="9" fill="#29394C"/>
+<rect x="108" y="424" width="93" height="6" fill="#A5B1B7"/>
+<rect x="300" y="387" width="171" height="31" fill="#8498FA"/>
+<rect x="300" y="425" width="171" height="27" fill="#CAD2E1"/>
+<circle cx="91" cy="386" r="5" fill="#E7AE88"/><circle cx="471" cy="451" r="5" fill="#E7AE88"/>
+<path d="M280 500v27" stroke="#8197F6" stroke-width="3" stroke-dasharray="5 5"/>
+<path d="M272 520l8 9 8-9" fill="none" stroke="#8197F6" stroke-width="3"/>
+<rect x="47" y="532" width="466" height="171" fill="#F1F1EA"/>
+<rect x="47" y="532" width="466" height="41" fill="#D8DFE0"/>
+<text x="68" y="559" fill="#243249" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700">03 / REVIEWED OUTPUT</text>
+<rect x="70" y="587" width="426" height="96" fill="#FBFBF6"/>
+<rect x="88" y="601" width="211" height="8" fill="#293A50"/>
+<rect x="88" y="621" width="164" height="7" fill="#A7B6BA"/>
+<rect x="88" y="644" width="102" height="25" fill="#647BF1"/>
+<rect x="336" y="599" width="143" height="65" fill="#CAD5E3"/>
+<path d="M350 651l28-24 25 8 29-20 34 7" fill="none" stroke="#5C75EC" stroke-width="3"/>
+<rect x="85" y="596" width="396" height="77" fill="none" stroke="#7F94FF" stroke-width="2"/>
+<circle cx="477" cy="597" r="14" fill="#7F94FF"/>
+<path d="M469 596l6 6 10-12" fill="none" stroke="#162339" stroke-width="3"/>
+<text x="48" y="727" fill="#A3B5CF" font-family="Arial,Helvetica,sans-serif" font-size="13" letter-spacing="1.2">RESEARCH · INTENT · VERIFICATION</text>
+</svg>
