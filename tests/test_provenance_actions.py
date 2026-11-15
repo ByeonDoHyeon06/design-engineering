@@ -182,6 +182,8 @@ class ActionGuidanceTests(unittest.TestCase):
         augmented=call("--actions","--explain")
         self.assertEqual(original["research"],augmented["research"])
         self.assertIn("practice_guidance",augmented)
+        self.assertTrue(augmented["practice_guidance"]["suggestions"],
+                        "A Korean typography question should yield a card-grounded practice hypothesis.")
         self.assertIn("coverage",augmented)
         for item in augmented["practice_guidance"]["suggestions"]:
             self.assertEqual(item["practice_type"],"design_hypothesis_not_research_finding")
