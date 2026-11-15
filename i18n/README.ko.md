@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="../assets/design-engineering-mark.svg" width="76" height="76" alt="정교하게 맞물린 사각 프레임으로 표현한 Design Engineering 아이콘" />
+<img src="../assets/design-engineering-mark.webp" width="76" height="76" alt="정교하게 맞물린 사각 프레임으로 표현한 Design Engineering 아이콘" />
 
 # Design Engineering
 
@@ -24,7 +24,10 @@
 </div>
 
 <p align="center">
-  <img src="../assets/hero-system.svg" width="100%" alt="연구 근거가 정교한 인터페이스 설계와 시각적 검토로 연결되는 과정을 표현한 일러스트레이션" />
+  <picture>
+    <source media="(max-width: 640px)" srcset="../assets/hero-system-mobile.svg" />
+    <img src="../assets/hero-system.svg" width="100%" alt="연구 근거가 정교한 인터페이스 설계와 시각적 검토로 연결되는 과정을 표현한 일러스트레이션" />
+  </picture>
 </p>
 
 ## 프로젝트 소개
@@ -59,33 +62,43 @@
 ## 작업 방식
 
 <p align="center">
-  <img src="../assets/process-loop.svg" width="100%" alt="과제 이해, 연구, 대안 탐색, 구현, 검증, 개선으로 이어지는 여섯 단계 디자인 워크플로" />
+  <picture>
+    <source media="(max-width: 640px)" srcset="../assets/process-loop-mobile.svg" />
+    <img src="../assets/process-loop.svg" width="100%" alt="과제 이해, 연구, 대안 탐색, 구현, 검증, 개선으로 이어지는 여섯 단계 디자인 워크플로" />
+  </picture>
 </p>
 
 과제를 정의하고 실제 콘텐츠를 확인한 다음, 필요한 근거만 찾아 의미 있는 설계 방향을 비교합니다. 동작하는 결과물을 만들고 실제 화면을 살펴 수정합니다. 자동 테스트 통과가 반드시 좋은 사용자 경험을 의미하는 것은 아닙니다.
 
 ### 지식은 쌓아두는 것이 아니라 맥락에 맞게 활용합니다
 
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <img src="../assets/knowledge-context.svg" width="100%" alt="출처가 명확한 공통 연구 자료와 개인·프로젝트·세션 선호가 서로 구분되어 디자인 판단에 활용되는 다이어그램" />
-      <p><strong>경계가 분명한 Knowledge</strong></p>
-      <p>공통 연구 근거와 사용자·프로젝트·세션 취향을 분리합니다. AI가 작성한 지식도 검토·승인 전에는 자동 등록되지 않습니다.</p>
-    </td>
-    <td width="50%" valign="top">
-      <img src="../assets/validation-study.svg" width="100%" alt="인터페이스의 문제점을 발견하고 수정한 뒤 다시 확인하는 과정을 보여주는 개념도" />
-      <p><strong>실제 결과물 검토</strong></p>
-      <p>정보 위계, 타이포그래피, 레이아웃, 상호작용 상태를 실제 화면에서 확인하고 수정 결과를 재검증합니다.</p>
-    </td>
-  </tr>
-</table>
+#### 공통 연구와 개인 선호를 명확하게 구분
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 640px)" srcset="../assets/knowledge-context-mobile.svg" />
+    <img src="../assets/knowledge-context.svg" width="100%" alt="출처가 명확한 공통 연구 자료와 개인·프로젝트·세션 선호가 분리되어 디자인 판단에 활용되는 과정" />
+  </picture>
+</p>
+
+출처가 확인된 연구와 사용자·프로젝트·세션 취향을 별도로 관리합니다. AI가 작성한 내용도 검토 및 승인을 거치기 전에는 공통 근거로 등록되지 않습니다.
+
+#### 실제 결과를 확인하고 개선
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 640px)" srcset="../assets/validation-study-mobile.svg" />
+    <img src="../assets/validation-study.svg" width="100%" alt="인터페이스의 문제를 발견해 수정하고 실제 화면을 다시 캡처하여 검증하는 과정의 개념도" />
+  </picture>
+</p>
+
+정보 위계, 타이포그래피, 레이아웃, 상호작용 상태를 실제 화면에서 확인합니다. 이미지는 **검토 방법을 설명하는 개념도**이며 실제 제품의 테스트 결과를 의미하지 않습니다.
 
 ## 시작하기
 
 `SKILL.md` 하나가 아니라 **저장소 전체**를 설치해야 합니다. Knowledge 자료와 검증 도구가 함께 필요하기 때문입니다.
 
-### Claude Code
+### <img src="../assets/integrations/claude.svg" width="24" height="24" alt="" /> Claude Code
 
 Claude Code 안에서 다음을 실행합니다.
 
@@ -94,7 +107,7 @@ Claude Code 안에서 다음을 실행합니다.
 /plugin install design-engineering@design-engineering-marketplace
 ```
 
-### Codex
+### <img src="../assets/integrations/codex.svg" width="24" height="24" alt="" /> Codex
 
 프로젝트의 스킬 디렉터리에 전체 저장소를 복제합니다.
 
