@@ -19,7 +19,7 @@ A six-page model-generated A/B test yields a tiny score gap and a claim of scien
 4. If using custom expert scores, label them as exploratory subjective judgments; do not call them VisAWI results.
 
 ## Countercases and overclaim guard
-- Explicitly review source-specific constraints in `knowledge/verified/claims.json` and source access levels in `knowledge/sources.json`.
+- Explicitly review source-specific constraints in `knowledge/claims.json` and source access levels in `knowledge/sources.json`.
 - Do not turn a studied observation into a mandatory style rule, numerical CSS constant, or general guarantee of user performance.
 - The agent must not assert that this study validated AI-generated UI, unless such testing exists elsewhere.
 

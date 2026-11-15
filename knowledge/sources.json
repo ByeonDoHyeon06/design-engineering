@@ -49,12 +49,15 @@
       "access_level": "institutional_abstract_verified",
       "verified_at": null,
       "limitations": "screen-based first impression, not observed task success",
-      "provenance_note": "Reverified from an identified publisher, institutional, or official standards page on 2026-11-14. Specific claim limitations must accompany every use.",
+      "provenance_note": "Reverified from an identified publisher, institutional, or official standards page on 2026-11-14. Specific claim limitations must accompany every use. Publisher abstract was also checked under the same DOI; it is one publication, not independent corroboration.",
       "reverified_at": "2026-11-14",
       "verification_url": "https://research.google/pubs/the-role-of-visual-complexity-and-prototypicality-regarding-first-impression-of-websites-working-towards-understanding-aesthetic-judgments/",
       "verification_scope": "Two screenshot-rating studies measured very brief first-impression judgments; low complexity and high prototypicality scored well in this context.",
       "claim_verified_from": "publisher or institution abstract",
-      "full_text_reviewed_this_release": false
+      "full_text_reviewed_this_release": false,
+      "additional_verification_urls": [
+        "https://www.sciencedirect.com/science/article/abs/pii/S1071581912001127"
+      ]
     },
     {
       "id": "E5",
@@ -154,23 +157,6 @@
       "provenance_note": "Carried forward from v3.3 metadata; access_level indicates whether material was fully inspected. Recheck primary source for exact claims."
     },
     {
-      "id": "A7",
-      "authors": "Tuch et al. (2012)",
-      "title": "The role of visual complexity and prototypicality regarding first impression of websites",
-      "url": "https://doi.org/10.1016/j.ijhcs.2012.06.003",
-      "type": "empirical_or_model_see_register",
-      "topic": "aesthetics_and_identity",
-      "access_level": "publisher_abstract_verified",
-      "verified_at": null,
-      "limitations": "check exact task, outcomes and boundary conditions in original reference register",
-      "provenance_note": "Reverified from an identified publisher, institutional, or official standards page on 2026-11-14. Specific claim limitations must accompany every use.",
-      "reverified_at": "2026-11-14",
-      "verification_url": "https://www.sciencedirect.com/science/article/abs/pii/S1071581912001127",
-      "verification_scope": "Same Tuch et al. 2012 study as E4; record is a bibliographic alias, not an independent replication.",
-      "claim_verified_from": "publisher or institution abstract",
-      "full_text_reviewed_this_release": false
-    },
-    {
       "id": "A8",
       "authors": "Reinecke et al. (2013)",
       "title": "Predicting users first impressions of website aesthetics",
@@ -259,18 +245,6 @@
       "authors": "Jiang et al. (2016)",
       "title": "The Determinants and Impacts of Aesthetics in Users’ First Interaction with Websites",
       "url": "https://www.jstor.org/stable/26614036",
-      "type": "empirical_or_model_see_register",
-      "topic": "aesthetics_and_identity",
-      "access_level": "prior_register_not_reverified",
-      "verified_at": null,
-      "limitations": "check exact task, outcomes and boundary conditions in original reference register",
-      "provenance_note": "Carried forward from v3.3 metadata; access_level indicates whether material was fully inspected. Recheck primary source for exact claims."
-    },
-    {
-      "id": "A16",
-      "authors": "O’Quin & Besemer (1989)",
-      "title": "The Development, Reliability, and Validity of the Revised Creative Product Semantic Scale",
-      "url": "https://doi.org/10.1080/10400418909534323",
       "type": "empirical_or_model_see_register",
       "topic": "aesthetics_and_identity",
       "access_level": "prior_register_not_reverified",
@@ -542,21 +516,6 @@
       "verification_scope": "Protocol studies of nine experienced industrial designers suggest co-evolution of problem and solution spaces.",
       "claim_verified_from": "publisher or institution abstract",
       "full_text_reviewed_this_release": false
-    },
-    {
-      "id": "DC4",
-      "title": "Design cognition",
-      "authors": "author metadata not verified",
-      "year": 2025,
-      "url": "https://doi.org/10.1093/oso/9780192864543.003.0031",
-      "doi": "10.1093/oso/9780192864543.003.0031",
-      "type": "theory",
-      "topic": "design cognition",
-      "evidence_type": "THEORY",
-      "access_level": "public_preview",
-      "verified_at": "2026-11-14",
-      "limitations": "Overview; full-text not verified",
-      "provenance_note": "Carried forward from v3.3 metadata; access_level indicates whether material was fully inspected. Recheck primary source for exact claims."
     },
     {
       "id": "PM1",

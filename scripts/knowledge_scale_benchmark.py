@@ -57,8 +57,8 @@ def search_trial(n):
         (root/"knowledge/sources.json").write_text(
             json.dumps({"records":[{"id":"SYN","type":"synthetic",
                    "access_level":"generated_not_reviewed"}]}),encoding="utf-8")
-        (root/"knowledge/verified").mkdir()
-        (root/"knowledge/verified/claims.json").write_text('{"claims":[]}',encoding="utf-8")
+        
+        (root/"knowledge/claims.json").write_text('{"claims":[]}',encoding="utf-8")
         (root/"knowledge/concepts.json").write_text('{"concepts":[]}',encoding="utf-8")
         db=root/"index.sqlite"
         tracemalloc.start();begin=time.perf_counter()

@@ -19,7 +19,7 @@ The chart renders correctly but users cannot answer their actual question.
 3. Validate at the relevant level: domain-expert relevance, abstract data mapping, perceptual encoding, or computational performance. Iterate freely between levels.
 
 ## Countercases and overclaim guard
-- Explicitly review source-specific constraints in `knowledge/verified/claims.json` and source access levels in `knowledge/sources.json`.
+- Explicitly review source-specific constraints in `knowledge/claims.json` and source access levels in `knowledge/sources.json`.
 - Do not turn a studied observation into a mandatory style rule, numerical CSS constant, or general guarantee of user performance.
 - The agent must not assert that this study validated AI-generated UI, unless such testing exists elsewhere.
 

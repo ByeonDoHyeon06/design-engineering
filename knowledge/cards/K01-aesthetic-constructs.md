@@ -20,7 +20,7 @@ A visually tidy UI may still lack identity; a visually bold page may still be in
 3. If using a validated instrument, follow its actual administration and interpretation; a custom rubric is a heuristic, not the VisAWI instrument.
 
 ## Countercases and overclaim guard
-- Explicitly review source-specific constraints in `knowledge/verified/claims.json` and source access levels in `knowledge/sources.json`.
+- Explicitly review source-specific constraints in `knowledge/claims.json` and source access levels in `knowledge/sources.json`.
 - Do not turn a studied observation into a mandatory style rule, numerical CSS constant, or general guarantee of user performance.
 - The agent must not assert that this study validated AI-generated UI, unless such testing exists elsewhere.
 

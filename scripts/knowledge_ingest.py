@@ -15,7 +15,7 @@ import sys
 from datetime import datetime, timezone
 
 from gemini_client import generate_json, GeminiError
-from knowledge_lookup import ROOT
+from query_understanding import ROOT
 
 LOCAL=ROOT/'.local'/'ingestion'
 ALLOWED={'.pdf','.md','.txt','.html','.htm'}

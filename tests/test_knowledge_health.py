@@ -1,6 +1,9 @@
 """Knowledge governance and retrieval noise tests; no web/browser required."""
+import copy
 import json
+import shutil
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -9,18 +12,37 @@ sys.path.insert(0, str(ROOT/"scripts"))
 import knowledge_index
 import knowledge_health
 
-class KnowledgeGovernanceTests(unittest.TestCase):
+class KnowledgeHealthTests(unittest.TestCase):
     def test_registry_graph_has_no_broken_references(self):
         result = knowledge_health.inspect(ROOT)
         self.assertEqual(result["errors"], [], result)
         self.assertGreater(result["counts"]["cards"], 30)
         self.assertEqual(result["counts"]["concepts"], 22)
 
-    def test_warns_about_potential_source_aliases_without_auto_merging(self):
-        result = knowledge_health.inspect(ROOT)
-        self.assertGreaterEqual(result["counts"]["potential_duplicate_source_groups"], 1)
-        self.assertTrue(any("E4" in v and "A7" in v for v in result["warnings"]))
-        self.assertTrue(any("source not referenced" in v for v in result["warnings"]))
+    def test_current_sources_have_no_orphans_or_duplicate_urls(self):
+        report=knowledge_health.inspect(ROOT)
+        self.assertEqual(report["counts"]["potential_duplicate_source_groups"],0)
+        self.assertEqual(report["warnings"],[])
+
+    def test_warns_about_synthetic_aliases_without_auto_merging(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)
+            shutil.copytree(ROOT/"knowledge",root/"knowledge")
+            file=root/"knowledge/sources.json"
+            records=json.loads(file.read_text(encoding="utf-8"))
+            original=next(r for r in records["records"] if r["id"]=="E4")
+            duplicate=copy.deepcopy(original);duplicate["id"]="SYNTHETIC_E4"
+            orphan=copy.deepcopy(original);orphan["id"]="SYNTHETIC_ORPHAN"
+            orphan["url"]="https://example.com/unused-registry-source"
+            records["records"].extend([duplicate,orphan])
+            file.write_text(json.dumps(records),encoding="utf-8")
+            result=knowledge_health.inspect(root)
+            self.assertEqual(result["errors"],[])
+            self.assertEqual(result["counts"]["potential_duplicate_source_groups"],1)
+            self.assertTrue(any("E4" in w and "SYNTHETIC_E4" in w
+                                for w in result["warnings"]))
+            self.assertTrue(any("source not referenced by a card: SYNTHETIC_ORPHAN" in w
+                                for w in result["warnings"]))
 
     def test_can_disable_relative_cutoff_for_diagnostics(self):
         question = "한글 폰트 줄바꿈과 타이포그래피"

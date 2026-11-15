@@ -34,7 +34,7 @@ def inspect(root=ROOT):
     root=Path(root).resolve()
     catalog=_json(root,"knowledge/catalog.json")["records"]
     sources=_json(root,"knowledge/sources.json")["records"]
-    claims=_json(root,"knowledge/verified/claims.json")["claims"]
+    claims=_json(root,"knowledge/claims.json")["claims"]
     concepts=_json(root,"knowledge/concepts.json")["concepts"]
     errors=[]; warnings=[]
     def duplicates(rows,name):

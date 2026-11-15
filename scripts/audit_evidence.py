@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 CAT=json.loads((ROOT/'knowledge/catalog.json').read_text(encoding='utf8'))
 SRC=json.loads((ROOT/'knowledge/sources.json').read_text(encoding='utf8'))
-CLAIMS=json.loads((ROOT/'knowledge/verified/claims.json').read_text(encoding='utf8'))
+CLAIMS=json.loads((ROOT/'knowledge/claims.json').read_text(encoding='utf8'))
 byid={s['id']:s for s in SRC['records']}; claims={c['id']:c for c in CLAIMS['claims']}
 errors=[]; seen=set(); updated=0
 for row in CAT['records']:

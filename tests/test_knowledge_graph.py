@@ -16,12 +16,12 @@ import knowledge_index
 import query_understanding
 from knowledge_ingest import prepare, commit, IngestError
 
-class V40Tests(unittest.TestCase):
-    def test_full_legacy_graph_is_valid_and_nonduplicated(self):
+class KnowledgeGraphTests(unittest.TestCase):
+    def test_authoritative_graph_is_valid_and_nonduplicated(self):
         graph=knowledge_graph.build(ROOT)
         self.assertEqual(graph["errors"],[],graph["errors"])
         self.assertEqual(graph["counts"]["method"],41)
-        self.assertEqual(graph["counts"]["source"],55)
+        self.assertEqual(graph["counts"]["source"],52)
         self.assertEqual(graph["counts"]["claim"],18)
         self.assertEqual(graph["counts"]["concept"],22)
         self.assertEqual(graph["counts"]["practice"],7)
@@ -85,18 +85,30 @@ class V40Tests(unittest.TestCase):
         with self.assertRaisesRegex(knowledge_governance.GovernanceError,"changed"):
             knowledge_governance.approve(root,proposal,"human",confirm=True)
 
-    def test_equivalence_needs_human_and_preserves_both_sources(self):
+    def _sandbox_with_duplicate_source(self):
+        """Synthetic duplicate DOI record; production catalog is kept clean."""
         root=self._sandbox()
+        path=root/"knowledge/sources.json"
+        data=json.loads(path.read_text(encoding="utf-8"))
+        origin=next(r for r in data["records"] if r["id"]=="E4")
+        duplicate=copy.deepcopy(origin)
+        duplicate["id"]="SYNTHETIC_E4"
+        data["records"].append(duplicate)
+        path.write_text(json.dumps(data),encoding="utf-8")
+        return root
+
+    def test_equivalence_needs_human_and_preserves_both_sources(self):
+        root=self._sandbox_with_duplicate_source()
         p=knowledge_governance.propose(root,"equivalence",reviewer="researcher",
              reason="same DOI, editions still kept separately pending review",
-             a="source:E4",b="source:A7")
+             a="source:E4",b="source:SYNTHETIC_E4")
         target=root/"eq.json";target.write_text(json.dumps(p),encoding="utf-8")
         knowledge_governance.approve(root,target,"researcher",confirm=True)
         graph=knowledge_graph.build(root)
         self.assertEqual(graph["errors"],[])
         self.assertEqual(len(graph["equivalences"]),1)
         self.assertIn("source:E4",{x["id"] for x in graph["nodes"]})
-        self.assertIn("source:A7",{x["id"] for x in graph["nodes"]})
+        self.assertIn("source:SYNTHETIC_E4",{x["id"] for x in graph["nodes"]})
 
     def test_archive_source_flags_active_dependents_and_overdue_reviews(self):
         state=knowledge_graph.read_json(ROOT,knowledge_graph.GOVERNANCE)
@@ -109,13 +121,19 @@ class V40Tests(unittest.TestCase):
                             for v in graph["warnings"]))
 
     def test_reviewed_equivalence_resolves_warning_but_not_records(self):
-        state=knowledge_graph.read_json(ROOT,knowledge_graph.GOVERNANCE)
-        state["equivalences"].append({"a":"source:E4","b":"source:A7",
-            "reviewer":"tester","reason":"Matching DOI inspected"})
-        graph=knowledge_graph.build(ROOT,state)
+        root=self._sandbox_with_duplicate_source()
+        state=knowledge_graph.read_json(root,knowledge_graph.GOVERNANCE)
+        before=knowledge_graph.build(root,state)
+        self.assertTrue(any("potential source alias: E4, SYNTHETIC_E4" in w
+                            for w in before["warnings"]))
+        state["equivalences"].append({"a":"source:E4","b":"source:SYNTHETIC_E4",
+            "reviewer":"tester","reason":"Matching DOI inspected in synthetic fixture"})
+        graph=knowledge_graph.build(root,state)
         self.assertEqual(graph["errors"],[])
-        self.assertFalse(any("potential source alias: E4, A7" in w for w in graph["warnings"]))
-        self.assertEqual(sum(1 for n in graph["nodes"] if n["id"] in ("source:E4","source:A7")),2)
+        self.assertFalse(any("potential source alias: E4, SYNTHETIC_E4" in w
+                             for w in graph["warnings"]))
+        self.assertEqual(sum(1 for n in graph["nodes"]
+                             if n["id"] in ("source:E4","source:SYNTHETIC_E4")),2)
 
     def test_graph_export_is_deterministic(self):
         a=knowledge_graph.build(ROOT)

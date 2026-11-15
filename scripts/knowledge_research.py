@@ -3,7 +3,7 @@
 import argparse, hashlib, json, os, re, sys, time
 from pathlib import Path
 from gemini_client import generate_json, GeminiError
-from knowledge_lookup import ROOT, rank
+from knowledge_index import ROOT, rank
 
 CONFIG=ROOT/'config.json'; EXAMPLE=ROOT/'config.example.json'
 

@@ -12,7 +12,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-GOVERNANCE = "knowledge/v4/governance.json"
+GOVERNANCE = "knowledge/governance.json"
 VALID_STATES = {"active", "needs_review", "superseded", "archived"}
 PREFIXES = ("source:", "claim:", "concept:", "method:", "practice:", "observation:")
 
@@ -42,7 +42,7 @@ def build(root=ROOT, governance=None):
     root = Path(root).resolve()
     cards = read_json(root, "knowledge/catalog.json")["records"]
     sources = read_json(root, "knowledge/sources.json")["records"]
-    claims = read_json(root, "knowledge/verified/claims.json")["claims"]
+    claims = read_json(root, "knowledge/claims.json")["claims"]
     concepts = read_json(root, "knowledge/concepts.json")["concepts"]
     practices = read_json(root, "methods/designer-methods.json")["methods"]
     if governance is None:

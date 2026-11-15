@@ -1,22 +1,38 @@
 # Contributing
 
-- Keep `SKILL.md` current and concise; Git commits/releases, not historical prose, track versions.
-- Do not add third-party design galleries, unlicensed fonts, copied layouts or style presets.
-- Every verified research finding must link to a source, real review scope, `do_not_infer`, and the actual card's verified claim IDs.
-- Novel design prescriptions derived from papers remain `DESIGN_HYPOTHESIS` until independently tested.
-- For retrieval changes, extend `benchmarks/retrieval-v38.json` with new natural queries, include negative examples, and run `python scripts/retrieval_benchmark.py`.
-- For each new test or script, avoid network calls, secret exposure, forced style branches, fabricated UX outcomes, or version records in the runtime package.
-- Run `python -m unittest discover -s tests -q` and `python scripts/audit_evidence.py`. Browser tests are optional and should report NOT TESTED if unavailable.
-- Do not commit `.cache`, `.local`, API keys, collected copyrighted PDFs or user data.
+Contributions should improve **design decisions, evidence quality, or observable task results**, not simply increase card count.
 
-## v4 Knowledge contribution gate
+## Ground rules
 
-Do **not** create one new card per paper or add arbitrary synonyms to pass one curated query. Before proposing Knowledge:
-1. Search existing concepts, source IDs, verified claims and methods. Explain why a new claim or method is necessary.
-2. Check normalized DOI/URL and edition/translation differences with `python scripts/knowledge_health.py --json`; potential duplicates need human review, not automatic merging.
-3. Clearly separate publication verification, exact claim support, applicability and design hypothesis. `active` lifecycle status is never a truth grade.
-4. Use `python scripts/knowledge_graph.py impact source:<id>` to assess affected methods before revising or deprecating a source. Lifecycle changes require a reviewer, reason and explicit approval.
-5. Add a retrieval regression **and a no-answer/negative example** when retrieval rules change; do not tune only to training-like examples. Record false positives and precision as well as hit rate.
-6. Confirm old catalog IDs stay readable, Claude/Codex still use one root `SKILL.md`, and no private observations or screenshots are committed.
+- Keep one canonical root `SKILL.md`; do not add a per-agent copy for Codex or Claude Code.
+- Before adding Knowledge, search existing cards, concepts, claims and source IDs. Explain what cannot be expressed by existing records.
+- Preserve scholarly scope. A publication, verified quote, design hypothesis, and successful user task are **not** the same evidence.
+- Never auto-merge sources because of an identical URL/DOI. Distinct editions and translations may be legitimate; record a reviewed equivalence when appropriate.
+- Do not commit keys, private observations, third-party PDFs, copyrighted asset collections, generated caches or customer data.
+- Keep new Python tools local-first; external provider calls need explicit consent and must remain optional.
 
-Required checks: `python scripts/knowledge_graph.py validate`, `python scripts/knowledge_health.py --json`, `python scripts/retrieval_evaluation.py`, and `python -m unittest discover -s tests -v`. Run the optional `knowledge_scale_benchmark.py --search-size 1000` when changing the index.
+## Knowledge changes
+
+1. Run `python scripts/knowledge_health.py --json` and `python scripts/knowledge_graph.py validate`.
+2. Check source scope, verification status and dependent methods using `python scripts/knowledge_graph.py impact source:<ID>`.
+3. Use `scripts/knowledge_ingest.py` for source candidates. Quotes and interpretations require manual approval.
+4. Use `scripts/knowledge_governance.py` for reviewed lifecycle changes, aliases or equivalence links. All changes need a reviewer and reason.
+5. Add positive **and** out-of-domain/no-answer regression cases for search changes. Do not optimize solely for the benchmark examples.
+
+## Testing
+
+```bash
+python scripts/validate_install.py --root . --smoke
+python scripts/knowledge_graph.py validate
+python scripts/knowledge_health.py --json
+python -m unittest discover -s tests -v
+python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-core.json
+python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-typography.json --top 5
+python scripts/retrieval_evaluation.py --dataset benchmarks/retrieval-relevance.json
+```
+
+For changes to the search implementation also run `python scripts/knowledge_scale_benchmark.py --search-size 1000`. For visual or UX claims, include actual browser screenshots/scenario results. Record untested items as `NOT TESTED`, never as passed.
+
+## Pull requests
+
+Describe **problem, changes, data provenance, tests, and limitations**. Keep unrelated historical cleanup separate from new research claims. CI and a passing review do not certify real-user comprehension or the aesthetic quality of generated designs.

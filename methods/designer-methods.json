@@ -1,5 +1,4 @@
 {
-  "version": "3.4",
   "note": "Documented practices support reasoning operations, not named-style imitation. Each is descriptive practitioner evidence, not universal experimental validation.",
   "methods": [
     {
@@ -86,5 +85,6 @@
       "limitations": "Studio methodology not guaranteed optimal nor universal step-by-step law",
       "not_style_instruction": true
     }
-  ]
+  ],
+  "schema_version": 1
 }

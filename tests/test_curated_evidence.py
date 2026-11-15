@@ -12,7 +12,7 @@ class CuratedEvidenceTests(unittest.TestCase):
         self.assertGreater(report['legacy_sources_without_reverification'],0)
     def test_bilingual_retrieval(self):
         sys.path.insert(0,str(ROOT/'scripts'))
-        import knowledge_lookup
+        import knowledge_index
         cases={
           '대시보드 데이터 비교 정확도':'K03',
           '시각화 도메인 작업 데이터 추상화':'K04',
@@ -21,16 +21,16 @@ class CuratedEvidenceTests(unittest.TestCase):
           'WCAG 터치 대상 초점':'K11',
         }
         for query,target in cases.items():
-            found=[r['id'] for r in knowledge_lookup.rank(query)[:10]]
+            found=[r['id'] for r in knowledge_index.rank(query)[:10]]
             self.assertIn(target,found,(query,found))
     def test_verified_only_search(self):
         sys.path.insert(0,str(ROOT/'scripts'))
-        import knowledge_index, knowledge_lookup
-        self.assertTrue(all(x['id'].startswith('K') for x in knowledge_lookup.rank('미학 색채',verified_only=True)))
+        import knowledge_index, knowledge_index
+        self.assertTrue(all(x['id'].startswith('K') for x in knowledge_index.rank('미학 색채',verified_only=True)))
         self.assertTrue(all(x['id'].startswith('K') for x in knowledge_index.search('대시보드 데이터 비교 정확도',verified_only=True)))
 
     def test_no_unreviewed_claims_promoted(self):
-        claims=json.loads((ROOT/'knowledge/verified/claims.json').read_text())['claims']
+        claims=json.loads((ROOT/'knowledge/claims.json').read_text())['claims']
         sources={x['id']:x for x in json.loads((ROOT/'knowledge/sources.json').read_text())['records']}
         for c in claims:
             self.assertTrue(sources[c['source_id']].get('reverified_at'))

@@ -1,4 +1,4 @@
-# Type × Language × Layout review (v3.9)
+# Typography, Korean writing and content layout
 
 This is a **small optional judgment protocol**, not another mandatory checklist for every task. Use it when typography, Korean UX writing or content architecture materially affects task success. Canonical workflow: `SKILL.md`.
 
@@ -14,7 +14,7 @@ Use `knowledge_index.py search` with the **uncertain question**:
 - `python scripts/knowledge_index.py search '자연스러운 한국어 오류 메시지 버튼 문구' --top 5 --json`
 - `python scripts/knowledge_index.py search '콘텐츠 중요도에 따라 레이아웃 정보 구조' --top 5 --json`
 
-Read K16/K17/K18 only when returned/relevant. Source identity or an official draft is **not** experimental validation. `verified_claims: []` is expected for these new practitioner/draft cards; do not call them verified empirical findings.
+Read K16, K17 and K18 only when returned/relevant. Source identity or an official draft is **not** experimental validation. `verified_claims: []` is expected for these new practitioner/draft cards; do not call them verified empirical findings.
 
 ## Concrete decision and revision record
 For each significant decision, record:

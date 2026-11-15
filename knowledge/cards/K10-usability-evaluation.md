@@ -18,7 +18,7 @@ Two designs have nearly equal subjective scores; the team claims objective usabi
 3. Do not average unrelated metrics into one faux-scientific score without declared weights and uncertainty; separate subjective visuals from behavioral outcomes.
 
 ## Countercases and overclaim guard
-- Explicitly review source-specific constraints in `knowledge/verified/claims.json` and source access levels in `knowledge/sources.json`.
+- Explicitly review source-specific constraints in `knowledge/claims.json` and source access levels in `knowledge/sources.json`.
 - Do not turn a studied observation into a mandatory style rule, numerical CSS constant, or general guarantee of user performance.
 - The agent must not assert that this study validated AI-generated UI, unless such testing exists elsewhere.
 
