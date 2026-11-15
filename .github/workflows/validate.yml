@@ -16,6 +16,8 @@ jobs:
           python-version: '3.12'
       - name: Full installation smoke
         run: python scripts/validate_install.py --root . --smoke
+      - name: Knowledge registry health
+        run: python scripts/knowledge_health.py --json
       - name: Unit tests
         run: python -m unittest discover -s tests -v
       - name: Knowledge retrieval benchmarks

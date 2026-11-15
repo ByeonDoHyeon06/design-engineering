@@ -38,6 +38,14 @@ Preserve facts, constraints, brand/legal terminology and actions before rephrasi
 - Optional *real* local sentence embeddings: `--embedding-model /path/to/pre-downloaded-model`; requires extra `sentence-transformers` and does **not** download a model automatically. Model validity/quality depends on that choice.
 - `python scripts/retrieval_benchmark.py` — repeat a transparent regression dataset; do not confuse the curated benchmark with held-out real-world evaluation.
 
+## Knowledge relevance and maintenance (v3.9)
+
+Search is a **candidate selection tool**, not a guarantee of a relevant finding. When one result strongly dominates, the default query-relative cutoff suppresses notably weaker cards (`--relative-cutoff 0.20`). The threshold is a heuristic **not** a calibrated relevance probability; use `--relative-cutoff 0` to inspect suppressed candidates or if recall seems insufficient. Do not cite a weak, unrelated result simply to fill a top-N quota.
+
+The search response distinguishes `evidence_status` for explicit claim links from `source_context` for source type and verification access level. A W3C draft or practitioner opinion remains context, not a proved design effect.
+
+Before adding Knowledge, check whether an existing source, concept, claim or method already covers the question. Run `python scripts/knowledge_health.py --json` to inspect graph errors and **review-only** duplicate-source warnings. Do not automatically merge or discard sources based on URL similarity. The proposed v4.0 typed lifecycle/migration lives in `docs/v4-knowledge-architecture.md`; it is not implemented by the current index.
+
 ## Evidence and optional external AI
 
 - Source identity, selected paper sections and claim provenance are in `knowledge/sources.json`, `knowledge/verified/claims.json` and `knowledge/VERIFICATION-POLICY.md`. Unreviewed legacy cards remain available, but must not be promoted to verified research findings.

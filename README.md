@@ -53,6 +53,21 @@ Claude Code에서 검증할 때는 다음을 그대로 요청하는 것이 좋�
 
 마켓플레이스 설치가 계속 실패할 때는 로컬에서 저장소 전체를 클론하여 `claude --plugin-dir /absolute/path/to/design-engineering` 방식으로 별도로 테스트할 수 있습니다. 이렇게 하면 마켓플레이스 캐시 문제와 플러그인 자체 문제를 분리할 수 있습니다. `claude plugin validate .`로 플러그인/마켓플레이스 메타데이터도 확인하세요.
 
+## v3.9 Knowledge 품질 및 v4.0 설계
+
+새로운 자료를 계속 카드로 추가하기 전에 기존 자료의 중복, 출처 검증 상태, 개념 연결, 실제 사용 목적을 확인하세요.
+
+```bash
+python scripts/knowledge_health.py --json
+python scripts/knowledge_index.py search '한글 폰트 줄바꿈과 타이포그래피' --top 5 --json
+# 검색 누락 진단: 상대 점수 필터 비활성화
+python scripts/knowledge_index.py search '한글 폰트 줄바꿈과 타이포그래피' --relative-cutoff 0 --top 10 --json
+```
+
+검색은 강한 결과가 존재할 때 약한 상대 점수의 후보를 제외하도록 개선했습니다. 이 점수는 확률이나 학술 근거의 신뢰도가 아닙니다. `source_context`는 출처의 종류와 검증 수준을 표시하고, `verified_claims`는 실제로 검증 등록된 주장만 표시합니다.
+
+`knowledge_health.py`는 구조 오류를 실패 처리하고, 중복 DOI·참조되지 않는 출처는 **검토용 경고**로 보고합니다. 데이터를 임의로 병합·삭제하지 않습니다. 향후 지식 모델을 정규화하기 위한 RFC: [v4.0 Knowledge Architecture](docs/v4-knowledge-architecture.md). **v4.0 마이그레이션은 아직 수행하지 않았습니다.**
+
 ## 빠른 시작
 
 아래 명령들은 Skill 루트에서 실행합니다. 로컬 경로에서는 **외부 통신·API 키가 필요 없습니다.**

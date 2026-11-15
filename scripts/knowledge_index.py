@@ -148,7 +148,8 @@ def _fts(db,terms,top=100):
     except sqlite3.OperationalError:return {}
 
 
-def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=None,semantic_scores=None):
+def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=None,semantic_scores=None,relative_cutoff=0.20):
+    if not 0 <= relative_cutoff <= 1:raise ValueError('relative_cutoff must be between 0 and 1')
     if not str(q).strip():return []
     root=Path(root);db_path=Path(db_path)
     if not db_path.exists():rebuild(db_path,root)
@@ -196,11 +197,22 @@ def search(q,top=5,db_path=INDEX,root=ROOT,verified_only=False,embedding_model=N
             status='source_claims_checked' if details and not issues else 'no_explicit_reviewed_claim_link'
             res.append({'id':id_,'title':title,'path':path,'kind':kind,'source_ids':json.loads(src_json),
                         'verified_claim_ids':claim_ids,'verified_claims':details,
-                        'evidence_status':status,'score':round(score,5),
+                        'evidence_status':status,'source_context':[
+                            {'id':sid,'type':sources.get(sid,{}).get('type'),
+                             'access_level':sources.get(sid,{}).get('access_level'),
+                             'reverified_at':sources.get(sid,{}).get('reverified_at')}
+                            for sid in json.loads(src_json)],
+                        'score':round(score,5),
                         'why_matched':{'concepts':[c['id'] for c,_ in concept_matches],
                                        'fts':id_ in fts,'character_similarity':round(char[i],3),
                                        'local_embeddings':embed is not None}})
         res.sort(key=lambda r:(-r['score'],r['id']))
+        # Query-relative noise suppression, NOT calibrated relevance or evidence quality.
+        # Only apply if one result has a strong lexical/conceptual match.
+        # Keep --relative-cutoff 0 for diagnostics and broad recall.
+        if res and relative_cutoff and res[0]['score']>=2.0:
+            threshold=res[0]['score']*relative_cutoff
+            res=[r for r in res if r['score']>=threshold]
         return res[:max(1,top)]
     finally:db.close()
 
@@ -212,10 +224,12 @@ def main():
     a.add_argument('query');a.add_argument('--top',type=int,default=5);a.add_argument('--json',action='store_true')
     a.add_argument('--verified-only',action='store_true',help='Requires explicit claim linked to verified source, not card ID prefix')
     a.add_argument('--embedding-model',help='Optional already-downloaded LOCAL sentence-transformers model directory')
+    a.add_argument('--relative-cutoff',type=float,default=0.20,
+                   help='Query-relative weak-match suppression when best score >= 2; 0 disables it. Heuristic, not probability.')
     opts=p.parse_args()
     if opts.cmd=='rebuild':print(json.dumps(rebuild(),ensure_ascii=False))
     else:
-        results=search(opts.query,opts.top,verified_only=opts.verified_only,embedding_model=opts.embedding_model)
+        results=search(opts.query,opts.top,verified_only=opts.verified_only,embedding_model=opts.embedding_model,relative_cutoff=opts.relative_cutoff)
         if opts.json:print(json.dumps(results,ensure_ascii=False,indent=2))
         else:
             for r in results:
