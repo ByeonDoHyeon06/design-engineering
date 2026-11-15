@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "note": "New unseen-style hand-written diagnostic prompts including explicit out-of-domain negatives. Curated, NOT representative human evaluation; do not tune to claim general model accuracy.",
+  "cases": [
+    {
+      "question": "프로그램이 많은 행사에서 관심 있는 발표를 빨리 찾는 방법",
+      "relevant": [
+        "P06",
+        "K06"
+      ]
+    },
+    {
+      "question": "모바일에서 한국어와 영어를 섞은 긴 타이틀의 줄이 어색하게 끊긴다",
+      "relevant": [
+        "K16",
+        "K14"
+      ]
+    },
+    {
+      "question": "한글 오류 메시지가 딱딱하고 다음에 뭘 해야 할지 모르겠어",
+      "relevant": [
+        "K17",
+        "P11"
+      ]
+    },
+    {
+      "question": "서비스 소개 콘텐츠의 구조가 전부 똑같은 카드라 구분이 안 된다",
+      "relevant": [
+        "K18",
+        "P05"
+      ]
+    },
+    {
+      "question": "AI 디자인 시안들이 비슷한 레이아웃만 반복한다",
+      "relevant": [
+        "P03",
+        "K08"
+      ]
+    },
+    {
+      "question": "그래프의 면적과 길이 중 수치 비교에 더 정확한 방식",
+      "relevant": [
+        "K03"
+      ]
+    },
+    {
+      "question": "모바일에서 클릭은 되는데 키보드 포커스가 안 보임",
+      "relevant": [
+        "K11",
+        "K14"
+      ]
+    },
+    {
+      "question": "디자인 결정의 학술적 근거가 어디까지 확인됐는지 알기",
+      "relevant": [
+        "K12"
+      ]
+    },
+    {
+      "question": "지구 맨틀의 광물 결정과 판 구조론",
+      "relevant": []
+    },
+    {
+      "question": "서울에서 회식할 대형 식당 예약 가능한 시간",
+      "relevant": []
+    },
+    {
+      "question": "코드 컴파일러의 SSA 중간 표현 최적화",
+      "relevant": []
+    },
+    {
+      "question": "고양이 발톱 손질을 위한 수의학적 조언",
+      "relevant": []
+    }
+  ]
+}
