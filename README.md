@@ -7,7 +7,7 @@
 **From evidence to intentional design.**
 
 A research-informed design engineering skill for **Codex and Claude Code**.  
-Research with evidence. Build for context. Inspect what actually ships.
+Find relevant knowledge, design for actual context, and validate the result.
 
 <p>
   <a href="README.md"><strong>English</strong></a> ·
@@ -16,6 +16,7 @@ Research with evidence. Build for context. Inspect what actually ships.
 
 <p>
   <a href="#overview">Overview</a> ·
+  <a href="#see-the-cli-in-action">CLI demo</a> ·
   <a href="#approach">Approach</a> ·
   <a href="#getting-started">Get started</a> ·
   <a href="#documentation">Documentation</a>
@@ -24,24 +25,52 @@ Research with evidence. Build for context. Inspect what actually ships.
 </div>
 
 <p align="center">
-  <img src="assets/readme/terminal-showcase.svg" width="100%" alt="Illustrative macOS-style terminal showing Design Engineering source-aware research and repository checking commands." />
+  <picture>
+    <source media="(max-width: 640px)" srcset="assets/hero-system-mobile.svg" />
+    <img src="assets/hero-system.svg" width="100%" alt="Editorial illustration of research evidence becoming a deliberate interface, with visual review annotations." />
+  </picture>
 </p>
 
-<p align="center"><sub>Illustrative CLI screen, not a captured execution or a benchmark result.</sub></p>
+## Overview
 
-## Why Design Engineering
+**Design Engineering** helps AI coding agents make more deliberate design decisions. It connects source-aware research, content and layout reasoning, hands-on implementation, and inspection of the actual rendered interface.
 
-**Good interface design needs judgment, not just consistent components.** Design Engineering is a research-informed skill for coding agents: look up the right evidence, make context-aware design choices, build, inspect and refine. It does not impose one house style.
+It does **not** impose a house style, component library, or universal page template. The question is not only *what should we build?*, but also *why does this approach fit, and what did we actually verify?*
 
-The approach is **understand → research → explore → build → validate → refine**. Source-backed knowledge and personal or project preferences stay separate, and an automated check is never presented as proof of usability.
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <strong>◈ &nbsp; Research-informed</strong>
+      <p>Retrieve relevant papers, standards, and practitioner methods while preserving their limitations and provenance.</p>
+    </td>
+    <td width="50%" valign="top">
+      <strong>◇ &nbsp; Context-driven</strong>
+      <p>Let content, brand, user needs, and real constraints shape the composition instead of forcing generic patterns.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <strong>↗ &nbsp; Inspect &amp; refine</strong>
+      <p>Review browser captures and task flows, document issues, make changes, and check the result again.</p>
+    </td>
+    <td valign="top">
+      <strong>◎ &nbsp; Personal knowledge</strong>
+      <p>Let people and agents propose preferences and observations without mixing them into the verified research library.</p>
+    </td>
+  </tr>
+</table>
 
-## See it in action
+## See the CLI in action
 
-<p align="center">
-  <img src="assets/readme/cli-workflow.svg" width="100%" alt="Illustrative animated terminal showing research, provenance inspection and repository check commands." />
-</p>
+The research and review workflow is also available through a local command-line interface.
 
-<sub>Animated illustration of documented CLI entry points—not a live recording. Animation support depends on the viewer.</sub>
+![Illustrative macOS-style terminal showing research search, source coverage, and repository checks](assets/readme/terminal-showcase.svg)
+
+<sub>Illustrative terminal example, not an actual CLI recording or benchmark result.</sub>
+
+### From question to checks
+
+![Animated illustration of a CLI sequence from research to verification](assets/readme/cli-workflow.svg)
 
 ```bash
 de search "How should mixed Korean and Latin headings wrap?"
@@ -49,23 +78,35 @@ de search "How should mixed Korean and Latin headings wrap?" --explain
 de check
 ```
 
-The point is not to generate an interface from a generic recipe. The workflow retrieves relevant references and their limitations, then brings the design back to the actual content, viewport and interaction.
+The search surfaces relevant evidence with provenance and limitations. Repository checks complement — but do not replace — inspection of the rendered interface.
 
-## Capabilities
-
-| | What it does |
-| --- | --- |
-| **Research with provenance** | Finds relevant standards, papers and practitioner methods, while retaining limitations and origins. |
-| **Design for context** | Uses content, language, brand, users and constraints to drive hierarchy and composition. |
-| **Inspect and refine** | Reviews rendered screens, identifies specific issues and verifies changes. |
-| **Keep direction separate** | Handles personal and project preferences as reviewable guidance rather than scientific evidence. |
-| **Evaluate carefully** | Supports comparison against baselines without claiming that aesthetic judgments are objective facts. |
-
-### Your project, your direction
+## Approach
 
 <p align="center">
-  <img src="assets/readme/project-context.svg" width="100%" alt="Illustrative terminal demonstrating scoped design preference drafting and review commands." />
+  <picture>
+    <source media="(max-width: 640px)" srcset="assets/process-loop-mobile.svg" />
+    <img src="assets/process-loop.svg" width="100%" alt="The six-stage Design Engineering loop: Understand, Research, Explore, Build, Validate, and Refine." />
+  </picture>
 </p>
+
+Start with the question and the real content. Look up only the knowledge needed, compare meaningful directions, build a working artifact, and inspect the rendered result. A passing automated test is **not** automatically a successful user experience.
+
+### Knowledge is contextual, not a pile of prompts
+
+#### Separate evidence from personal direction
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 640px)" srcset="assets/knowledge-context-mobile.svg" />
+    <img src="assets/knowledge-context.svg" width="100%" alt="Conceptual diagram: source-backed research and separately scoped personal preferences inform a design decision without being conflated." />
+  </picture>
+</p>
+
+Core evidence stays separate from user, project, and session preferences. AI-assisted additions begin as drafts and require review before they become active guidance.
+
+##### Example: reviewing project direction
+
+![Illustrative terminal example of drafting and reviewing project guidance](assets/readme/project-context.svg)
 
 ```bash
 de add "Prefer precise square layouts and clear typography" --scope project
@@ -73,18 +114,18 @@ de review --list
 de context --conflicts
 ```
 
-Project preferences start as drafts. Approval is explicit; research evidence retains independent provenance.
+<sub>Illustrative command sequence; project preferences remain separate from verified research.</sub>
 
-<details>
-<summary><strong>The six-stage workflow</strong></summary>
+#### Inspect, revise, and verify
 
 <p align="center">
-  <img src="assets/process-loop.svg" width="100%" alt="Understand, Research, Explore, Build, Validate and Refine." />
+  <picture>
+    <source media="(max-width: 640px)" srcset="assets/validation-study-mobile.svg" />
+    <img src="assets/validation-study.svg" width="100%" alt="Conceptual before-and-after interface views: a problem is identified, the layout is revised, and the result is inspected again." />
+  </picture>
 </p>
 
-Start with the actual brief and content, retrieve only relevant knowledge, compare meaningful directions, implement a working interface, inspect it, then refine specific failures.
-
-</details>
+Visual critique examines hierarchy, typography, spacing, and interaction states. These illustrations explain the **review workflow**, not real product test results.
 
 ## Getting started
 
