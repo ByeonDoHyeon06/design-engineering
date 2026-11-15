@@ -16,6 +16,10 @@
 
 </div>
 
+<p align="center">
+  <img src="assets/hero-system.svg" width="100%" alt="Design Engineering illustration: reviewed evidence is translated into a deliberate interface composition, then checked with a visual annotation." />
+</p>
+
 ---
 
 ## Overview
@@ -49,9 +53,9 @@
 
 ## How it works
 
-```text
-Understand → Research → Explore → Build → Validate → Refine
-```
+<p align="center">
+  <img src="assets/process-loop.svg" width="100%" alt="The six-step design process: Understand, Research, Explore, Build, Validate, and Refine, with feedback returning to the next iteration." />
+</p>
 
 디자인 과제를 정의한 뒤 관련 근거와 프로젝트별 선호를 확인합니다. 여러 방향을 탐색하고 실제 결과물을 구현한 다음, 화면과 상호작용을 검사해 개선합니다.
 
