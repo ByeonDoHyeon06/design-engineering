@@ -243,6 +243,39 @@ def _qa(args):
     return result.returncode
 
 
+def _evaluation(args):
+    """Paired design study: no models or reviewers are simulated by the CLI."""
+    from . import evaluation as ev
+    if args.eval_action == "tasks":
+        catalog = ev.load_tasks(args.tasks)
+        _print({"tasks": catalog["tasks"],
+                "limitations": catalog.get("description", "")}, args.json)
+        return 0
+    if args.eval_action == "init":
+        result = ev.init_run(tasks_file=args.tasks, out=args.out,
+                             seed=args.seed, agent=args.agent, model=args.model,
+                             effort=args.effort, protocol_note=args.protocol_note)
+    elif args.eval_action == "attach":
+        result = ev.attach(run=args.run, task_id=args.task, condition=args.condition,
+                           screenshot=args.screenshot, duration_seconds=args.seconds,
+                           input_tokens=args.input_tokens, output_tokens=args.output_tokens,
+                           cost_usd=args.cost_usd)
+    elif args.eval_action == "validate":
+        result = ev.validate_run(args.run, require_complete=args.require_complete)
+        _print(result, args.json)
+        return 0 if result["ok"] else 1
+    elif args.eval_action == "scorecard":
+        result = ev.scorecard(run=args.run, judge=args.judge, out=args.out)
+    elif args.eval_action == "report":
+        result = ev.report(run=args.run, judgment_files=args.judgments or [])
+        if args.out:
+            ev._private_json(args.out, result)
+    else:
+        raise ev.EvaluationError("Unknown evaluation action.")
+    _print(result, args.json)
+    return 0
+
+
 def parser():
     p=argparse.ArgumentParser(prog="de",
         description="Design Engineering — research, personal Knowledge, and real UI validation.")
@@ -313,6 +346,58 @@ def parser():
     qa.add_argument("--width",type=int,default=390)
     qa.add_argument("--json",action="store_true")
     qa.set_defaults(func=_qa)
+
+    evaluation = sub.add_parser(
+        "eval", help="Prepare blinded design A/B studies and summarize real reviews.")
+    esub = evaluation.add_subparsers(dest="eval_action", required=True)
+    tasks = esub.add_parser("tasks", help="Inspect the curated design-task catalog.")
+    tasks.add_argument("--tasks", default=str(ROOT/"benchmarks/design-tasks.json"))
+    tasks.add_argument("--json", action="store_true")
+    tasks.set_defaults(func=_evaluation)
+
+    init = esub.add_parser("init", help="Create balanced randomized A/B assignments and blind packet.")
+    init.add_argument("--tasks", default=str(ROOT/"benchmarks/design-tasks.json"))
+    init.add_argument("--out", required=True, help="New directory for the local study.")
+    init.add_argument("--seed", type=int, default=42)
+    init.add_argument("--agent", required=True, help="Record the actual agent product/version.")
+    init.add_argument("--model", required=True, help="Record the same model for both conditions.")
+    init.add_argument("--effort", required=True, help="Record the same thinking effort/budget.")
+    init.add_argument("--protocol-note", default="", help="Extra controlled-run setup details.")
+    init.add_argument("--json", action="store_true")
+    init.set_defaults(func=_evaluation)
+
+    attach = esub.add_parser("attach", help="Strip screenshot metadata and attach under blind A/B label.")
+    attach.add_argument("--run", required=True)
+    attach.add_argument("--task", required=True)
+    attach.add_argument("--condition", choices=("baseline","skill"), required=True)
+    attach.add_argument("--screenshot", required=True, help="Actual PNG capture; no mock output created.")
+    attach.add_argument("--seconds", type=float, default=None)
+    attach.add_argument("--input-tokens", type=int, default=None)
+    attach.add_argument("--output-tokens", type=int, default=None)
+    attach.add_argument("--cost-usd", type=float, default=None)
+    attach.add_argument("--json", action="store_true")
+    attach.set_defaults(func=_evaluation)
+
+    check_eval = esub.add_parser("validate", help="Check task pairs, screenshot hashes and blind packet.")
+    check_eval.add_argument("--run", required=True)
+    check_eval.add_argument("--require-complete", action="store_true")
+    check_eval.add_argument("--json", action="store_true")
+    check_eval.set_defaults(func=_evaluation)
+
+    scorecard = esub.add_parser("scorecard", help="Create an explicitly blank human-review template.")
+    scorecard.add_argument("--run", required=True)
+    scorecard.add_argument("--judge", required=True)
+    scorecard.add_argument("--out", required=True)
+    scorecard.add_argument("--json", action="store_true")
+    scorecard.set_defaults(func=_evaluation)
+
+    report = esub.add_parser("report", help="Aggregate actual blind judgments, report all missing evidence.")
+    report.add_argument("--run", required=True)
+    report.add_argument("--judgments", nargs="*", default=[])
+    report.add_argument("--out", help="Optional location to save full JSON report.")
+    report.add_argument("--json", action="store_true")
+    report.set_defaults(func=_evaluation)
+
     return p
 
 
