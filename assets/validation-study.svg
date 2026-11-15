@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="490" viewBox="0 0 1200 490" role="img" aria-labelledby="title desc">
+<title id="title">Design validation as evidence-led iteration</title>
+<desc id="desc">Conceptual before and after browser views; the first identifies a clipped heading and layout alignment issue, and the second shows a refined layout with clearer hierarchy and a review check.</desc>
+<defs><pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#425368" stroke-width=".5" opacity=".35"/></pattern></defs>
+<rect width="1200" height="490" fill="#101926"/>
+<rect x="16" y="16" width="1168" height="458" fill="url(#grid)" stroke="#415065"/>
+<text x="44" y="49" font-family="Arial,Helvetica,sans-serif" fill="#9CAFC7" font-size="12" font-weight="700" letter-spacing="2.3">VALIDATE THE ACTUAL OUTPUT</text>
+<text x="1150" y="49" text-anchor="end" font-family="Arial,Helvetica,sans-serif" fill="#9CAFC7" font-size="11" letter-spacing="1.7">SCREENSHOT STUDY / CONCEPT</text>
+<!-- initial page -->
+<rect x="54" y="86" width="484" height="324" fill="#EDF0EE"/>
+<rect x="54" y="86" width="484" height="39" fill="#C8D1D8"/>
+<circle cx="76" cy="105.5" r="4" fill="#D98F6B"/><circle cx="92" cy="105.5" r="4" fill="#A1ADBA"/><circle cx="108" cy="105.5" r="4" fill="#A1ADBA"/>
+<rect x="134" y="98" width="374" height="16" fill="#F6F5F0" rx="2"/>
+<rect x="70" y="142" width="451" height="28" fill="#E1E5E2"/>
+<rect x="83" y="152" width="83" height="7" fill="#31415C"/>
+<rect x="428" y="152" width="24" height="5" fill="#A4B1BA"/><rect x="467" y="152" width="24" height="5" fill="#A4B1BA"/>
+<!-- hero bad -->
+<rect x="70" y="185" width="273" height="162" fill="#F8F8F3"/>
+<rect x="87" y="201" width="256" height="16" fill="#2A394F"/>
+<rect x="87" y="225" width="275" height="16" fill="#2A394F"/>
+<rect x="87" y="250" width="201" height="5" fill="#A6B2B6"/>
+<rect x="87" y="263" width="175" height="5" fill="#BEC6C6"/>
+<rect x="87" y="295" width="116" height="36" fill="#7187F2"/>
+<rect x="354" y="185" width="167" height="162" fill="#D4DDE6"/>
+<path d="M377 325l29-51 25 8 19-45 34 12" fill="none" stroke="#6C86FA" stroke-width="3"/>
+<rect x="70" y="360" width="451" height="30" fill="#DDE0DD"/>
+<rect x="85" y="372" width="84" height="6" fill="#9CA9B1"/>
+<rect x="185" y="372" width="74" height="6" fill="#9CA9B1"/>
+<rect x="275" y="372" width="91" height="6" fill="#9CA9B1"/>
+<!-- issue annotations -->
+<rect x="83" y="197" width="279" height="49" fill="none" stroke="#E3A17E" stroke-width="2"/>
+<path d="M364 221h38v-34" fill="none" stroke="#E3A17E" stroke-width="2"/>
+<circle cx="402" cy="182" r="13" fill="#E3A17E"/>
+<path d="M396 176l12 12m0-12l-12 12" stroke="#162133" stroke-width="2.5"/>
+<path d="M330 350v21h41" fill="none" stroke="#E3A17E" stroke-width="2"/>
+<circle cx="370" cy="371" r="4" fill="#E3A17E"/>
+<text x="64" y="438" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" letter-spacing="1.9" fill="#EAB497">01 / OBSERVE THE ISSUE</text>
+<!-- middle update -->
+<path d="M556 238h86m-15-12 15 12-15 12" fill="none" stroke="#A2B4CF" stroke-width="2.5"/>
+<circle cx="599" cy="237" r="5" fill="#F1B18B"/>
+<text x="598" y="267" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" letter-spacing="1" fill="#9EAEC3">REVISE</text>
+<!-- refined page -->
+<rect x="661" y="86" width="484" height="324" fill="#EDF0EE"/>
+<rect x="661" y="86" width="484" height="39" fill="#C8D1D8"/>
+<circle cx="683" cy="105.5" r="4" fill="#A0ADBA"/><circle cx="699" cy="105.5" r="4" fill="#A0ADBA"/><circle cx="715" cy="105.5" r="4" fill="#A0ADBA"/>
+<rect x="740" y="98" width="375" height="16" fill="#F6F5F0" rx="2"/>
+<rect x="678" y="142" width="451" height="28" fill="#E1E5E2"/>
+<rect x="692" y="152" width="83" height="7" fill="#31415C"/>
+<rect x="1037" y="152" width="24" height="5" fill="#A4B1BA"/><rect x="1076" y="152" width="24" height="5" fill="#A4B1BA"/>
+<rect x="678" y="185" width="271" height="162" fill="#F8F8F3"/>
+<rect x="698" y="207" width="222" height="13" fill="#2A394F"/>
+<rect x="698" y="231" width="194" height="13" fill="#2A394F"/>
+<rect x="698" y="264" width="197" height="5" fill="#A6B2B6"/>
+<rect x="698" y="278" width="181" height="5" fill="#BEC6C6"/>
+<rect x="698" y="308" width="116" height="25" fill="#7187F2"/>
+<rect x="962" y="185" width="167" height="162" fill="#D4DDE6"/>
+<path d="M982 325l29-51 25 8 19-45 37 12" fill="none" stroke="#6C86FA" stroke-width="3"/>
+<rect x="678" y="360" width="451" height="30" fill="#DDE0DD"/>
+<rect x="693" y="372" width="84" height="6" fill="#9CA9B1"/>
+<rect x="793" y="372" width="74" height="6" fill="#9CA9B1"/>
+<rect x="883" y="372" width="91" height="6" fill="#9CA9B1"/>
+<!-- resolved geometry -->
+<rect x="689" y="196" width="251" height="139" fill="none" stroke="#7791FF" stroke-width="2"/>
+<path d="M940 207h45v-17" fill="none" stroke="#7791FF" stroke-width="2"/>
+<circle cx="985" cy="186" r="14" fill="#7791FF"/>
+<path d="M978 185l5 5 9-10" fill="none" stroke="#142034" stroke-width="2.6" stroke-linejoin="miter"/>
+<text x="672" y="438" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" letter-spacing="1.9" fill="#B6C4F9">02 / RE-CAPTURE AND VERIFY</text>
+<path d="M1128 459H72" stroke="#485770" stroke-width="1"/>
+</svg>
