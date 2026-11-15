@@ -19,7 +19,7 @@ A visually polished analytics application fails when used with real data.
 4. Keep artistic composition, perceived aesthetics and numerical validity as separate critique dimensions.
 
 ## Countercases and overclaim guard
-- Explicitly review source-specific constraints in `knowledge/verified/claims.json` and source access levels in `knowledge/sources.json`.
+- Explicitly review source-specific constraints in `knowledge/claims.json` and source access levels in `knowledge/sources.json`.
 - Do not turn a studied observation into a mandatory style rule, numerical CSS constant, or general guarantee of user performance.
 - The agent must not assert that this study validated AI-generated UI, unless such testing exists elsewhere.
 

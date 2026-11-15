@@ -19,7 +19,7 @@ The header wraps into two lines and anchor navigation hides the target.
 4. Fix concrete collisions, and report which tests ran; do not mark an anchor heading hidden as automatically failing 2.4.11 unless focused UI visibility meets its failure condition.
 
 ## Countercases and overclaim guard
-- Explicitly review source-specific constraints in `knowledge/verified/claims.json` and source access levels in `knowledge/sources.json`.
+- Explicitly review source-specific constraints in `knowledge/claims.json` and source access levels in `knowledge/sources.json`.
 - Do not turn a studied observation into a mandatory style rule, numerical CSS constant, or general guarantee of user performance.
 - The agent must not assert that this study validated AI-generated UI, unless such testing exists elsewhere.
 

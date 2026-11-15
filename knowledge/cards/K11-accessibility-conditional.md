@@ -20,7 +20,7 @@ A reviewer claims every 1px border under 3:1 or every 20px link automatically fa
 3. Test keyboard focus, sticky overlays, spacing overrides and zoom; avoid certification claims from static code only.
 
 ## Countercases and overclaim guard
-- Explicitly review source-specific constraints in `knowledge/verified/claims.json` and source access levels in `knowledge/sources.json`.
+- Explicitly review source-specific constraints in `knowledge/claims.json` and source access levels in `knowledge/sources.json`.
 - Do not turn a studied observation into a mandatory style rule, numerical CSS constant, or general guarantee of user performance.
 - The agent must not assert that this study validated AI-generated UI, unless such testing exists elsewhere.
 
