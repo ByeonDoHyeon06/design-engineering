@@ -37,6 +37,10 @@ The user-facing command is `de`. The full package also supports `python -m desig
 
 For real text-layout problems, query K16 (Hangul typography and mixed-script layout), K17 (natural Korean UX copy) and K18 (content roles and layout), as applicable. Preserve legal/brand terminology, product facts and exact actions; review Korean honorific tone, translationese, line wrapping, truncation and cross-viewport typography **in the rendered UI**. W3C Hangul layout is a Group Note Draft, and English practitioner guidance does not experimentally validate Korean wording choices. Details: `docs/typography-writing.md`.
 
+## Content-first design execution and visual assets
+
+For nontrivial UI tasks, start from actual text, user goals and action states. `de design plan --brief BRIEF.json --out PLAN.json` scaffolds **two distinct layout/meaning directions** plus image provenance and responsive checks. Complete it by judgment, not by automatically inventing features or claims; `de design validate PLAN.json --require-ready` checks completeness, not visual quality. For rendered UI, use `de qa ... --mode visual`, view the actual pixels and record corrections; `de design review critique.json` requires different before/after screenshot content and an actual after-observation. See `docs/design-execution.md`. Research, creative hypotheses and personal preferences remain different kinds of inputs.
+
 ## Controlled design evaluation (optional)
 
 When asked to **measure whether this skill improves outputs**, do not manufacture outcomes or compare unrelated designs. Use `de eval tasks` and `de eval init` to prepare matched baseline-versus-skill trials, capture **actual desktop and mobile PNGs for both**, and share only `blind/` with independent reviewers. Only human-authored, evidence-linked reviews may enter `de eval report`; without them the status is `NO_OBSERVATIONS`. Preserve negative results and missing pairs. The CLI does **not** generate webpages, perform human studies or supply aesthetic scores. See `docs/design-evaluation.md`. This procedure is not required for ordinary interface design work.

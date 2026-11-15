@@ -31,3 +31,7 @@ craft / cross-viewport consistency. Do not assign fake numeric aesthetics scores
 
 Inspect keyboard/focus/interaction separately with UX task scenarios. Geometry
 smoke checks are not proof of user comprehension, aesthetic preference, or WCAG conformance.
+
+## Revision evidence safeguards
+
+`de design review critique.json --json` uses the same review audit as `visual_critique.py validate`. A claim marked `fixed` must point to **two different screenshot files with different SHA-256 content**, a concrete after-observation, and both screenshots inside the review directory. Duplicate files, missing screenshots, escaped paths and renamed copies are not evidence that a defect was corrected. Differences still do not prove improvement: a person or agent must **inspect the actual pixels**. For layout planning, use `de design plan --brief ... --out ...` and `de design validate --require-ready ...`; see [Design execution](design-execution.md).

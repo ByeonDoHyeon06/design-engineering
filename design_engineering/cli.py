@@ -276,6 +276,26 @@ def _evaluation(args):
     return 0
 
 
+def _design(args):
+    from . import design_plan
+    if args.design_action == "plan":
+        result = design_plan.create(args.brief, args.out)
+    elif args.design_action == "validate":
+        result = design_plan.validate(args.file, require_ready=args.require_ready)
+        _print(result, args.json)
+        return 0 if result["ok"] else 1
+    elif args.design_action == "review":
+        from visual_critique import audit
+        doc = json.loads(Path(args.file).read_text(encoding="utf-8"))
+        result = audit(doc, Path(args.file).resolve().parent)
+        _print(result, args.json)
+        return 0 if result["ok"] else 1
+    else:
+        raise design_plan.DesignPlanError("Unknown design action.")
+    _print(result, args.json)
+    return 0
+
+
 def parser():
     p=argparse.ArgumentParser(prog="de",
         description="Design Engineering — research, personal Knowledge, and real UI validation.")
@@ -398,6 +418,25 @@ def parser():
     report.add_argument("--out", help="Optional location to save full JSON report.")
     report.add_argument("--json", action="store_true")
     report.set_defaults(func=_evaluation)
+
+    design = sub.add_parser("design", help="Content-led design planning and source-aware visual review.")
+    dsub = design.add_subparsers(dest="design_action", required=True)
+    plan = dsub.add_parser("plan", help="Create an editable design and visual asset direction plan.")
+    plan.add_argument("--brief", required=True, help="JSON with real content roles and constraints.")
+    plan.add_argument("--out", required=True)
+    plan.add_argument("--json", action="store_true")
+    plan.set_defaults(func=_design)
+
+    check_plan = dsub.add_parser("validate", help="Audit real content, concept contrast, image rights and viewport plan.")
+    check_plan.add_argument("file")
+    check_plan.add_argument("--require-ready", action="store_true")
+    check_plan.add_argument("--json", action="store_true")
+    check_plan.set_defaults(func=_design)
+
+    review = dsub.add_parser("review", help="Validate screenshot-anchored critique and revision evidence.")
+    review.add_argument("file", help="Existing visual-critique JSON file.")
+    review.add_argument("--json", action="store_true")
+    review.set_defaults(func=_design)
 
     return p
 
